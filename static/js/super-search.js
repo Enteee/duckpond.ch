@@ -47,7 +47,9 @@ MIT Licensed
 
 	function getPostsFromXml(xml) {
 		var json = xmlToJson(xml);
-console.log(json);
+		if(typeof json === 'object'){
+			return [json.entry];
+		}
 		return json.entry;
 	}
 
@@ -88,7 +90,6 @@ console.log(json);
 		if (matchingPosts.length && currentResultHash !== lastSearchResultHash) {
 			searchResultsEl.classList.remove('is-hidden');
 			searchResultsEl.innerHTML = matchingPosts.map(function (post) {
-console.log(post);
 				d = new Date(post.published);
 				return '<li><a href="' + post.id + '">' + post.title + '&raquo; <span class="search__result-date">' + d.toUTCString().replace(/.*(\d{2})\s+(\w{3})\s+(\d{4}).*/,'$2 $1, $3') + '</span></a></li>';
 			}).join('');
@@ -102,7 +103,7 @@ console.log(post);
 		searchInputEl = document.querySelector(options.inputSelector || '#js-super-search__input');
 		searchResultsEl = document.querySelector(options.resultsSelector || '#js-super-search__results');
 
-		var xmlhttp=new XMLHttpRequest();
+		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.open('GET', searchFile);
 		xmlhttp.onreadystatechange = function () {
 			if (xmlhttp.readyState != 4) return;
