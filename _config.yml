@@ -7,10 +7,10 @@ timezone: "Etc/GMT+1"
 urls:
     - text: About
       url: /about/
-    - text: XML Feed
-      url: /feed.xml
     - text: Issues
       url: https://github.com/Enteee/Enteee.github.io/issues
+    - text: Atom-feed
+      url: /feed.xml
 url: "https://duckpond.ch"
 baseurl: ""
 paginate: 20
@@ -19,3 +19,4 @@ paginate_path: "/page:num/"
 markdown: kramdown
 gems:
     - jekyll-paginate
+    - jekyll-feed
