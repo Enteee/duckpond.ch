@@ -5,10 +5,10 @@ date:   2016-05-24
 categories: [meta]
 ---
 
-Yet an other blog spawned and nobody cares! There are a couple of things lef to do here:
+Yet another blog spawned and nobody cares! There are a couple of things left to do:
 
-* https duckpond.ch, using [lets encrypt](https://letsencrypt.org/).
-* comment server, using [isso]. Why not [disqus](https://disqus.com/)? Beacuse I don't like having their javascript on my page. Also [isso] is OSS and has a freaking Pokémon as a logo! Checking their code atm.
+* https using [lets encrypt](https://letsencrypt.org/).
+* comment server using [isso]. Why not [disqus](https://disqus.com/)? Beacuse I don't like having their javascript on my page. Also [isso] is OSS and has a freaking Pokémon as a logo! Checking their code atm.
 
 Some credits:
 
