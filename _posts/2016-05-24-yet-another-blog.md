@@ -14,6 +14,7 @@ Some credits:
 
 * Template: [Agusmakmum](https://github.com/agusmakmun/agusmakmun.github.io)
 * Icon: [Flaticon.com](https://www.flaticon.com)
+* Search: [supersearch](https://github.com/chinchang/super-search)
 
 [isso]:https://posativ.org/isso/
 
