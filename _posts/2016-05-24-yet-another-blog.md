@@ -12,9 +12,11 @@ Yet another blog spawned and nobody cares! There are a couple of things left to 
 
 Some credits:
 
-* Template: [Agusmakmum](https://github.com/agusmakmun/agusmakmun.github.io)
-* Icon: [Flaticon.com](https://www.flaticon.com)
+* Base template: [Agusmakmum](https://github.com/agusmakmun/agusmakmun.github.io)
+* Icons: [Flaticon.com](https://www.flaticon.com)
 * Search: [supersearch](https://github.com/chinchang/super-search)
+* Atom-feed: [jekyll-feed](https://github.com/jekyll/jekyll-feed)
+* Static web: [jekyll](https://jekyllrb.com/)
 
 [isso]:https://posativ.org/isso/
 

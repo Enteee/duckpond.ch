@@ -11,8 +11,7 @@ urls:
       url: https://github.com/Enteee/Enteee.github.io/issues
     - text: Atom-feed
       url: /feed.xml
-url: "https://duckpond.ch"
-baseurl: ""
+url: "http://duckpond.ch" #replace with https:// once migrated
 paginate: 20
 per_page: 20
 paginate_path: "/page:num/"
