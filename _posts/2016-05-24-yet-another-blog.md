@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Yet another blog"
-date:   2016-5-24 16:00:00 +0100
+date:   2016-05-24
 categories: [meta]
 ---
 
