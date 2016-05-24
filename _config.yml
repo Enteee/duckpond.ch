@@ -8,6 +8,8 @@ urls:
       url: /about/
     - text: XML Feed
       url: /feed.xml
+    - text: Issues
+      url: https://github.com/Enteee/Enteee.github.io/issues
 url: "https://duckpond.ch"
 baseurl: ""
 paginate: 20
