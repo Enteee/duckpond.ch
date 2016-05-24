@@ -1,6 +1,6 @@
 # Duckpond
 
-[https://duckpond.ch](https://duckpond.ch)
+[https://www.duckpond.ch](https://www.duckpond.ch)
 
 ## Credits
 
