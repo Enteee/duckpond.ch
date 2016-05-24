@@ -3,6 +3,7 @@ description: deep inside the pond..
 author: Ente
 github: https://github.com/Enteee
 about: I like ducks!
+timezone: "Etc/GMT+1"
 urls:
     - text: About
       url: /about/
