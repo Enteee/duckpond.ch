@@ -47,6 +47,7 @@ MIT Licensed
 
 	function getPostsFromXml(xml) {
 		var json = xmlToJson(xml);
+console.log(json);
 		return json.entry;
 	}
 
