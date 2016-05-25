@@ -247,18 +247,16 @@ div.col-sm-3 img#about {
     display: block;
     width: auto;
     overflow: hidden;
-}
-
-.PageNavigation a {
-    display: block;
-    width: 50%;
-    float: left;
-    margin: 1em 0;
+    margin: 0 auto;
 }
 
 .PageNavigation .next {
+    float: left;
     text-align: right;
+    width: 50%;
 }
 .PageNavigation .prev {
+    float: right;
     text-align: left;
+    width: 50%;
 }
