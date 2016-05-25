@@ -12,8 +12,7 @@ urls:
     - text: Atom-feed
       url: /feed.xml
 url: "http://duckpond.ch" #replace with https:// once migrated
-paginate: 20
-per_page: 20
+paginate: 5
 paginate_path: "/page:num/"
 markdown: kramdown
 gems:

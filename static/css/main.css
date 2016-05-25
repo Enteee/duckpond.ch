@@ -81,6 +81,9 @@ a:hover {
  */
 .pagination {
     height: 36px;
+    width: 50%;
+    margin: 0 auto; 
+    display: block;
 }
 
 .pagination ul {
@@ -253,10 +256,8 @@ div.col-sm-3 img#about {
 .PageNavigation .next {
     float: left;
     text-align: right;
-    width: 50%;
 }
 .PageNavigation .prev {
     float: right;
     text-align: left;
-    width: 50%;
 }
