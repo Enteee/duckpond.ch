@@ -1,0 +1,1 @@
+WELLKNOWN="${BASEDIR}/.acme-challenges"

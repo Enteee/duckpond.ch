@@ -1,0 +1,47 @@
+version: '2'
+
+services:
+    nginx-http:
+        image: nginx
+        ports:
+            - 80:80
+        volumes:
+            - ./nginx-http/conf.d/:/etc/nginx/conf.d:ro
+            - ./letsencrypt.sh/etc/.acme-challenges/:/usr/share/nginx/letsencrypt/.well-known/acme-challenge:ro
+        networks:
+            backbone:
+                aliases:
+                    - nginx-http
+    nginx-https:
+        build: nginx-https
+        ports:
+            - 443:443
+        volumes:
+            - ./nginx-https/conf.d/:/etc/nginx/conf.d:ro
+            - ./www/:/usr/share/nginx/html:ro
+            - ./letsencrypt.sh/etc/certs:/certs:ro
+        networks:
+            backbone:
+                aliases:
+                    - duckpond.ch
+                    - nginx-https
+    letsencrypt:
+        build: letsencrypt.sh
+        volumes:
+            - ./letsencrypt.sh/etc:/etc/letsencrypt.sh:rw
+        user: $UID
+    isso:
+        build: isso
+        environment:
+            - GID=1000
+            - UID=1000
+        volumes:
+            - ./isso/config:/config
+            - ./isso/db:/db
+        networks:
+            backbone:
+                aliases:
+                    - isso
+
+networks:
+    backbone:
