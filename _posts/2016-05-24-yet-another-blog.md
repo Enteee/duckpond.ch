@@ -1,8 +1,7 @@
 ---
 layout: post
-title:  "Yet another blog"
-date:   2016-05-24
 categories: [meta]
+keywords: [Agusmakmun, jekyll]
 ---
 
 Yet another blog spawned and nobody cares! There are a couple of things left to do:
@@ -12,7 +11,7 @@ Yet another blog spawned and nobody cares! There are a couple of things left to 
 
 Some credits:
 
-* Base template: [Agusmakmum](https://github.com/agusmakmun/agusmakmun.github.io)
+* Base template: [Agusmakmun](https://github.com/agusmakmun/agusmakmun.github.io)
 * Icons: [Flaticon.com](https://www.flaticon.com)
 * Search: [supersearch](https://github.com/chinchang/super-search)
 * Atom-feed: [jekyll-feed](https://github.com/jekyll/jekyll-feed)

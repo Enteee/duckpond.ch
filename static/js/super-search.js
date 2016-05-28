@@ -91,7 +91,7 @@ MIT Licensed
 			searchResultsEl.classList.remove('is-hidden');
 			searchResultsEl.innerHTML = matchingPosts.map(function (post) {
 				d = new Date(post.published);
-				return '<li><a href="' + post.id + '.html">' + post.title + '&raquo; <span class="search__result-date">' + d.toUTCString().replace(/.*(\d{2})\s+(\w{3})\s+(\d{4}).*/,'$2 $1, $3') + '</span></a></li>';
+				return '<li><a href="' + post.id + '">' + post.title + '&raquo; <span class="search__result-date">' + d.toUTCString().replace(/.*(\d{2})\s+(\w{3})\s+(\d{4}).*/,'$2 $1, $3') + '</span></a></li>';
 			}).join('');
 		}
 		lastSearchResultHash = currentResultHash;
