@@ -272,5 +272,14 @@ div.col-sm-3 img#about {
 
 .footnotes {
     border-top: 1px solid #F7F1F1;
+    padding-top: 0.7em;
+}
+
+.footnotes li {
     font-size: 0.7em;
+    line-height: 1em;
+}
+
+.footnotes li p {
+    margin: 0.1em;
 }
