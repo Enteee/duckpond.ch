@@ -1,7 +1,6 @@
 ---
 layout: post
-title:  "Docker hell"
-date:   2016-05-28
+keywords: [docker, debian, letsencrypt]
 categories: [meta]
 ---
 
