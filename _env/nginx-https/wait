@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-cmd="$@"
+cmd="$*"
 
 echo "CMD: $cmd"
 
@@ -14,4 +14,5 @@ until stat ${CERT} ${KEY} && ping -c1 ${ISSO}; do
 done
 
 >&2 echo "ready"
+#exec ${cmd}
 nginx -g 'daemon off;'

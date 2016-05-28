@@ -2,5 +2,6 @@ FROM nginx
 
 MAINTAINER Ente "ducksource@duckpond.ch"
 
-COPY startup.sh .
-CMD ./startup.sh
+COPY wait .
+ENTRYPOINT ["./wait"]
+CMD ["nginx", "-g" ,"daemon off;"]
