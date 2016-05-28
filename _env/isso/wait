@@ -2,12 +2,10 @@
 set -e
 cmd="$@"
 
-echo "CMD: $cmd"
-
 until nc -z nginx-https 443; do
-  >&2 echo "nginx-https not ready - sleeping"
+  >&2 echo "sleeping"
   sleep 1
 done
 
->&2 echo "nginx-https ready"
+>&2 echo "starting"
 exec $cmd

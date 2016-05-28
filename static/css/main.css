@@ -11,6 +11,7 @@ body {
     color: #666;
     font-weight: 300;
 }
+
 hr {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -261,4 +262,15 @@ div.col-sm-3 img#about {
 .PageNavigation .prev {
     float: right;
     text-align: left;
+}
+
+/**
+ * ///////////////////////////////////
+ * Footnotes
+ * ///////////////////////////////////
+ */
+
+.footnotes {
+    border-top: 1px solid #F7F1F1;
+    font-size: 0.7em;
 }
