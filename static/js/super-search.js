@@ -47,7 +47,7 @@ MIT Licensed
 
 	function getPostsFromXml(xml) {
 		var json = xmlToJson(xml);
-		if(typeof json === 'object'){
+		if(Object.prototype.toString.call(json.entry) !== '[object Array]'){
 			return [json.entry];
 		}
 		return json.entry;
