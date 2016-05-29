@@ -11,12 +11,19 @@ body {
     color: #666;
     font-weight: 300;
 }
+
 hr {
     margin-top: 20px;
     margin-bottom: 20px;
     border: 0;
     border-top: 1px solid #F7F1F1;
     border-bottom: 1px solid #fff;
+}
+
+sup {
+    border-left: 1px solid #E6E6E6;
+    border-right: 1px solid #E6E6E6;
+    margin-right: 0.3em;
 }
 /*
 @media (min-width: 768px) {
@@ -261,4 +268,24 @@ div.col-sm-3 img#about {
 .PageNavigation .prev {
     float: right;
     text-align: left;
+}
+
+/**
+ * ///////////////////////////////////
+ * Footnotes
+ * ///////////////////////////////////
+ */
+
+.footnotes {
+    border-top: 1px solid #F7F1F1;
+    padding-top: 0.7em;
+}
+
+.footnotes li {
+    font-size: 0.7em;
+    line-height: 1em;
+}
+
+.footnotes li p {
+    margin: 0.1em;
 }

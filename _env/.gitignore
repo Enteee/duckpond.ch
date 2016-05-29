@@ -1,0 +1,6 @@
+isso/db/*
+letsencrypt.sh/etc/private*
+letsencrypt.sh/etc/.acme-challenges/*
+letsencrypt.sh/etc/certs/*
+
+
