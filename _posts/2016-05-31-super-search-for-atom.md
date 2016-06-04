@@ -46,15 +46,6 @@ I prefere Atom over RSS. Mainly because Atom is [a proposed standard][Atom-stand
             }).join('');
         }
         lastSearchResultHash = currentResultHash;
-@@ -100,7 +103,7 @@
-        searchInputEl = document.querySelector(options.inputSelector || '#js-super-search__input');
-        searchResultsEl = document.querySelector(options.resultsSelector || '#js-super-search__results');
- 
--       var xmlhttp=new XMLHttpRequest();
-+       var xmlhttp = new XMLHttpRequest();
-        xmlhttp.open('GET', searchFile);
-        xmlhttp.onreadystatechange = function () {
-            if (xmlhttp.readyState != 4) return;
 ```
 
 [^1]:Press ESC, '/' or the magnifying glass in the upper right corner to toggle the search.
