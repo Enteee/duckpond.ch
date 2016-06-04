@@ -25,6 +25,10 @@ sup {
     border-right: 1px solid #E6E6E6;
     margin-right: 0.3em;
 }
+
+blockquote {
+    font-size: 0.9em;
+}
 /*
 @media (min-width: 768px) {
   .container {
