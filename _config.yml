@@ -15,6 +15,7 @@ url: "https://duckpond.ch"
 paginate: 5
 paginate_path: "/page:num/"
 markdown: kramdown
+host: localhost
 gems:
     - jekyll-paginate
     - jekyll-feed
