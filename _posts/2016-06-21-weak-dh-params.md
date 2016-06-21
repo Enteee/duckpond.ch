@@ -5,26 +5,26 @@ keywords: [diffie-hellman parameters, logjam]
 categories: [security]
 ---
 
-Not a long time ago a friend of mine pointed out the nginx at duckpond.ch is using 1024 bit standard DH parameters.
+Not a long time ago a friend of mine told me that the nginx at duckpond.ch is using 1024 bit standard DH parameters.
 
 ![ssl lab-weak ciphers](/static/posts/weak-dh-parameters/ssl_lab-ciphers-weak.png)
 *SSL-Lab: weak key negotiation because of standard DH parameters*
 
-Eww, after beeing at the [32c3-logjam] talk I should have known better. So let's have some fun with DH befor changing the parameters to something (hopefully) more secure.
+Eww, after being at the [32c3-logjam] talk I should have known better. So let's have some fun with DH before changing the parameters to something (hopefully) more secure.
 
-Openssl is fat and messy and I don't particularily like their man pages [^1]. This is why I started reading some blogs. I really like the [step by step instructions by steven gordon][openssl-dh]. Befor we begin let's define what we plan to do:
+Openssl is fat and messy and I don't particularly like their man pages [^1]. This is why I started reading some blogs. I really like the [step by step instructions by steven gordon][openssl-dh]. Following [steven's][openssl-dh] blog I defined a plan of action:
 
 1. Extracting parameters $$ g, p $$ from duckpond.ch.
 2. Generate private random $$ r_{c} $$ for these parameters.
-3. Perform a DH-keyagreement with duckpond.ch using [s_client] with the just generated private random $$ r_{c} $$. Our goal is to agree with duckpond on a pre master secret $$ k_{0} $$ with:
+3. Perform a DH-key agreement with duckpond.ch using [s_client] with the just generated private random $$ r_{c} $$. Our goal is to agree with duckpond on a pre-master secret $$ k_{0} $$ with:
 \begin{equation}
 k_{0} \equiv g^{r_{c} r_{s}} \pmod{p}
 \end{equation}
-4. Derive the master secret $$ k $$ from the calculated pre master secret $$ k_{0} $$.
+4. Derive the master secret $$ k $$ from the calculated pre-master secret $$ k_{0} $$.
 \begin{equation}
 k = kdf(k_{0})
 \end{equation}
-5. Try to solve $$ log_{g}(g^{r_{c}}) \pmod{p} $$ so that we get $$ r_{c} $$ back.
+5. Try to solve $$ log_{g}(g^{r_{c}}) \pmod{p} $$ in order to get $$ r_{c} $$ back.
 
 ## Extracting parameters
 Extracting the parameters from duckpond.ch: [^2]
@@ -41,7 +41,7 @@ In : log(p)/log(2)
 Out: 1023.552554397631
 ```
 
-Openssl works with a PEM [^3] encoded parameters file. Thus we've to pack our prime modulo $$ p $$ and generator $$ g $$ in an ASN.1 encoded representation. I could not find a way using Openssl to generate a arbritrary parameters file. This means I had to "reverse" [^4] the PEM data, using [Lapo Luchini's ASN.1 decoder][asn1-decoder]. It's not rocket science; the following python script generates a PEM [^5] for an arbritraty $$ p $$ (first argument), $$ g $$ (second argument) combination.
+Openssl works with a PEM [^3] encoded parameters file. Thus we've to pack our prime modulo $$ p $$ and generator $$ g $$ in an ASN.1 encoded representation. I could not find a way using Openssl to generate a arbitrary parameters file. This means I had to "reverse" [^4] the PEM data, using [Lapo Luchini's ASN.1 decoder][asn1-decoder]. It's not rocket science; the following python script generates a PEM [^5] for an arbitrary $$ p $$ (first argument), $$ g $$ (second argument) combination.
 
 ```python
 #!/usr/bin/env python
@@ -98,7 +98,7 @@ HcLKcl7OZicMyaUDXYzs7vnqAnSmOrHlj6/UmI0PZdFGdX2gcd8EXP4Wub
 
 ## Generate $$ r_{c} $$
 
-The genrated PEM can be used for Openssl's genpkey command [^6].
+The generated PEM can be used for Openssl's genpkey command [^6].
 
 ```shell
 $ openssl genpkey -paramfile dhp.pem -text
@@ -145,11 +145,11 @@ DH Private-Key: (1024 bit)
     generator: 2 (0x2)
 ```
 
-Well that was easy...
+Well, that was easy...
 
-# Keyagreement
+# Key agreement
 
-Using Openssl's s_client with the just generated private key and recording the [ssl-handshake]:
+The I used [s_client] with the just generated private key and recorded the [ssl-handshake]: [^7]
 
 ```shell
 $ openssl s_client -connect duckpond.ch:443 -cipher DHE-RSA-AES256-SHA256 -key dhkey.pem 
@@ -176,13 +176,13 @@ SSL-Session:
 [...]
 ```
 
-Then I extracted the transmitted $$ g^{r_{c}} $$ from the [ssl-handshake]:
+After this I extracted the transmitted $$ g^{r_{c}} $$ from the [ssl-handshake]:
 
 ```python
 In : gr_c = 0xac5b13ac2d295e8779d1beca26c06f54071d804dd82914160941732f6252875ac61704b925f2e540fead8ef29cc678604cf060f49ca9b5008aa5763ffcf0cced3271000c3ecf7b089e05dd506a9ca9e438c75db80da2a93c6081a5412
 ```
 
-and realized that I fucked up. Emphemeral DH (DHE) uses a new $$ r_{c} $$ for every connection. Which is a good thing to do, but for now very annoying as it makes it hard to reproduce results. Attaching a debugger quickly revealed that Openssl does load the provided DH-parameters but is not using them once the Client Key Exchange-message is generated. So I patched Openssl's crypto/dh/dh_key.c:generate_key() so that it always returns the first loaded key, which is the one we provide via the '-key' parameter [^8]:
+and realized that I fucked up. Ephemeral DH (DHE) uses a new $$ r_{c} $$ for every connection. Which is a good thing to do, but for now very annoying. DHE makes it hard to reproduce results. Attaching a debugger quickly revealed that Openssl does load the provided DH-parameters but is not using them once the Client Key Exchange-message is generated. So I patched Openssl's crypto/dh/dh_key.c:generate_key() and made it always return the first loaded key [^8]. The first loaded key is the one we provide via the '-key' parameter:
 
 ```c
 diff --git a/crypto/dh/dh_key.c b/crypto/dh/dh_key.c
@@ -211,7 +211,7 @@ index 9b79f39..2c22b46 100644
  }
 ```
 
-Re-running the [ssl-handshake2]:
+Re-running the [ssl-handshake2] using the patched Openssl version:
 
 ```
 $ openssl s_client -connect duckpond.ch:443 -cipher DHE-RSA-AES256-SHA256 -key dhkey.pem 
@@ -243,7 +243,7 @@ And extracting the $$ g^{r_{c}} $$ from the new [ssl-handshake2]:
 g_rc = 0x5c59238c0b0978f38fdbf015c12ddae1f7caa58c42e0ff29da33ae896dcb78d43e0d11795c82f28d27bbca12fb22efde48c3000de7a30d3e613d0dd882bb16d77394f31c5439decdd9c9385595d3d0b5aa9f66015629006b04bb22a6661651d1443260045a2b7bc5a870252d4007d346fe621f5d2cbb24c9507a54d3a9e26218
 ```
 
-Finally the $$ g^{r_{c}} $$ is the same as the just generated public-key. Which means the we should be able to compute the $$ g^{r_{c}} $$ using the known private key: $$ r_{c} $$
+Finally the $$ g^{r_{c}} $$ is the same as the just generated public-key. Which means the we should be able to compute the $$ g^{r_{c}} $$ using the known private key $$ r_{c} $$:
 
 ```python
 In : r_c = 0x7c3c6a68d0a1b19690b89f56fe8fc987427a1e668e3abac797877d5b9ad14785ec4fc21521eb83ddf428e935d69f9cbc50b9e0995b3e5a228b651b4edf937852ed73e396c5bad75372ebbfacc6e6e565649da1c7ffa2b9ca0051403e1dd055bd2b1cb0c059cf1b20f79419721a9a94800fc40c5fb4d8897e6398684298bc5470
@@ -251,31 +251,21 @@ In : pow(g, r_c, p) == g_rc
 Out: True
 ```
 
-Yayy! From here it should be straigt forward to calculate the pre master secret $$ k_{0} $$ using the servers public key $$ g^{r_{s}} $$ which I also extracted from the [ssl-handshake2]:
-
-```python
-In : g_rs = 0x3f2be9298aa84d6889dcfbd1a0bb0788a440b81f5b5b5d948174c6a1daf729d8f760ecf5363cdbee460ceee8f8b64d8a1710c61a9a8b9f043570e6a17ce0846f1af6a215dd4c5dd2e567547345cd9b9ef24af8791060f2e7451f11735f64d3b80d1d2253587ca3c5676ed3f1c84e96d32d9766607811a9996e802cacc4b97f05
-```
-
-using:
+Yayy! From here it should be straight forward to calculate the pre-master secret $$ k_{0} $$.
 
 \begin{equation}
 k_{0} \equiv g^{r_{c} r_{s}} \equiv g^{r_{s}^{r_{c}}} \pmod{p}
 \end{equation}
 
+The only thing we need for this is the server public key $$ g^{r_{s}} $$ which is easy to extract from the [ssl-handshake2]:
+
+
 ```python
+In : g_rs = 0x3f2be9298aa84d6889dcfbd1a0bb0788a440b81f5b5b5d948174c6a1daf729d8f760ecf5363cdbee460ceee8f8b64d8a1710c61a9a8b9f043570e6a17ce0846f1af6a215dd4c5dd2e567547345cd9b9ef24af8791060f2e7451f11735f64d3b80d1d2253587ca3c5676ed3f1c84e96d32d9766607811a9996e802cacc4b97f05
 In : k0 = pow(g_rs, r_c, p)
 ```
 
-## Key derivation
-
-This step is for verification purpose only. I want to derive the master secret $$ k $$ from the pre master secret $$ k_{0} $$ in order to check that I did everything right. The agreed master secret $$ k $$ is beeing printed when running s_client:
-
-```python
-In : k = 0x403247e9625be70e2ac4076297b48a18178696404fc7ffcd924ecaa5628fdba049dfbd4170f65acbc6a84aa18696144a
-```
-
-A good starting point is the TLS 1.2 finish described in [RFC 5246-8.1.2](https://tools.ietf.org/html/rfc5246#section-8.1.2). Note that in [ssl-handshake2] the client sends the Extended Master Secret Extension, thus the master secret $$ k $$ is computed according to [RFC 7627-4](https://tools.ietf.org/html/rfc7627#section-4)[^9].
+Now I'm in perfect shape for step 4 and 5 which I'll do in a [follow-up](weak-dh-params2.html).
 
 [^1]: If somebody can point out a good cheat-sheet I'd be soooo happy.
 [^2]: By capturing an [ssl-handshake].
@@ -283,14 +273,13 @@ A good starting point is the TLS 1.2 finish described in [RFC 5246-8.1.2](https:
 [^4]: The ASN.1 standard is even more cumbersome than Openssl manpages.
 [^5]: Append it to all the MAIL!
 [^6]: So that you can send it to your friends via mail.
-[^7]: Yes, I restarted the webserver and client after doing this.
+[^7]: Yes, I restarted the web server and client after doing this.
 [^8]: Don't do this at home.
-[^9]: The [introduction of RFC 7627](https://tools.ietf.org/html/rfc7627#section-1) describes the ["Triple Handshakes"](http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6956559)-Attack quite well.
 
 [openssl-dh]:https://sandilands.info/sgordon/diffie-hellman-secret-key-exchange-with-openssl
 [openssl-testing]:https://www.feistyduck.com/library/openssl-cookbook/online/ch-testing-with-openssl.html
 
-[32c3-logjam]:https://www.youtube.com/watch?v=TfK5tf3ScR4&t=1970
+[32c3-logjam]:https://www.youtube.com/watch?v=TfK5tf3ScR4
 [weak-dh]:https://weakdh.org/
 
 [ssl-handshake]:/static/posts/weak-dh-parameters/ssl_handshake.pcap
