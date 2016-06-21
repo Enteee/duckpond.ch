@@ -5,11 +5,11 @@ keywords: [Atom, super-search]
 categories: [web, meta]
 ---
 
-I use [super-search] on an [Atom-feed] to make duckpond.ch searchable[^1]. From [super-search] readme:
+I use [super-search] on an [Atom-feed] to make duckpond.ch searchable[^1]. From [super-search] README:
 
 > super-search adds search feature to your blog. super-search works on your blog's RSS feeds to enable searching posts.
 
-I prefere Atom over RSS. Mainly because Atom is [a proposed standard][Atom-standard] and there is a [plugin for jekyll][jekyll-Atom]. Btw; RSS should also be [fairly easy][jekyll-rss] to integrate. Anyway here's a patch for [super-search] which should make it Atom compatible [^2][^3][^4]:
+I prefer Atom over RSS. Mainly because Atom is [a proposed standard][Atom-standard] and there is a [plugin for jekyll][jekyll-Atom]. Btw; RSS should also be [fairly easy][jekyll-rss] to integrate. Anyway here's a patch for [super-search] which should make it Atom compatible [^2][^3][^4]:
 
 ```javascript
 --- supersearch.js.old
