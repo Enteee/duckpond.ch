@@ -72,14 +72,15 @@ h1 {
 
 h2 {
     font-weight: normal;
-    margin-bottom: 5px;
     color: #666;
+    margin-bottom: 5px;
+    font-size: 20px;
 }
-        
+
 h3 {
     font-weight: normal;
-    margin-bottom: 5px;
     color: #666666;
+    font-size: 15px;
 }
 
 a, a:link, a:active {
