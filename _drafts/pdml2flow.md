@@ -1,25 +1,27 @@
 ---
 layout: post
 keywords: [pdml, wireshark, flow, network]
-categories: [security]
+categories: [networking]
 ---
 
-Quite a time ago I wrote a script as a replcement for a network flow generator called [tranalyzer]. In contrast to [tranalyzer] the script should:
+Quite a time ago I wrote a supplement to a network flow generator called [tranalyzer]. In contrast to [tranalyzer] the script should:
 
-* extract the same features as [wireshark]
-* aggregates flows based on a configurable set of features
-* use [JSON] as its default output
-* be compatible with [UNIX pipes]
+* extract the same features as [wireshark].
+* aggregates flows based on a configurable set of features.
+* use [JSON] as its default output.
+* be compatible with [UNIX pipes].
+
+This blog post gives a brief introduction into the flow processing world then presents the script called [pdml2flow]. At last I will show a couple of real world applications of the said script. The target audience are people familiar with ip networking on the command line.
 
 # Terminology
 
-Before we start you might want to make yourself familiar with some terms:
+Before we start I do have to introduce and define some terms.
 
 ## Network Flows
 
-A network flow is quite a fuzzy term. Looking up [network flow in wikipedia](https://en.wikipedia.org/wiki/Traffic_flow_(computer_networking)) reflects this. Wikipedia quotes several RFCs[^1][^2][^3] and they all differ. But most of them share one aspect which is, that a network flow is a set of packets having a set of attributes in common. The term emerged from the mathematical definition of a [flow network](https://en.wikipedia.org/wiki/Flow_network). This is something routing-guys at universities [^4] were looking at in order to design efficient routing algorithms. I didn't live back then but among the 10 or 20 people capable of building such networks, the Flow was likely a well defined term. Later, with more sophisticated networks in place, companies wanted to have more control over what kind of traffic they are routing and how much of it. So they started building walls of fire [^5] and started shaping traffic ([QoS](https://en.wikipedia.org/wiki/Quality_of_service)). For this purpose a lot of proprietary mechanisms for flow control were developped in parallel. With the effect of washing out the term. In the pdml2flow context we use a slightly different and more generic definition of a flow:
+A network flow is a fuzzy term. Looking up [network flow in wikipedia](https://en.wikipedia.org/wiki/Traffic_flow_(computer_networking)) reflects this. Wikipedia quotes several RFCs[^1][^2][^3] and they all differ. But most of them share the aspect that a network flow is a set of packets having a set of attributes in common. The term emerged from the mathematical definition of a [flow network](https://en.wikipedia.org/wiki/Flow_network). This is something routing-guys at universities [^4] were looking at in order to design efficient routing algorithms. I didn't live back then but among the 10 or 20 people capable of building such networks, the flow was likely a well defined term. Later, with more sophisticated networks in place, companies wanted to have more control over what kind of traffic they are routing and how much of it. So they started building walls of fire [^5] and started shaping traffic ([QoS](https://en.wikipedia.org/wiki/Quality_of_service)). For this purpose a lot of proprietary mechanisms for flow control were developped in parallel, with the effect of washing out the term. In the pdml2flow context we use a slightly different and more generic definition of a flow:
 
-> A flow $$ \Xi $$ (xi) is a set of all frames $$ f $$ which are equal for a set of attributes $$ A $$ and are all in a certain proximity $$ t $$ of each other.
+> A flow $$ \Xi $$ (xi) is the set of all frames $$ f $$ which are equal for a set of attributes $$ A $$ and are all in a certain proximity $$ t $$ of each other.
 
 Other than the definitions mentioned so far, pdml2flow operates on frames $$ f $$ instead of packets. Frames are maps of attributes to values. 
 
@@ -29,7 +31,7 @@ $$ \mathbb{U} $$ deontes the set of all possible unicode strings and $$ \perp $$
 
 $$ \tau : F \rightarrow \mathbb{R} $$
 
-we can order $$ F $$. When we combine all these definitions we can write an algorithm in python which constructs us a certain flow around a generating frame $$ f^{'} $$ (f0):
+we can order $$ F $$. When we combine all these definitions [^6] we can now write an algorithm in python which constructs us a certain flow around a generating frame $$ f^{'} $$ (f0):
 
 ```python
 def same_flow(f, xi, t, A):
@@ -49,7 +51,7 @@ def get_flow(F, t, A, f0):
     xi = newXi
 ```
 
-That's quite a lot of formalism. The following graphic shoud give a concrete example for a three flows scenario:
+That's quite a lot of formalism. The following diagram shoud give a concrete example for a three flows scenario:
 
 ![flow visualization](/static/posts/pdml2flow/flows.svg)
 *Visualization of four frames in three flows*
@@ -61,7 +63,7 @@ Note:
 
 ## PDML - Packet Details Markup Language
 
-An XML schema for describing packets. For in depth information please refer to the [PDML-specification][PDML] or the [NetPDL-paper][NetPDL]. The [PDML-schema] as well as the [NetPDL-schema] provide a in deph implementation specification. The reason why I chose [PDML] as an input format is that wireshark / tshark does suport support the [PDML] format out of the box:
+PDML is a XML schema which can be used for describing packets. For in depth information please refer to the [PDML-specification][PDML] or the [NetPDL-paper][NetPDL]. Furthermore provides the [PDML-schema] as well as the [NetPDL-schema] a in deph implementation specification. The reason why I chose [PDML] as an input format is that [wireshark] / [tshark] does suport the [PDML] format out of the box:
 
 ```shell
 $ tshark -i eth0 -T pdml
@@ -71,29 +73,35 @@ $ tshark -i eth0 -T pdml
 
 ## Download, Installation and Source Code
 
-The newest version of the script should always be hosted in the [PyPI][pdml2flow]. This means intalling and updating the software using [pip] should be as simple as:
+The newest version of the script can always be found in the [Python Package Index][pdml2flow]. This means intalling and updating the software using [pip] should be as simple as:
 
-```
+```shell
 $ sudo pip install --upgrade pdml2flow
 ```
 
-This will install the three components pdml2flow, pdml2json and pdml2xml systemwide. The source code is hosted @ [Github][pdml2flow-git] and automatically been built using [Travis CI][pdml2flow-travis] and [Coveralls][pdml2flow-coveralls].
+This will install three components systemwide:
+
+* pdml2flow: aggregates frames to flows and converts them to either json or xml.
+* pdml2json: converts pdml frames to json.
+* pdml2xml: converts pdml frames to xml.
+
+The source code is hosted at [Github][pdml2flow-git] and automatically built using [Travis CI][pdml2flow-travis] and [Coveralls][pdml2flow-coveralls]. Issues are beeing tracked in the [pdml2flow-issue tracker].
 
 ## Running it
 
-The script reads from stdin and writes to stdout, debug messages and warnings are reported to stderr. This allows for easy integration with [wireshark] as data generator and [jq] as postprocessor. Reading a `.pcap`-file is as simpe as:
+The script reads from stdin and writes to stdout, debug messages and warnings are reported to stderr. This allows for easy integration with [wireshark] / [tshark][tshark] [^7] as data generator and [jq] as post processor. Reading a `.pcap`-file is as simpe as:
 
 ```shell
 $ tshark -r file.pcap -T pdml | pdml2flow
 ```
 
-or you can even sniff live packets from a network interface:
+or sniff live packets from a network interface:
 
 ```shell
 $ tshark -i eth0 -T pdml | pdml2flow
 ```
 
-For postprocessing, such as prettyprinting, you can further pipe stdout to [jq]:
+For post processing, such as pretty printing, you can further pipe stdout to [jq]:
 
 ```shell
 $ tshark -i eth0 -T pdml | pdml2flow | jq
@@ -101,24 +109,273 @@ $ tshark -i eth0 -T pdml | pdml2flow | jq
 
 ## Changing the Behaviour
 
+[pdml2flow] has several command line options. I'll give a brief overview of the most important ones.
+
+### ```-f```: Attribute Set
+
+This option lets you define the attributes $$ A $$ which define a flow. Each attribute in the set must be specified using a separate ```-f``` option. The name of the attributes should match the corresponding [wireshark] display filter. The [wireshark] project maintains an exhaustive [list of display filters], but its usually easier to jump directly into [wireshark] and compile your attribute set there.
+![wireshark-filter](/static/posts/pdml2flow/wireshark-filter-blur.png)
+*Using wireshark to find display filter names*
+Altenatively you can use the utility pdml2json in combination with [jq]. The following command captures the first 100 packets from eth0 and prints out all possible display filters.
+
+```shell
+$ tshark -i eth0 -T pdml -c 100 | pdml2json | jq -s '
+  add 
+  | [
+      (keys - ["data"])[] as $key
+      | { 
+        ($key): .[$key] | keys 
+      }
+  ]' 
+```
+Which should give you something like (incomplete):
+
+```json
+[
+  {
+    "_ws": [
+      "expert"
+    ]
+  },
+  {
+    "arp": [
+      "dst",
+      "hw",
+      "opcode",
+      "proto",
+      "src"
+    ]
+  },
+
+[...]
+```
+
+The next command is an example application of the ```-f``` flag. When using it you will essentially get a live view of all ethernet connections on interface eth0:
+
+```shell
+$ tshark -i eth0 -T pdml | pdml2flow -c -t 10 -f eth.dst -f eth.src | jq '.eth.addr.raw'
+```
+
+### ```-t```: Flow Buffer Time
+
+This option lets you define the proximity $$ t $$. Note that in the [pdml2flow] context the arrival time function $$ \tau $$ will always yield the value of the field ```frame.time_epoch.raw```. Frames not having a ```frame.time_epoch.raw``` will be discarded. In the example above we set ```-t 10``` because most ethernet flows will have a lot of assigned frames, thus will never terminate if $$ t $$ is too big.
+
+### ```-c```: Compress
+
+This option will compress the output. Normally all attribute values will be extracted from a frame $$ f $$ and appended in order (according to $$ \tau $$) to the flow $$ \Xi $$. In real world applications however, some attribute values are recurring and not interesting. The previous example without the ```-c``` option will print something like:
+
+```json
+[
+  "9a:89:d9:ee:c8:1e",
+  "00:11:32:3d:82:a5"
+]
+[
+  "ff:ff:ff:ff:ff:ff",
+  "8c:96:1f:e7:4d:72",
+  "ff:ff:ff:ff:ff:ff",
+  "8c:96:1f:e7:4d:72",
+  "ff:ff:ff:ff:ff:ff",
+  "8c:96:1f:e7:4d:72",
+  "ff:ff:ff:ff:ff:ff",
+  "8c:96:1f:e7:4d:72",
+  "ff:ff:ff:ff:ff:ff",
+  "8c:96:1f:e7:4d:72",
+  "ff:ff:ff:ff:ff:ff",
+  "8c:96:1f:e7:4d:72"
+]
+[
+  "ff:ff:ff:ff:ff:ff",
+  "c9:a2:ab:8c:90:36",
+  "ff:ff:ff:ff:ff:ff",
+  "c9:a2:ab:8c:90:36",
+  "ff:ff:ff:ff:ff:ff",
+  "c9:a2:ab:8c:90:36",
+  "ff:ff:ff:ff:ff:ff"
+]
+```
+
+With the ```-c``` option present this will be compressed to:
+
+```json
+[
+  "9a:89:d9:ee:c8:1e",
+  "00:11:32:3d:82:a5"
+]
+[
+  "ff:ff:ff:ff:ff:ff",
+  "8c:96:1f:e7:4d:72",
+]
+[
+  "ff:ff:ff:ff:ff:ff",
+  "c9:a2:ab:8c:90:36",
+]
+```
+
+Note that compressen will not preserve order of the values. Which means the following ouput could also have been possible:
+
+```json
+[
+  "00:11:32:3d:82:a5"
+  "9a:89:d9:ee:c8:1e",
+]
+[
+  "ff:ff:ff:ff:ff:ff",
+  "8c:96:1f:e7:4d:72",
+]
+[
+  "c9:a2:ab:8c:90:36",
+  "ff:ff:ff:ff:ff:ff",
+]
+```
+
+Revisiting and expanding the example above, we get a command which will print a live view of all ethernet connections with a count of seen ip addresses within the flow.
+
+```shell
+$ tshark -i eth0 -T pdml | pdml2flow -t 10 -f eth.dst -f eth.src | jq '
+  def cunique: group_by(.)? | map( { (.[0]) : (. | length)} );
+  {
+    ethSrc: (.eth.src.raw | unique)[0],
+    ethDst: (.eth.dst.raw | unique)[0],
+    ipSrc: (.ip.src.raw | cunique)[0],
+    ipDst: (.ip.dst.raw | cunique)[0]
+  }'
+```
+
+which will print something like:
+
+```json
+{
+  "ethSrc": "c9:a2:ab:8c:90:36",
+  "ethDst": "ff:ff:ff:ff:ff:ff",
+  "ipSrc": {
+    "10.1.2.123": 1
+  },
+  "ipDst": {
+    "10.2.3.4": 1
+  }
+}
+{
+  "ethSrc": "00:11:32:3d:82:a5",
+  "ethDst": "9a:89:d9:ee:c8:1e",
+  "ipSrc": {
+    "10.3.2.1": 1
+  },
+  "ipDst": {
+    "239.255.255.250": 1
+  }
+}
+```
+
+# Example Usage
+
+The following section should list a couple of example commands. With the goal of inspiring new users to build their own set up. If you built your own commands already, don't hesitate to share them in the comment section!
+
+* Map http uris to ip addresses requesting them.
+
+```shell
+$ tshark -i eth0 -T pdml | pdml2flow -f 'http.host' -f 'http.request.uri' | jq '
+  def cunique: group_by(.)? | map( { (.[0]) : (. | length)} );
+  {
+    uri: ( 
+      "http://" 
+      + .http.host.raw[0] 
+      + "/" 
+      + .http.request.uri.raw[0]
+    ),
+    ipSrc: (
+      .ip.src.raw | cunique 
+    )
+  }'
+```
+
+* Monitor tls / ssl handshakes.
+
+```shell
+$ tshark -i eth0 -T pdml | pdml2flow -s | jq '
+if
+  .ssl.handshake.type
+then
+  { 
+    ipSrc: ( .ip.src.raw | unique? )[],
+    ipDst: ( .ip.dst.raw | unique? )[],
+    sslHandshakeMessages: ( .ssl.handshake.type.show ) 
+  }
+else
+  empty
+end'
+```
+
+
+* Mean and standard deviation of TCP payloads lengths.
+
+```shell
+$ tshark -i eth0 -T pdml | pdml2flow | jq '
+def meanStdDef(name):
+try (
+  (
+  # calculate mean
+    (
+      reduce .[] as $item (
+        0;
+        . + $item
+      )
+    )
+    /
+    (. | length)
+  ) as $mean
+  | [
+    $mean,
+  (
+  # calculate standard deviation
+    (
+      (
+        reduce .[] as $item2 (
+          0;
+          . + (($item2 - $mean) | pow(.;2))
+        )
+      )
+      /
+      (. | length)
+    ) | sqrt
+  )
+  ]
+) catch ([-1, -1])
+| { (name + "Mean"): (.[0]), (name + "StdDev"): (.[1]) };
+
+.tcp.len.raw | meanStdDef("tcpLen")'
+```
+
+# Disclaimer
+
+* [pdml2flow] was designed to be flexible. Speed was never a requirement. If you want to do high bandwith real team frame processing use specialized software such as [tranalyzer], [bro] or [DPDK].
+* [pdml2flow] is licenced under the [Apache Licence Version 2.0]
+
 
 [^1]: [RFC2722 Traffic Flow Measurement: Architecture](https://tools.ietf.org/html/rfc2722)
 [^2]: [RFC3697 IPv6 Flow Label Specification](https://tools.ietf.org/html/rfc3697)
 [^3]: [RFC3917 Requirements for IP Flow Information Export (IPFIX)](https://tools.ietf.org/html/rfc3917)
 [^4]: The stereotype of the modern geek
 [^5]: Zechariah 2:5
+[^6]: and stop doing all this nasty math
+[^7]: you cat get rid of the [tshark] packet count by running [tshark] with the ```-q``` option
 
 [tranalyzer]: https://tranalyzer.com/
 [wireshark]: https://www.wireshark.org/
+[list of display filters]: https://www.wireshark.org/docs/dfref/
+[tshark]: https://www.wireshark.org/docs/man-pages/tshark.html
 [JSON]: https://de.wikipedia.org/wiki/JavaScript_Object_Notation
 [UNIX pipes]: https://en.wikipedia.org/wiki/Pipeline_(Unix)
 [PDML]: http://ftp.tuwien.ac.at/.vhost/analyzer.polito.it/30alpha/docs/dissectors/PDMLSpec.htm
-[PDML-schema]: http://www.nbee.org/download/pdml-schema.xsd
+[PDML-schema]: /static/posts/pdml2flow/pdml-schema.xsd
 [NetPDL]: http://www.sciencedirect.com/science/article/pii/S1389128605002008
-[NetPDL-schema]: http://www.nbee.org/download/netpdl-schema.xsd
+[NetPDL-schema]: /static/posts/pdml2flow/netpdl-schema.xsd
 [pdml2flow]: https://pypi.python.org/pypi/pdml2flow/2.4
 [pdml2flow-git]: https://github.com/Enteee/pdml2flow
 [pdml2flow-travis]: https://travis-ci.org/Enteee/pdml2flow
 [pdml2flow-coveralls]: https://coveralls.io/github/Enteee/pdml2flow
+[pdml2flow-issue tracker]: https://github.com/Enteee/pdml2flow/issues
 [pip]: https://pypi.python.org/pypi/pip
 [jq]: https://stedolan.github.io/jq/
+[Apache Licence Version 2.0]: https://www.apache.org/licenses/LICENSE-2.0
+[DPDK]: http://dpdk.org/
+[bro]: https://www.bro.org/
