@@ -11,7 +11,7 @@ Quite a time ago I wrote a supplement to a network flow generator called [tranal
 * use [JSON] as its default output.
 * be compatible with [UNIX pipes].
 
-This blog post gives a brief introduction into the flow processing world then presents the script called [pdml2flow]. At last I will show a couple of real world applications of the said script. The target audience are people familiar with ip networking on the command line.
+This blog post gives a brief introduction into the flow processing world then presents the script called [pdml2flow]. At last I will show a couple of real world applications of the said script. The target audience are people familiar with IP networking on the command line.
 
 # Terminology
 
@@ -19,7 +19,7 @@ Before we start I do have to introduce and define some terms.
 
 ## Network Flows
 
-A network flow is a fuzzy term. Looking up [network flow in wikipedia](https://en.wikipedia.org/wiki/Traffic_flow_(computer_networking)) reflects this. Wikipedia quotes several RFCs[^1][^2][^3] and they all differ. But most of them share the aspect that a network flow is a set of packets having a set of attributes in common. The term emerged from the mathematical definition of a [flow network](https://en.wikipedia.org/wiki/Flow_network). This is something routing-guys at universities [^4] were looking at in order to design efficient routing algorithms. I didn't live back then but among the 10 or 20 people capable of building such networks, the flow was likely a well defined term. Later, with more sophisticated networks in place, companies wanted to have more control over what kind of traffic they are routing and how much of it. So they started building walls of fire [^5] and started shaping traffic ([QoS](https://en.wikipedia.org/wiki/Quality_of_service)). For this purpose a lot of proprietary mechanisms for flow control were developped in parallel, with the effect of washing out the term. In the pdml2flow context we use a slightly different and more generic definition of a flow:
+A network flow is a fuzzy term. Looking up [network flow in wikipedia](https://en.wikipedia.org/wiki/Traffic_flow_(computer_networking)) reflects this. Wikipedia quotes several RFCs[^1][^2][^3] and they all differ. But most of them share the aspect that a network flow is a set of packets having a set of attributes in common. The term emerged from the mathematical definition of a [flow network](https://en.wikipedia.org/wiki/Flow_network). This is something routing-guys at universities [^4] were looking at in order to design efficient routing algorithms. I didn't live back then but among the 10 or 20 people capable of building such networks, the flow was likely a well defined term. Later, with more sophisticated networks in place, companies wanted to have more control over what kind of traffic they are routing and how much of it. So they started building walls of fire [^5] and started shaping traffic ([QoS](https://en.wikipedia.org/wiki/Quality_of_service)). For this purpose a lot of proprietary mechanisms for flow control were developed in parallel, with the effect of washing out the term. In the pdml2flow context we use a slightly different and more generic definition of a flow:
 
 > A flow $$ \Xi $$ (xi) is the set of all frames $$ f $$ which are equal for a set of attributes $$ A $$ and are all in a certain proximity $$ t $$ of each other.
 
@@ -27,7 +27,7 @@ Other than the definitions mentioned so far, pdml2flow operates on frames $$ f $
 
 $$ f : \mathbb{U} \rightarrow \{\perp\} \cup \mathbb{U} $$
 
-$$ \mathbb{U} $$ deontes the set of all possible unicode strings and $$ \perp $$ the response iff an attribute is not defined. The set of all possible frames is called $$ F $$, thus $$ f \in F $$. Using an arrival time function $$ \tau $$ (tau):
+$$ \mathbb{U} $$ denotes the set of all possible Unicode strings and $$ \perp $$ the response iff an attribute is not defined. The set of all possible frames is called $$ F $$, thus $$ f \in F $$. Using an arrival time function $$ \tau $$ (tau):
 
 $$ \tau : F \rightarrow \mathbb{R} $$
 
@@ -51,7 +51,7 @@ def get_flow(F, t, A, f0):
     xi = newXi
 ```
 
-That's quite a lot of formalism. The following diagram shoud give a concrete example for a three flows scenario:
+That's quite a lot of formalism. The following diagram should give a concrete example for a three flows scenario:
 
 ![flow visualization](/static/posts/pdml2flow/flows.svg)
 *Visualization of four frames in three flows*
@@ -63,7 +63,7 @@ Note:
 
 ## PDML - Packet Details Markup Language
 
-PDML is a XML schema which can be used for describing packets. For in depth information please refer to the [PDML-specification][PDML] or the [NetPDL-paper][NetPDL]. Furthermore provides the [PDML-schema] as well as the [NetPDL-schema] a in deph implementation specification. The reason why I chose [PDML] as an input format is that [wireshark] / [tshark] does suport the [PDML] format out of the box:
+PDML is a XML schema which can be used for describing packets. For in depth information please refer to the [PDML-specification][PDML] or the [NetPDL-paper][NetPDL]. Furthermore provides the [PDML-schema] as well as the [NetPDL-schema] a in depth implementation specification. The reason why I chose [PDML] as an input format is that [wireshark] / [tshark] does support the [PDML] format out of the box:
 
 ```shell
 $ tshark -i eth0 -T pdml
@@ -73,23 +73,23 @@ $ tshark -i eth0 -T pdml
 
 ## Download, Installation and Source Code
 
-The newest version of the script can always be found in the [Python Package Index][pdml2flow]. This means intalling and updating the software using [pip] should be as simple as:
+The newest version of the script can always be found in the [Python Package Index][pdml2flow]. This means installing and updating the software using [pip] should be as simple as:
 
 ```shell
 $ sudo pip install --upgrade pdml2flow
 ```
 
-This will install three components systemwide:
+This will install three components system wide:
 
-* pdml2flow: aggregates frames to flows and converts them to either json or xml.
-* pdml2json: converts pdml frames to json.
-* pdml2xml: converts pdml frames to xml.
+* pdml2flow: aggregates frames to flows and converts them to either JSON or XML.
+* pdml2json: converts pdml frames to JSON.
+* pdml2xml: converts pdml frames to XML.
 
-The source code is hosted at [Github][pdml2flow-git] and automatically built using [Travis CI][pdml2flow-travis] and [Coveralls][pdml2flow-coveralls]. Issues are beeing tracked in the [pdml2flow-issue tracker].
+The source code is hosted at [GitHub][pdml2flow-git] and automatically built using [Travis CI][pdml2flow-travis] and [Coveralls][pdml2flow-coveralls]. Issues are being tracked in the [pdml2flow-issue tracker].
 
 ## Running it
 
-The script reads from stdin and writes to stdout, debug messages and warnings are reported to stderr. This allows for easy integration with [wireshark] / [tshark][tshark] [^7] as data generator and [jq] as post processor. Reading a `.pcap`-file is as simpe as:
+The script reads from stdin and writes to stdout, debug messages and warnings are reported to stderr. This allows for easy integration with [wireshark] / [tshark][tshark] [^7] as data generator and [jq] as post processor. Reading a `.pcap`-file is as simple as:
 
 ```shell
 $ tshark -r file.pcap -T pdml | pdml2flow
@@ -107,7 +107,7 @@ For post processing, such as pretty printing, you can further pipe stdout to [jq
 $ tshark -i eth0 -T pdml | pdml2flow | jq
 ```
 
-## Changing the Behaviour
+## Changing the Behavior
 
 [pdml2flow] has several command line options. I'll give a brief overview of the most important ones.
 
@@ -116,7 +116,7 @@ $ tshark -i eth0 -T pdml | pdml2flow | jq
 This option lets you define the attributes $$ A $$ which define a flow. Each attribute in the set must be specified using a separate ```-f``` option. The name of the attributes should match the corresponding [wireshark] display filter. The [wireshark] project maintains an exhaustive [list of display filters], but its usually easier to jump directly into [wireshark] and compile your attribute set there.
 ![wireshark-filter](/static/posts/pdml2flow/wireshark-filter-blur.png)
 *Using wireshark to find display filter names*
-Altenatively you can use the utility pdml2json in combination with [jq]. The following command captures the first 100 packets from eth0 and prints out all possible display filters.
+Alternatively you can use the utility pdml2json in combination with [jq]. The following command captures the first 100 packets from eth0 and prints out all possible display filters.
 
 ```shell
 $ tshark -i eth0 -T pdml -c 100 | pdml2json | jq -s '
@@ -150,7 +150,7 @@ Which should give you something like (incomplete):
 [...]
 ```
 
-The next command is an example application of the ```-f``` flag. When using it you will essentially get a live view of all ethernet connections on interface eth0:
+The next command is an example application of the ```-f``` flag. When using it you will essentially get a live view of all Ethernet connections on interface eth0:
 
 ```shell
 $ tshark -i eth0 -T pdml | pdml2flow -c -t 10 -f eth.dst -f eth.src | jq '.eth.addr.raw'
@@ -158,7 +158,7 @@ $ tshark -i eth0 -T pdml | pdml2flow -c -t 10 -f eth.dst -f eth.src | jq '.eth.a
 
 ### ```-t```: Flow Buffer Time
 
-This option lets you define the proximity $$ t $$. Note that in the [pdml2flow] context the arrival time function $$ \tau $$ will always yield the value of the field ```frame.time_epoch.raw```. Frames not having a ```frame.time_epoch.raw``` will be discarded. In the example above we set ```-t 10``` because most ethernet flows will have a lot of assigned frames, thus will never terminate if $$ t $$ is too big.
+This option lets you define the proximity $$ t $$. Note that in the [pdml2flow] context the arrival time function $$ \tau $$ will always yield the value of the field ```frame.time_epoch.raw```. Frames not having a ```frame.time_epoch.raw``` will be discarded. In the example above we set ```-t 10``` because most Ethernet flows will have a lot of assigned frames, thus will never terminate if $$ t $$ is too big.
 
 ### ```-c```: Compress
 
@@ -211,7 +211,7 @@ With the ```-c``` option present this will be compressed to:
 ]
 ```
 
-Note that compressen will not preserve order of the values. Which means the following ouput could also have been possible:
+Note that compressed will not preserve order of the values. Which means the following output could also have been possible:
 
 ```json
 [
@@ -228,7 +228,7 @@ Note that compressen will not preserve order of the values. Which means the foll
 ]
 ```
 
-Revisiting and expanding the example above, we get a command which will print a live view of all ethernet connections with a count of seen ip addresses within the flow.
+Revisiting and expanding the example above, we get a command which will print a live view of all Ethernet connections with a count of seen IP addresses within the flow.
 
 ```shell
 $ tshark -i eth0 -T pdml | pdml2flow -t 10 -f eth.dst -f eth.src | jq '
@@ -270,7 +270,7 @@ which will print something like:
 
 The following section should list a couple of example commands. With the goal of inspiring new users to build their own set up. If you built your own commands already, don't hesitate to share them in the comment section!
 
-* Map http uris to ip addresses requesting them.
+* Map HTTP Uris to IP addresses requesting them.
 
 ```shell
 $ tshark -i eth0 -T pdml | pdml2flow -f 'http.host' -f 'http.request.uri' | jq '
@@ -288,7 +288,7 @@ $ tshark -i eth0 -T pdml | pdml2flow -f 'http.host' -f 'http.request.uri' | jq '
   }'
 ```
 
-* Monitor tls / ssl handshakes.
+* Monitor TLS / SSL handshakes.
 
 ```shell
 $ tshark -i eth0 -T pdml | pdml2flow -s | jq '
@@ -347,8 +347,8 @@ try (
 
 # Disclaimer
 
-* [pdml2flow] was designed to be flexible. Speed was never a requirement. If you want to do high bandwith real team frame processing use specialized software such as [tranalyzer], [bro] or [DPDK].
-* [pdml2flow] is licenced under the [Apache Licence Version 2.0]
+* [pdml2flow] was designed to be flexible. Speed was never a requirement. If you want to do high bandwidth real team frame processing use specialized software such as [tranalyzer], [bro] or [DPDK].
+* [pdml2flow] is licensed under the [Apache License Version 2.0]
 
 
 [^1]: [RFC2722 Traffic Flow Measurement: Architecture](https://tools.ietf.org/html/rfc2722)
@@ -376,6 +376,6 @@ try (
 [pdml2flow-issue tracker]: https://github.com/Enteee/pdml2flow/issues
 [pip]: https://pypi.python.org/pypi/pip
 [jq]: https://stedolan.github.io/jq/
-[Apache Licence Version 2.0]: https://www.apache.org/licenses/LICENSE-2.0
+[Apache License Version 2.0]: https://www.apache.org/licenses/LICENSE-2.0
 [DPDK]: http://dpdk.org/
 [bro]: https://www.bro.org/
