@@ -12,7 +12,7 @@ body {
     font-weight: 300;
 }
 
-img {
+.post > p > img {
     width: 100%;
 }
 
