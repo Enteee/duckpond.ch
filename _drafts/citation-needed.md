@@ -10,4 +10,4 @@ Posts in this category are merely just a list of links I found particularily int
 
 * [Interactive Sudoku Zero-knowledge Proof](https://manishearth.github.io/blog/2016/08/10/interactive-sudoku-zero-knowledge-proof/)
 * [This JPEG is also a webpage](http://lcamtuf.coredump.cx/squirrel/)
-
+* [Pink light doesn't really exist](http://www.techinsider.io/pink-light-doesnt-really-exist-2015-8)
