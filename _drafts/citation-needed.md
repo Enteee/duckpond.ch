@@ -16,3 +16,4 @@ Posts in this category are merely just a list of links I found particularily int
 * [Big O cheat sheet](http://bigocheatsheet.com/)
 * [Big O is not everything](https://jackmott.github.io/programming/2016/08/20/when-bigo-foolsya.html)
 * [We Tame Lions selease their first album](https://soundcloud.com/user-556093465-257341533)
+* [Pink light doesn't really exist](http://www.techinsider.io/pink-light-doesnt-really-exist-2015-8)
