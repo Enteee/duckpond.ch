@@ -7,7 +7,7 @@ categories: [security]
 
 ## Key derivation
 
-This step is for verification purpose only. I want to derive the master secret $$ k $$ from the pre master secret $$ k_{0} $$ in order to check that I did everything right. The agreed master secret $$ k $$ is beeing printed when running s_client:
+This step is for verification purpose only. I want to derive the master secret $$ k $$ from the pre master secret $$ k_{0} $$ in order to check that I did everything right. The agreed master secret $$ k $$ is being printed when running s_client:
 
 ```python
 In : k = 0x403247e9625be70e2ac4076297b48a18178696404fc7ffcd924ecaa5628fdba049dfbd4170f65acbc6a84aa18696144a
