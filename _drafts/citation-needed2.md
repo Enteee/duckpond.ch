@@ -8,3 +8,4 @@ keywords: [zkp jpeg]
 
 Posts in this category are merely just a list of links I found particularily interesting.
 
+* [When you change the world and no one notices](http://www.collaborativefund.com/blog/when-you-change-the-world-and-no-one-notices/)
