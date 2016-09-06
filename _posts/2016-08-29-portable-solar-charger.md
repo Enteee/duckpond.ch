@@ -1,7 +1,7 @@
 ---
 layout: post
 categories: [meta]
-keywords: [English manual]
+keywords: [english, manual]
 ---
 
 A friend of mine just showed me the following "manuel" and I thought it's worth sharing.

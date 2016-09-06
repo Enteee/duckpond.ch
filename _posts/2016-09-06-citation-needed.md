@@ -1,7 +1,7 @@
 ---
 layout: post
 categories: [citation needed]
-keywords: [zkp jpeg climate change isometric cadavers big o album pink philea antibiotic]
+keywords: [zkp, jpeg, climate change, isometric boxes, cadavers, big o, album, pink, philea, antibiotic]
 ---
 
 ![citation-needed](/static/posts/citation-needed/xkcd_protester.png)
