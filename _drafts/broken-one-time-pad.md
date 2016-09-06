@@ -1,7 +1,7 @@
 ---
 layout: post
-categories: [security math]
-keywords: [one time pad otp]
+categories: [security, math]
+keywords: [one time pad, otp]
 ---
 
 There are many mistakes to be made when implementing crypto. So let's make a couple, abuse them and learn:
