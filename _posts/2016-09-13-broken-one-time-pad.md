@@ -10,8 +10,7 @@ There are many mistakes to be made when implementing crypto. So let's make some,
 
 I keep forgetting the key to [my bitcoin wallet](https://blockchain.info/address/1LdtdP1qHWU9hQbjAX3U64MxYV7ABDEyy5).
 
-{:.dontstretch}
-![QR-Code wallet](/static/posts/broken-one-time-pad/wallet.png).
+![QR-Code wallet](/static/posts/broken-one-time-pad/wallet.png){: .dontstretch }
 *My bitcoin wallet*
 
 So I saved my key as a [QR-Code]. Converted it to a [PNG]. [base64] encoded the [PNG], and set up the following service:
