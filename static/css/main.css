@@ -12,6 +12,12 @@ body {
     font-weight: 300;
 }
 
+img.dontstretch {
+    display: block;
+    margin: auto;
+    width: auto;
+}
+
 .post > p > img {
     width: 100%;
 }
@@ -25,12 +31,6 @@ img + em {
 
 img + em::first-letter {
     font-weight: bold;
-}
-
-img.dontstretch {
-    display: block;
-    margin: auto;
-    width: auto;
 }
 
 hr {
