@@ -4,7 +4,7 @@ categories: [security, math]
 keywords: [one time pad, broken, challenge]
 ---
 
-There are many mistakes to be made when implementing crypto. So let's make some, abuse them and learn:
+There are many mistakes to be made when implementing crypto. So let's make some, abuse them and learn.
 
 # Broken One-Time-Pad
 
