@@ -27,6 +27,12 @@ img + em::first-letter {
     font-weight: bold;
 }
 
+.dontstretch img {
+    display: block;
+    margin: auto;
+    width: auto;
+}
+
 hr {
     margin-top: 20px;
     margin-bottom: 20px;
