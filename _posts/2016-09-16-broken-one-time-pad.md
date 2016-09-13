@@ -68,9 +68,10 @@ if __name__ == "__main__":
     main()
 ```
 
-Now I can connect via TCP to [duckpond.ch:8888](duckpond.ch:8888) and retrieve my key. As safe as it gets! [^1]
+Now I can connect via TCP to [duckpond.ch:8888](duckpond.ch:8888) and retrieve my key. As safe as it gets! [^1][^2]
 
 [^1]: Keep the money if you can break it.
+[^2]: Please share your solution in the comment section.
 
 [QR-Code]:https://de.wikipedia.org/wiki/QR-Code
 [PNG]:https://en.wikipedia.org/wiki/Portable_Network_Graphics
