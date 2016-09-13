@@ -6,7 +6,7 @@ keywords: [one time pad, broken, challenge]
 
 There are many mistakes to be made when implementing crypto. So let's make some, abuse them and learn:
 
-# Broken one time pad
+# Broken One-Time-Pad
 
 I keep forgetting the key to [my bitcoin wallet](https://blockchain.info/address/1LdtdP1qHWU9hQbjAX3U64MxYV7ABDEyy5).
 
@@ -70,7 +70,7 @@ if __name__ == "__main__":
 
 Now I can connect via TCP to [duckpond.ch:8888](duckpond.ch:8888) and retrieve my key. As safe as it gets! [^1]
 
-[^1]: Feel free to Keep the money if you can break it.
+[^1]: Keep the money if you can break it.
 
 [QR-Code]:https://de.wikipedia.org/wiki/QR-Code
 [PNG]:https://en.wikipedia.org/wiki/Portable_Network_Graphics
