@@ -12,14 +12,14 @@ body {
     font-weight: 300;
 }
 
-img.dontstretch {
+.post > p > img {
+    width: 100%;
+}
+
+.post > p > img.dontstretch {
     display: block;
     margin: auto;
     width: auto;
-}
-
-.post > p > img {
-    width: 100%;
 }
 
 img + em {
