@@ -42,6 +42,14 @@ services:
             backbone:
                 aliases:
                     - isso
+    challenges:
+        build: challenges
+        ports:
+            - 8888:8888
+        networks:
+            backbone:
+                aliases:
+                    - challenges
 
 networks:
     backbone:
