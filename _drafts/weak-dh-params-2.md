@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Weak Diffie-Hellman Parameters - 2"
+title:  "Weak Diffie-Hellman Parameters 2"
 keywords: [diffie-hellman parameters, logjam]
 categories: [security]
 ---
