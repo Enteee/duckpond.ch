@@ -15,3 +15,4 @@ Posts in this category are merely just a list of links I found particularily int
 * [Someone is learning how to take down the internet](https://www.schneier.com/blog/archives/2016/09/someone_is_lear.html)
 * [Implementing full text search in PostgreSQL](https://www.postgresql.org/docs/8.3/static/textsearch.html)
 * [How Reddit ranking algorithms work](https://medium.com/hacking-and-gonzo/how-reddit-ranking-algorithms-work-ef111e33d0d9)
+* [Original Apollo 11 guidance computer (AGC) source code](https://github.com/chrislgarry/Apollo-11)
