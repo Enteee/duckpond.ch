@@ -1,5 +1,6 @@
 ---
 layout: post
+title: "Broken One-time pad"
 categories: [security, math]
 keywords: [one time pad, broken, challenge]
 ---
