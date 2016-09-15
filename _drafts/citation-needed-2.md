@@ -16,3 +16,4 @@ Posts in this category are merely just a list of links I found particularily int
 * [Implementing full text search in PostgreSQL](https://www.postgresql.org/docs/8.3/static/textsearch.html)
 * [How Reddit ranking algorithms work](https://medium.com/hacking-and-gonzo/how-reddit-ranking-algorithms-work-ef111e33d0d9)
 * [Original Apollo 11 guidance computer (AGC) source code](https://github.com/chrislgarry/Apollo-11)
+* [An introduction to mathematical cryptography](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.182.9999)
