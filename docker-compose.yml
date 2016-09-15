@@ -1,0 +1,67 @@
+version: '2'
+
+services:
+    jekyll:
+        build: ${CONTAINER_DIR}/jekyll
+        volumes:
+            - ./:/src:ro
+            - www:/www:rw
+            - www-dev:/www-dev:rw
+    nginx-http:
+        image: nginx
+        ports:
+            - 80:80
+            - 8080:8080
+        volumes:
+            - ${CONTAINER_DIR}/nginx-http/conf.d/:/etc/nginx/conf.d:ro
+            - ${CONTAINER_DIR}/nginx-http/htpasswd:/etc/nginx/.htpasswd:ro
+            - ${CONTAINER_DIR}/letsencrypt.sh/etc/.acme-challenges/:/usr/share/nginx/letsencrypt/.well-known/acme-challenge:ro
+            - www-dev:/usr/share/nginx/html:ro
+        networks:
+            backbone:
+                aliases:
+                    - nginx-http
+    nginx-https:
+        build: ${CONTAINER_DIR}/nginx-https
+        ports:
+            - 443:443
+        volumes:
+            - ${CONTAINER_DIR}/nginx-https/conf.d/:/etc/nginx/conf.d:ro
+            - ${CONTAINER_DIR}/letsencrypt.sh/etc/certs:/certs:ro
+            - www:/usr/share/nginx/html:ro
+        networks:
+            backbone:
+                aliases:
+                    - duckpond.ch
+                    - nginx-https
+#    letsencrypt:
+#        build: ${CONTAINER_DIR}/letsencrypt.sh
+#        volumes:
+#            - ${CONTAINER_DIR}/letsencrypt.sh/etc:/etc/letsencrypt.sh:rw
+#        user: $UID
+    isso:
+        build: ${CONTAINER_DIR}/isso
+        environment:
+            - GID=1000
+            - UID=1000
+        volumes:
+            - ${CONTAINER_DIR}/isso/config:/config
+            - ${CONTAINER_DIR}/isso/db:/db
+        networks:
+            backbone:
+                aliases:
+                    - isso
+    challenges:
+        build: ${CONTAINER_DIR}/challenges
+        ports:
+            - 8888:8888
+        networks:
+            backbone:
+                aliases:
+                    - challenges
+volumes:
+    www:
+    www-dev:
+
+networks:
+    backbone:
