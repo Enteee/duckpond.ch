@@ -9,7 +9,7 @@ OUT_WWW_DEV="/www-dev"
 OUT_WWW="/www"
 
 # build www-dev
-git clone -b dev "${SRC}" "${TMP_WWW_DEV}"
+cp -r "${SRC}" "${TMP_WWW_DEV}"
 chown jekyll:jekyll "${OUT_WWW_DEV}"
 jekyll build --drafts -s "${TMP_WWW_DEV}" -d "${OUT_WWW_DEV}"
 rm -rf "${TMP_WWW_DEV}"

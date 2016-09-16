@@ -34,11 +34,11 @@ services:
                 aliases:
                     - duckpond.ch
                     - nginx-https
-#    letsencrypt:
-#        build: ${CONTAINER_DIR}/letsencrypt.sh
-#        volumes:
-#            - ${CONTAINER_DIR}/letsencrypt.sh/etc:/etc/letsencrypt.sh:rw
-#        user: $UID
+    letsencrypt:
+        build: ${CONTAINER_DIR}/letsencrypt.sh
+        volumes:
+            - ${CONTAINER_DIR}/letsencrypt.sh/etc:/etc/letsencrypt.sh:rw
+        user: $UID
     isso:
         build: ${CONTAINER_DIR}/isso
         environment:

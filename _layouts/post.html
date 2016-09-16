@@ -9,6 +9,19 @@ layout: default
 </span>
 {% endif %}
 
+{% assign intro = content | strip_html | strip_newlines | split: '.' | first %}
+{% assign title = page.title | append: ': ' | append: intro | strip_html | strip_newlines | truncate: 140 | uri_escape %}
+{% assign url = site.url | append: page.url | uri_escape %}
+{% assign tags = page.keywords | join: ', ' | uri_escape %}
+<div class="social-media">
+    <a class="reddit" href="https://www.reddit.com/submit?title={{ title }}&url={{ url }}">
+        {% include img/reddit.svg %}
+    </a>
+    <a class="twitter" href="https://twitter.com/intent/tweet?text={{ title }}&url={{ url }}&hashtags={{ tags }}">
+        {% include img/twitter.svg %}
+    </a>
+</div>
+
 <div class="content">
     <div class="post">{{ content }}</div>
 </div>
