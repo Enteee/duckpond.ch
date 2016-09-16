@@ -2,7 +2,7 @@
 layout: post
 title: "Broken One-time pad"
 categories: [security, math]
-keywords: [one time pad, broken, challenge]
+keywords: [one-time pad, challenge]
 ---
 
 There are many mistakes to be made when implementing crypto. So let's make some, abuse them and learn.
