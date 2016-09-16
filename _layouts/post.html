@@ -13,11 +13,12 @@ layout: default
 {% assign title = page.title | append: ': ' | append: intro | strip_html | strip_newlines | truncate: 140 | uri_escape %}
 {% assign url = site.url | append: page.url | uri_escape %}
 {% assign tags = page.keywords | join: ', ' | uri_escape %}
+{% assign via = site.twitter | uri_escape %}
 <div class="social-media">
     <a class="reddit" href="https://www.reddit.com/submit?title={{ title }}&url={{ url }}">
         {% include img/reddit.svg %}
     </a>
-    <a class="twitter" href="https://twitter.com/intent/tweet?text={{ title }}&url={{ url }}&hashtags={{ tags }}">
+    <a class="twitter" href="https://twitter.com/intent/tweet?text={{ title }}&url={{ url }}&hashtags={{ tags }}&via={{ via }}">
         {% include img/twitter.svg %}
     </a>
 </div>
