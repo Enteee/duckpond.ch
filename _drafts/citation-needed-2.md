@@ -17,3 +17,4 @@ Posts in this category are merely just a list of links I found particularily int
 * [How Reddit ranking algorithms work](https://medium.com/hacking-and-gonzo/how-reddit-ranking-algorithms-work-ef111e33d0d9)
 * [Original Apollo 11 guidance computer (AGC) source code](https://github.com/chrislgarry/Apollo-11)
 * [An introduction to mathematical cryptography](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.182.9999)
+* [Extremely well made videos about all sorf of engineering topics](https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg)
