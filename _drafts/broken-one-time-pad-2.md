@@ -18,18 +18,18 @@ The [broken one-time pad] was solved. On reddit a user called svvw [claimed to b
 
 In this post I'll first try to reconstruct svvw's solution, then present my own. At the end we'll fix the found issues in the [broken one-time pad] and restart the challenge.
 
-# Notation And Mental Image
+# Notation And Visualization
 
 The message stream $$ m $$ equals the repeated [base64] encoded [PNG] image. The pad stream $$ k $$ reassembles a key stream. The XOR of both streams is the resulting ciphertext stream $$ c = m \oplus p $$. The streams are all chunked and indexed in bytes. E.g. $$ m_{3} $$ is the third byte in the message stream. The streams repeat themselves after $$ \vert m \vert $$, respectively $$ \vert k \vert $$ bytes. In general $$ \vert m \vert \neq \vert k \vert $$ which means after every repetition of the shorter, they are shifted by $$ \DeclareMathOperator{\abs}{abs} s = abs( \vert m \vert - \vert k \vert ) $$ bytes. Importatnt to note is that the two streams always line up after $$ \DeclareMathOperator{\lcm}{lcm} \vert c \vert = \lcm(\vert m \vert, \vert k \vert) $$ bytes.
 
-Variants of the following graphic are used to visualize the two streams..
+Variants of the following graphic are used to visualize the two streams. The outer ring represents the key stream $$ k $$. The inner the message stream $$ m $$. The upper right corner magnifies a section of the two rings.
 
 ![repeating pad](/static/posts/broken-one-time-pad-2/repeating_pad.svg)
-*Graphic to keep in mind*
+*The two cyclic streams aligned*
 
 # svvw's Solution
 
-First things first, [broken one-time pad] should implement an [one-time pad]. [^1] Due to the broken nature of the implementation it becomes similar to a [Vigenerer cipher]. Nevertheless cryptoanalysis techniques working on [Vigenerer cipher]s will will mostly work on the [broken one-time pad], [^2]
+First things first, [broken one-time pad] should implement an [one-time pad]. [^1] Due to the broken nature of the implementation it becomes similar to a [Vigenerer cipher]. Cryptoanalysis techniques working on [Vigenerer cipher]s will will mostly work on the [broken one-time pad]. [^2]
 
 Let's get started reconstructing svvw's solution.
 
@@ -42,18 +42,18 @@ because $$ \vert k \vert = 1024 \cdot 100 $$ (from python implementation).
 
 > ... such that each character in block i was encrypted with key-byte i. This means we can simply look for each key-byte separately.
 
-For $$ i = 1 $$ this would correspond to the red lines in the following graphic:
+For $$ i = 1 $$ this would correspond to the red lines in the following visualization:
 
 ![repeating pad](/static/posts/broken-one-time-pad-2/repeating_pad_ieq1.svg)
 *e.g. $$ i = 1 $$*
 
 > When assessing whether or not some byte k could be a key-byte, one simply checks that only valid base64 characters ...
 
-With $$ M $$ as the set of valid message characters:
+With $$ M $$ as the set of valid base64 characters,
 
 $$ M = \{ 'a', 'b', 'c', \dots, 'A', 'B', 'C', \dots, '+', '/', '='\} $$
 
-Every byte in $$ m $$ has to be a character from $$ M $$. 
+every byte in $$ m $$ has to be a character from $$ M $$. 
 
 $$ \forall_{j \in \mathbb{N}} m_{j} \in M $$
 
@@ -90,7 +90,7 @@ def guess_k_i(i):
             yield candidate
 ```
 
-We could now get $$ k $$ like this:
+We could now get $$ k $$
 
 ```python
 K = [ [ k for k in guess_k_i(i) ] for i in range(K_REPEAT) ]
