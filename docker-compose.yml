@@ -55,6 +55,9 @@ services:
         build: ${CONTAINER_DIR}/challenges
         ports:
             - 8888:8888
+            - 8889:8889
+        volumes:
+            - /dev/zero:/dev/urandom
         networks:
             backbone:
                 aliases:

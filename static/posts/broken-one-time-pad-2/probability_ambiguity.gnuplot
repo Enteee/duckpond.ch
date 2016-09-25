@@ -7,7 +7,7 @@ set style data pm3d
 set style function pm3d
 set ticslevel 0
 
-set title "Probability for an ambiguity"
+set title 'Probability for an ambiguity in k_i'
 
 set xlabel 'possible characters : size of M'
 set xrange [ 0 : 256 ] noreverse nowriteback
@@ -23,4 +23,5 @@ set palette rgbformulae 30, 31, 32
 set terminal svg size 350,262 fname 'Verdana' fsize 10
 set output 'probability_ambiguity.svg'
 
+set key off
 splot (x/256)**y

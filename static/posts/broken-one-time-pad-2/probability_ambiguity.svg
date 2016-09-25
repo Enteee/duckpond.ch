@@ -45,7 +45,7 @@
 </g>
 <g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
 	<g transform="translate(175.0,36.2)" stroke="none" fill="black" font-family="Verdana" font-size="10.00"  text-anchor="middle">
-		<text><tspan font-family="Verdana" >Probability for an ambiguity</tspan></text>
+		<text><tspan font-family="Verdana" >Probability for an ambiguity in k</tspan><tspan font-family="Verdana"  font-size="8.0" dy="3.00px">i</tspan><tspan font-size="10.0" dy="-3.00"></tspan></text>
 	</g>
 </g>
 	<g id="gnuplot_plot_1" ><title>gnuplot_plot_1</title>
@@ -9852,9 +9852,6 @@
 		<polygon fill = 'rgb(  0,   0,   0)' points = '55.1,56.6 55.1,55.0 57.7,55.0 57.7,56.6 '/>
 		<polygon fill = 'rgb(  0,   0,   0)' points = '52.6,56.6 52.6,55.0 55.1,55.0 55.1,56.6 '/>
 		<polygon fill = 'rgb(  0,   0,   0)' points = '50.1,56.6 50.1,55.0 52.6,55.0 52.6,56.6 '/>
-	<g transform="translate(242.9,73.7)" stroke="none" fill="black" font-family="Verdana" font-size="10.00"  text-anchor="end">
-		<text>(x/256)**y</text>
-	</g>
 	</g>
 </g>
 <g fill="none" color="white" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
