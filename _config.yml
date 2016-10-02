@@ -9,7 +9,7 @@ urls:
     - text: About
       url: /about/
     - text: Issues
-      url: https://github.com/Enteee/Enteee.github.io/issues
+      url: https://github.com/Enteee/duckpond.ch/issues
     - text: Atom-feed
       url: /feed.xml
 url: "https://duckpond.ch"

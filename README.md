@@ -1,7 +1,7 @@
 # Duckpond
 
 * [https://www.duckpond.ch](https://www.duckpond.ch)
-* [Testbed](https://Enteee.github.io)
+* [Testbed](http://duckpond.ch:8080), user: ente  pw: gggggg
 
 ## Credits
 
