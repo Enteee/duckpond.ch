@@ -5,7 +5,7 @@ DIR=$(dirname $0)
 DEVELOP=false
 WATCH=false
 
-while getopts "wd" opt; do
+while getopts "wdh" opt; do
   case $opt in
     d)
       DEVELOP=true
@@ -13,8 +13,20 @@ while getopts "wd" opt; do
     w)
       WATCH=true
       ;;
+    h)
+      cat<<EOF
+$0: run the blog
+
+Options:
+  -h    print this help
+  -w    watch dir & update automatically
+  -d    develop mode
+EOF
+      exit
+      ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
+      exit 1
       ;;
   esac
 done

@@ -20,7 +20,7 @@ layout: default
 {% assign tags_raw = '' %}
 {% assign tags_size = 0 %}
 {% for tag in page.keywords %}
-    {% assign tag_final = tag | strip_html | strip_newlines | replace: ' ', '_' %}
+    {% assign tag_final = tag | strip_html | strip_newlines | replace: ' ', '_' | strip %}
     {% assign tag_size = tag_final | size %}
     {% assign tags_size = tags_size | plus: tag_size | plus: 2 %}
     {% if tags_size > 30 %}
@@ -35,8 +35,8 @@ layout: default
 {% assign tags = tags_raw | uri_escape %}
 {% assign chars_left = chars_left | minus: tags_size %}
 
-{% assign intro = content | strip_html | strip_newlines | replace: ',', '.' | replace: '!', '.' | replace: ':', '\.' | replace '?', '\.' | split: '.' | first %}
-{% assign title = page.title | append: ': ' | append: intro | strip_html | strip_newlines | truncate: chars_left | uri_escape %}
+{% assign intro = content | strip_html | strip_newlines | replace: ',', '.' | replace: '!', '.' | replace: ':', '\.' | replace '?', '\.' | split: '.' | first | strip %}
+{% assign title = page.title | append: ': ' | append: intro | strip_html | strip_newlines | truncate: chars_left | uri_escape | strip%}
 
 <div class="social-media">
     <a class="reddit" href="https://www.reddit.com/submit?title={{ title }}&url={{ url }}">
