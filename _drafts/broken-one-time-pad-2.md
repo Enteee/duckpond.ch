@@ -16,7 +16,7 @@ The [broken one-time pad] was solved. On reddit a user called svvw [claimed to b
 > Putting it all together (obtaining the QR code and so on) was done with python + some command line tools.
 > I'll try and write a little more detailed description later, a long with the code I wrote to solve it.
 
-A more detailed writeup can be found on [github](https://github.com/potater/broken-one-time-pad). Thank you for sharing the idea to your solution svvw. 
+A more detailed write up can be found on [github](https://github.com/potater/broken-one-time-pad). Thank you for sharing the idea to your solution svvw. 
 
 In this post I'll first try to reconstruct svvw's solution, then present my own. At the end we'll fix the found issues in the [broken one-time pad] and restart the challenge.
 
@@ -31,9 +31,9 @@ Variants of the following graphic are used to visualize the two streams. The out
 
 # svvw's solution
 
-First things first, [broken one-time pad] should implement an [one-time pad]. [^1] Due to the broken nature of the implementation it becomes similar to a [Vigenerer cipher]. Cryptoanalysis techniques working on [Vigenerer cipher]s will mostly work on the [broken one-time pad]. [^2]
+First things first, [broken one-time pad] should implement an [one-time pad]. [^1] Due to the broken nature of the implementation it becomes similar to a [Vigenerer cipher]. Cryptanalysis techniques working on [Vigenerer cipher]s will mostly work on the [broken one-time pad]. [^2]
 
-But now let's get started reconstructing svvw's solution. First we've to find out $$ \vert c \vert $$. From the visualization we can derive that $$ \DeclareMathOperator{\lcm}{lcm} \vert c \vert = \lcm(\vert m \vert, \vert k \vert) $$, which is excatly as many bytes as we'll get from the server. [^3] Thus, obtaining $$ \vert c \vert $$ is as simple as
+But now let's get started reconstructing svvw's solution. First we've to find out $$ \vert c \vert $$. From the visualization we can derive that $$ \DeclareMathOperator{\lcm}{lcm} \vert c \vert = \lcm(\vert m \vert, \vert k \vert) $$, which is exactly as many bytes as we'll get from the server. [^3] Thus, obtaining $$ \vert c \vert $$ is as simple as
 
 ```
 $ nc duckpond.ch 8888 | wc -c
@@ -196,7 +196,7 @@ and with the observation from above
 ![repeating pad](/static/posts/broken-one-time-pad-2/repeating_pad_xor.svg)
 *e.g. $$ m^{'}_{1} = (k_{1} \oplus m_{1}) \oplus (k_{1} \oplus m_{1+s}) $$*
 
-We lack only one last piece of information: $$ \vert m \vert $$. Once we notice that $$ \vert m \vert = \vert m^{'} \vert $$, we can write a python script which searches for repeating sublists in $$ m^{'} $$ and derive $$ \vert m \vert $$ accordingly.
+We lack only one last piece of information: $$ \vert m \vert $$. Once we notice that $$ \vert m \vert = \vert m^{'} \vert $$, we can write a python script which searches for repeating sub lists in $$ m^{'} $$ and derive $$ \vert m \vert $$ accordingly.
 
 ```python
 from math import floor
@@ -228,7 +228,7 @@ M_REPEAT = next(len(i) for i in sublists(M_XOR_M))
 SHIFT = K_REPEAT % M_REPEAT 
 ```
 
-There's a [PNG] insde the stream, which starts with `0x89504e470d0a1a0a`, this means we can break the cipher with a known-plaintext attack on $$ m^{'} $$.
+There's a [PNG] inside the stream, which starts with `0x89504e470d0a1a0a`, this means we can break the cipher with a known-plaintext attack on $$ m^{'} $$.
 
 ```python
 from base64 import b64encode
@@ -249,9 +249,11 @@ M = bytearray(M).decode("ascii")
 
 # Mitigation
 
+The cipher is called **ONE**-time pad. Which means the pad should only be used once! [^4] The mitigation of all these problems is as simple as not reusing the key stream.
 
+# Key as a service 2
 
-# Key as a service
+The key to [my new bitcoint wallet]() can be downloaded by a simple `duckpond.ch 8889`.
 
 ```python
 #!/usr/bin/env python3
@@ -291,11 +293,13 @@ if __name__ == "__main__":
     main()
 ```
 
+Can you break it? Btw, the [challenges can be found on github](https://github.com/Enteee/Enteee.github.io/tree/master/_env/challenges).
 
 
 [^1]:Captain obvious speaking
 [^2]:That makes me wonder if somebody already sampled relative character frequencies of [base64] encoded [PNG] images.
 [^3]:[Coincidence?](https://www.youtube.com/watch?v=Ssnw2GA657s)
+[^4]:It's getting late..
 
 [broken one-time pad]:https://duckpond.ch/security/math/2016/09/15/broken-one-time-pad.html
 [one-time pad]:https://en.wikipedia.org/wiki/One-time_pad
