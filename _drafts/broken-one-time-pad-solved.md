@@ -31,7 +31,7 @@ Variants of the following graphic are used to visualize the two streams. The out
 
 # svvw's solution
 
-First things first, [broken one-time pad] should implement an [one-time pad]. [^1] Due to the broken nature of the implementation it becomes similar to a [Vigenerer cipher]. Cryptanalysis techniques working on [Vigenerer cipher]s will mostly work on the [broken one-time pad]. [^2]
+First things first, [broken one-time pad] should implement a [one-time pad]. [^1] Due to the broken nature of the implementation it becomes similar to a [Vigenerer cipher]. Cryptanalysis techniques working on [Vigenerer cipher]s will mostly work on the [broken one-time pad]. [^2]
 
 But now let's get started reconstructing svvw's solution. First we've to find out $$ \vert c \vert $$. From the visualization we can derive that $$ \DeclareMathOperator{\lcm}{lcm} \vert c \vert = \lcm(\vert m \vert, \vert k \vert) $$, which is exactly as many bytes as we'll get from the server. [^3] Thus, obtaining $$ \vert c \vert $$ is as simple as
 
