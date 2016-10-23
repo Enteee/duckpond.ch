@@ -258,7 +258,6 @@ The cipher is called **ONE**-time pad. Which means the pad should only be used o
 [^4]:It's getting late..
 
 [broken one-time pad]:{% post_url 2016-09-15-broken-one-time-pad %}
-[broken one-time pad 2]:{% post_url broken-one-time-pad 2 %}
 [one-time pad]:https://en.wikipedia.org/wiki/One-time_pad
 [Vigenerer cipher]:https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher
 
