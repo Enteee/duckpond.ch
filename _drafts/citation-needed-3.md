@@ -9,3 +9,7 @@ keywords: []
 * [A tool for visualizing the connections between Wikipedia pages](http://luke.deentaylor.com/wikipedia/)
 * [Matplotlib: Choosing Colormaps](http://matplotlib.org/users/colormaps.html)
 * [Chaos Monkey randomly terminates virtual machine instances and containers that run inside of your production environment](https://github.com/netflix/chaosmonkey)
+* [Capturing packets in Linux at a speed of millions of packets per second without using third party libraries](http://kukuruku.co/hub/nix/capturing-packets-in-linux-at-a-speed-of-millions-of-packets-per-second-without-using-third-party-libraries)
+* [Splix.io is an online multplayer game where you have to conquer as much land as possible and become the biggest of them all](http://splix.io/)
+* [Zooids: Building blocks for swarm user interfaces \ extended material](https://github.com/ShapeLab/SwarmUI)
+* [vlany, Linux (LD_PRELOAD) rootkit](https://github.com/mempodippy/vlany)
