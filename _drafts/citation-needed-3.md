@@ -11,4 +11,7 @@ keywords: []
 * [Chaos Monkey randomly terminates virtual machine instances and containers that run inside of your production environment](https://github.com/netflix/chaosmonkey)
 * [Personal Rapid Transit (PRT)](http://assets.slate.wvu.edu/resources/1610/1406301617.pdf)
 * [Python 3.x rounding behavior](http://stackoverflow.com/questions/10825926/python-3-x-rounding-behavior)
-
+* [Capturing packets in Linux at a speed of millions of packets per second without using third party libraries](http://kukuruku.co/hub/nix/capturing-packets-in-linux-at-a-speed-of-millions-of-packets-per-second-without-using-third-party-libraries)
+* [Splix.io is an online multplayer game where you have to conquer as much land as possible and become the biggest of them all](http://splix.io/)
+* [Zooids: Building blocks for swarm user interfaces \ extended material](https://github.com/ShapeLab/SwarmUI)
+* [vlany, Linux (LD_PRELOAD) rootkit](https://github.com/mempodippy/vlany)
