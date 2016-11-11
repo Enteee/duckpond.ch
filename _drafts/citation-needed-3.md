@@ -15,3 +15,4 @@ keywords: []
 * [Splix.io is an online multplayer game where you have to conquer as much land as possible and become the biggest of them all](http://splix.io/)
 * [Zooids: Building blocks for swarm user interfaces \ extended material](https://github.com/ShapeLab/SwarmUI)
 * [vlany, Linux (LD_PRELOAD) rootkit](https://github.com/mempodippy/vlany)
+* [How a dead duck changed my life](https://www.ted.com/talks/kees_moeliker_how_a_dead_duck_changed_my_life)
