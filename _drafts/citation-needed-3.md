@@ -16,3 +16,6 @@ keywords: []
 * [Zooids: Building blocks for swarm user interfaces \ extended material](https://github.com/ShapeLab/SwarmUI)
 * [vlany, Linux (LD_PRELOAD) rootkit](https://github.com/mempodippy/vlany)
 * [How a dead duck changed my life](https://www.ted.com/talks/kees_moeliker_how_a_dead_duck_changed_my_life)
+* [Inspecting C's qsort through animation](http://nullprogram.com/blog/2016/09/05/)
+* [TB-303 Synth, Drum Machine and Sequencer](http://www.errozero.co.uk/acid-machine/)
+* [Why does calloc exist?](https://vorpus.org/blog/why-does-calloc-exist/)
