@@ -22,3 +22,4 @@ keywords: []
 * [Godaddy has issued at least 8850 SSL certificates without validating anything](https://groups.google.com/forum/?hl=en#!msg/mozilla.dev.security.policy/Htujoyq-pO8/uRBcS2TmBQAJ)
 * [Lecture Notes on Randomized Linear Algebra](https://arxiv.org/abs/1608.04481v1)
 * [The Security Impact of HTTPS Interception](https://jhalderm.com/pub/papers/interception-ndss17.pdf)
+* [Does it scale? Who cares!](https://jacquesmattheij.com/does-it-scale-who-cares)
