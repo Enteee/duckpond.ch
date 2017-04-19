@@ -1,7 +1,7 @@
 ---
 layout: post
 categories: [citation needed]
-keywords: []
+keywords: [wikipedia, matplotlib, chaos monkey, prt, rounding, networking, game, rootkit, duck, C, algebra, scaling]
 ---
 
 ![citation-needed](/static/posts/citation-needed/xkcd_protester.png)
