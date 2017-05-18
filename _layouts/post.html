@@ -9,6 +9,44 @@ layout: default
 </span>
 {% endif %}
 
+{% assign chars_left = 140 %}
+
+{% assign url = site.url | append: page.url | uri_escape %}
+{% assign chars_left = chars_left | minus: 24 %}
+
+{% assign via = site.twitter | uri_escape %}
+{% assign chars_left = chars_left | minus: 16 %}
+
+{% assign tags_raw = '' %}
+{% assign tags_size = 0 %}
+{% for tag in page.keywords %}
+    {% assign tag_final = tag | strip_html | strip_newlines | replace: ' ', '_' | strip %}
+    {% assign tag_size = tag_final | size %}
+    {% assign tags_size = tags_size | plus: tag_size | plus: 2 %}
+    {% if tags_size > 30 %}
+        {% break %}
+    {% endif %}
+    {% if forloop.first == true %}
+        {% assign tags_raw = tags_raw | append: tag_final %} 
+    {% else %}
+        {% assign tags_raw = tags_raw | append: ',' | append: tag_final %} 
+    {% endif %}
+{% endfor %}
+{% assign tags = tags_raw | uri_escape %}
+{% assign chars_left = chars_left | minus: tags_size %}
+
+{% assign intro = content | strip_html | strip_newlines | replace: ',', '.' | replace: '!', '.' | replace: ':', '\.' | replace '?', '\.' | split: '.' | first | strip %}
+{% assign title = page.title | append: ': ' | append: intro | strip_html | strip_newlines | truncate: chars_left | uri_escape | strip%}
+
+<div class="social-media">
+    <a class="reddit" href="https://www.reddit.com/submit?title={{ title }}&url={{ url }}">
+        {% include img/reddit.svg %}
+    </a>
+    <a class="twitter" href="https://twitter.com/intent/tweet?text={{ title }}&url={{ url }}&hashtags={{ tags }}&via={{ via }}">
+        {% include img/twitter.svg %}
+    </a>
+</div>
+
 <div class="content">
     <div class="post">{{ content }}</div>
 </div>

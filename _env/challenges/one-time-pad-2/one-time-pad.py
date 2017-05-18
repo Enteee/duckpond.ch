@@ -28,8 +28,6 @@ def main():
         # accept connections on socket
         (clientsocket, address) = serversocket.accept()
         print('Client connected {}'.format(address))
-        random.seed()
-        print(random.getstate())
         sys.stdout.flush()
         thread = Thread(target = client_thread, args = (clientsocket, ))
         thread.start()

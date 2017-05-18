@@ -173,14 +173,35 @@ a:hover {
     background-color: transparent;
 }
 
-/**
- * /////////////////
- * Container element
- * /////////////////
- */
 div#container {
     width: 700px;
     margin: auto;
+}
+
+/**
+ * ////
+ * Logo
+ * ////
+ */
+
+.logo svg {
+    width: 106px;
+    height: 90px;
+}
+
+/**
+ * /////////////////////
+ * Social media buttons
+ * ////////////////////
+ */
+div.social-media {
+    float: right;
+}
+
+div.social-media svg {
+    width: 1.5em;
+    height: 1.5em;
+    
 }
 
 /**
