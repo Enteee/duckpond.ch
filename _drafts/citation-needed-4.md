@@ -9,3 +9,4 @@ keywords: [Superlumination]
 * [Superluminal Speeds (faster than light)](https://www.youtube.com/watch?v=IsEDigUHsOQ)
 * [Cling is an interactive C++ interpreter](https://root.cern.ch/cling)
 * [Root is a programmable bank account for software developers](https://root.co.za/)
+* [Unicode character recognition](http://shapecatcher.com/)
