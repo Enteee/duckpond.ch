@@ -12,8 +12,7 @@ with open("key.png", "rb") as f:
 def client_thread(clientsocket):
     random.seed()
     clientsocket.send(bytes([
-        #SECRET[i] ^ random.getrandbits(8)
-        random.getrandbits(8)
+        SECRET[i] ^ random.getrandbits(8)
         for i in range(len(SECRET))
     ]))
     clientsocket.close()

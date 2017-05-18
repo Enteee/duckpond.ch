@@ -50,12 +50,7 @@ if __name__ == "__main__":
 Can you break it?[^5]
 
 
-[^0]:aka. potater on github
-[^1]:Captain obvious speaking
-[^2]:That makes me wonder if somebody already sampled relative character frequencies of [base64] encoded [PNG] images.
-[^3]:[Coincidence?](https://www.youtube.com/watch?v=Ssnw2GA657s)
-[^4]:It's getting late..
-[^5]:[All the challenges can be found on github](https://github.com/Enteee/duckpond.ch/tree/master/_env/challenges).
+[^1]:[All the challenges can be found on github](https://github.com/Enteee/duckpond.ch/tree/master/_env/challenges).
 
 [broken one-time pad]:https://duckpond.ch/security/math/2016/09/15/broken-one-time-pad.html
 [one-time pad]:https://en.wikipedia.org/wiki/One-time_pad
