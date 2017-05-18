@@ -5,7 +5,7 @@ categories: [security, math]
 keywords: [one-time pad, challenge]
 ---
 
-The key to [my new bitcoint wallet](https://blockchain.info/address/15DLuxjMPhYwyHUSXR7APSAiaHBbCKfpsr) can be downloaded by a simple `nc duckpond.ch 8889`.
+The key to [my new bitcoin wallet](https://blockchain.info/address/15DLuxjMPhYwyHUSXR7APSAiaHBbCKfpsr) can be downloaded by a simple `nc duckpond.ch 8889`.
 
 # Key as a service 2
 
