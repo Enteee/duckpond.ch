@@ -1,10 +1,10 @@
 ---
 layout: post
 categories: [meta]
-keywords: [english, manual]
+keywords: [english, manuel]
 ---
 
-A friend of mine just showed me the following "manuel" and I thought it's worth sharing.
+A friend of mine just showed me the following "manuel", and I thought it's worth sharing.
 
 ![manual1](/static/posts/portable-solar-charger/page1.jpg)
 ![manual2](/static/posts/portable-solar-charger/page2.jpg)

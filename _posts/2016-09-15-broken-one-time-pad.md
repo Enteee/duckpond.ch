@@ -2,12 +2,12 @@
 layout: post
 title: "Broken One-time pad"
 categories: [security, math]
-keywords: [one time pad, broken, challenge]
+keywords: [one-time pad, challenge]
 ---
 
 There are many mistakes to be made when implementing crypto. So let's make some, abuse them and learn.
 
-# Key As a Service 
+# Key as a service 
 
 I keep forgetting the key to [my bitcoin wallet](https://blockchain.info/address/1LdtdP1qHWU9hQbjAX3U64MxYV7ABDEyy5).
 

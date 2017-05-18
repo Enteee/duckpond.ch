@@ -1,6 +1,7 @@
 title: duckpond.ch
 description: deep inside the pond.. 
 author: Ente
+twitter: Enteeeeeee
 github: https://github.com/Enteee
 about: I like ducks!
 timezone: "Europe/Zurich"
@@ -8,7 +9,7 @@ urls:
     - text: About
       url: /about/
     - text: Issues
-      url: https://github.com/Enteee/Enteee.github.io/issues
+      url: https://github.com/Enteee/duckpond.ch/issues
     - text: Atom-feed
       url: /feed.xml
 url: "https://duckpond.ch"
@@ -16,7 +17,7 @@ paginate: 5
 paginate_path: "/page:num/"
 markdown: kramdown
 host: localhost
-exclude: ["Gemfile", "Gemfile.lock", "README.md", "docker-compose.yml"]
+exclude: ["Gemfile", "Gemfile.lock", "README.md", "docker-compose.yml", "up.sh" ]
 gems:
     - jekyll-paginate
     - jekyll-feed
