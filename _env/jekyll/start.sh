@@ -1,22 +1,18 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
+set -ex
 SRC="/src/"
 
-TMP_WWW_DEV="/tmp/www-dev"
 TMP_WWW="/tmp/www"
 
 OUT_WWW_DEV="/www-dev"
 OUT_WWW="/www"
 
-# build www-dev
-rm -rf "${TMP_WWW_DEV}" || true
-cp -r "${SRC}" "${TMP_WWW_DEV}"
+# copy to writable location
+cp -r "${SRC}" "${TMP_WWW}"
+
 chown -R jekyll:jekyll "${OUT_WWW_DEV}"
-jekyll build --drafts -s "${TMP_WWW_DEV}" -d "${OUT_WWW_DEV}"
+jekyll build --drafts -s "${TMP_WWW}" -d "${OUT_WWW_DEV}"
 
-
-# build www
-rm -rf "${TMP_WWW}" || true
-git clone "${SRC}" "${TMP_WWW}"
 chown -R jekyll:jekyll "${OUT_WWW}"
 jekyll build -s "${TMP_WWW}" -d "${OUT_WWW}"
+

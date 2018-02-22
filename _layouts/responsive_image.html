@@ -1,0 +1,12 @@
+{% capture srcset %}
+    {% for i in resized %}
+        /{{ i.path }} {{ i.width }}w,
+    {% endfor %}
+{% endcapture %}
+
+{% assign largest = resized | sort: 'width' | last %}
+
+<a target="_blank" href="/{{ original.path }}">
+  <img src="/{{ largest.path }}" alt="{{ alt }}" srcset="{{ srcset | strip_newlines }}">
+  <em>{{ caption }}</em>
+</a>
