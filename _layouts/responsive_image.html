@@ -7,6 +7,6 @@
 {% assign largest = resized | sort: 'width' | last %}
 
 <a target="_blank" href="/{{ original.path }}">
-  <img src="/{{ largest.path }}" alt="{{ alt }}" srcset="{{ srcset | strip_newlines }}">
-  <em>{{ caption }}</em>
+  <img src="/{{ largest.path }}" alt="{{ alt | escape }}" srcset="{{ srcset | strip_newlines }}">
+  <em>{{ caption | escape }}</em>
 </a>
