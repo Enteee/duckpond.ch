@@ -3,10 +3,16 @@ version: '2'
 services:
     jekyll:
         build: ${CONTAINER_DIR}/jekyll
+        command: jekyll build --watch
         volumes:
-            - ./:/src:ro
-            - www:/www:rw
-            - www-dev:/www-dev:rw
+            - ./:/srv/jekyll:ro
+            - www:/srv/jekyll/_site:rw
+    jekyll-dev:
+        build: ${CONTAINER_DIR}/jekyll
+        command: jekyll build --drafts --watch
+        volumes:
+            - ./:/srv/jekyll:ro
+            - www-dev:/srv/jekyll/_site:rw
     nginx-http:
         image: nginx
         ports:
