@@ -23,6 +23,7 @@ plugins:
     - jekyll-feed
     - jekyll-sitemap
     - jekyll-responsive-image
+    - jekyll-minifier
 
 responsive_image:
   # [Required]
