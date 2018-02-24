@@ -69,7 +69,7 @@ responsive_image:
   #   %{width}       Width of the resized image
   #   %{height}      Height of the resized image
   #
-  #output_path_format: static/resized/%{filename}-%{width}x%{height}.%{extension}
+  output_path_format: static/resized/%{filename}-%{width}x%{height}.%{extension}
 
   # [Optional, Default: true]
   # Whether or not to save the generated assets into the source folder.
