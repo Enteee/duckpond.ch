@@ -67,8 +67,6 @@ services:
             - acme-challenge:/etc/dehydrated/acme-challenge:rw
 
     isso:
-        depends_on:
-            - nginx-https
         build: ${CONTAINER_DIR}/isso
         command: -wait https://nginx-https -timeout ${DOCKERIZE_TIMEOUT} ./start.sh
         environment:
