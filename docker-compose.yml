@@ -46,7 +46,7 @@ services:
         ports:
             - 443:443
         volumes:
-            - ${CONTAINER_DIR}/nginx-http/conf.d/:${DOCKERIZE_CONF_DIR}/conf.d:ro
+            - ${CONTAINER_DIR}/nginx-https/conf.d/:${DOCKERIZE_CONF_DIR}/conf.d:ro
             - certs:/certs/:ro
             - www:/usr/share/nginx/html:ro
         networks:
