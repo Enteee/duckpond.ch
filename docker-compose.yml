@@ -56,6 +56,8 @@ services:
                     - nginx-https
 
     letsencrypt:
+        depends_on:
+            - nginx-http
         build: ${CONTAINER_DIR}/dehydrated
         command: dehydrated -c 
         volumes:
