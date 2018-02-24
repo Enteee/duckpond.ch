@@ -41,6 +41,7 @@ services:
     nginx-https:
         depends_on:
             - nginx-dockerize
+            - isso
         build: ${CONTAINER_DIR}/nginx-https
         command: -template ${DOCKERIZE_CONF_DIR}/conf.d/:/etc/nginx/conf.d/ -stdout /var/log/nginx/access.log -stderr /var/log/nginx/error.log -wait file:///certs/duckpond.ch/cert.pem -wait file:///certs/duckpond.ch/privkey.pem -wait file:///certs/duckpond.ch/fullchain.pem -timeout ${DOCKERIZE_TIMEOUT} ./start.sh
         ports:
