@@ -17,7 +17,7 @@ paginate: 5
 paginate_path: "/page:num/"
 markdown: kramdown
 host: localhost
-exclude: ["Gemfile", "Gemfile.lock", "README.md", "docker-compose.yml", "up.sh" ]
+exclude: ["Gemfile", "Gemfile.lock", "README.md", "docker-compose.yml", "up.sh", "_env" ]
 plugins:
     - jekyll-paginate
     - jekyll-feed
