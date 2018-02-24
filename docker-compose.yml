@@ -24,7 +24,7 @@ services:
             - nginx-dockerize
         image: nginx-http
         build: ${CONTAINER_DIR}/nginx-http
-        command: dockerize -template ${DOCKERIZE_CONF_DIR}/conf.d/:/etc/nginx/conf.d/ -template ${DOCKERIZE_CONF_DIR}/htpasswd:/etc/nginx/.htpasswd -stdout /var/log/nginx/access.log -stderr /var/log/nginx/error.log nginx
+        command: -template ${DOCKERIZE_CONF_DIR}/conf.d/:/etc/nginx/conf.d/ -template ${DOCKERIZE_CONF_DIR}/htpasswd:/etc/nginx/.htpasswd -stdout /var/log/nginx/access.log -stderr /var/log/nginx/error.log ./start.sh
         ports:
             - 80:80
             - 8080:8080
@@ -42,7 +42,7 @@ services:
         depends_on:
             - nginx-dockerize
         build: ${CONTAINER_DIR}/nginx-https
-        command: dockerize -template ${DOCKERIZE_CONF_DIR}/conf.d/:/etc/nginx/conf.d/ -stdout /var/log/nginx/access.log -stderr /var/log/nginx/error.log -wait file:///certs/duckpond.ch/cert.pem -wait file:///certs/duckpond.ch/privkey.pem -timeout 30s nginx
+        command: -template ${DOCKERIZE_CONF_DIR}/conf.d/:/etc/nginx/conf.d/ -stdout /var/log/nginx/access.log -stderr /var/log/nginx/error.log -wait file:///certs/duckpond.ch/cert.pem -wait file:///certs/duckpond.ch/privkey.pem -timeout 60s ./start.sh
         ports:
             - 443:443
         volumes:
@@ -69,7 +69,7 @@ services:
         depends_on:
             - nginx-https
         build: ${CONTAINER_DIR}/isso
-        command: dockerize -wait tcp://nginx-https:443 start.sh -timeout 30s
+        command: dockerize -wait tcp://nginx-https:443 start.sh -timeout 60s
         environment:
             - GID=${GID}
             - UID=${UID}
