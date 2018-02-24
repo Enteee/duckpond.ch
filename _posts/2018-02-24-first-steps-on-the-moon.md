@@ -114,7 +114,7 @@ The result is still red and blurry. This is why I then applied the following tra
 Compared to the imagery [on wikimedia](https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg) mine is a child's drawing. But it's mine! I am happy with the result because I was able to identify a lot of things to improve and test:
 
 * Write a program which finds automatically the best recording parameters
-* Come up with a procedure to calibrate the motor
+* Find a procedure for motor calibration
 * RAW instead of BMP
 * Try overlaying multiple images to reduce noise
 * Try [Dark-frame substraction](https://en.wikipedia.org/wiki/Dark-frame_subtraction)
