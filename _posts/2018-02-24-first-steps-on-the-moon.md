@@ -1,7 +1,7 @@
 ---
 layout: post
 categories: [astronomy]
-keywords: [moon]
+keywords: [moon, astrophotography]
 ---
 
 After a star tracking project I got hooked on astronomy. This post wraps up my first attempt photographing the Moon.
@@ -109,7 +109,7 @@ The result is still red and blurry. This is why I then applied the following tra
   caption: 'The processed image'
 %}
 
-# Final thoughts
+# Final Thoughts
 
 Compared to the imagery [on wikimedia](https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg) mine is a child's drawing. But it's mine! I am happy with the result. Not necessarily for the image per se. Mostly because I was able to identify a lot of things to improve and test:
 
