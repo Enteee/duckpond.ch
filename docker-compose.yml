@@ -69,6 +69,7 @@ services:
         depends_on:
             - nginx-https
         build: ${CONTAINER_DIR}/isso
+        command: dockerize -wait tcp://nginx-https:443 start.sh -timeout 30s
         environment:
             - GID=${GID}
             - UID=${UID}
@@ -85,8 +86,6 @@ services:
         ports:
             - 8888:8888
             - 8889:8889
-        volumes:
-            - /dev/zero:/dev/urandom
         networks:
             backbone:
                 aliases:
