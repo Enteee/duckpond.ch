@@ -3,13 +3,17 @@ set -ex
 
 event="${1}" && shift
 
-function link(){
-  local from="${1}" && shift
-  local name="${1}" && shift
+function link(){(
+  local file="${1}" && shift
+  local to="${1}" && shift
+
+  dir=$(dirname "${file}")
+  from=$(basename "${file}")
+
+  cd "${dir}"
   ln --force --symbolic \
-    "${from}" \
-    "$(dirname ${from})/${name}"
-}
+    "${from}" "${to}"
+)}
 
 case "${event}" in
   deploy_cert|unchanged_cert)
