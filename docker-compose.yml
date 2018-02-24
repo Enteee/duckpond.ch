@@ -7,49 +7,67 @@ services:
         volumes:
             - ./:/srv/jekyll:ro
             - www:/srv/jekyll/_site:rw
+
     jekyll-dev:
         build: ${CONTAINER_DIR}/jekyll
         command: jekyll build --drafts --watch
         volumes:
             - ./:/srv/jekyll:ro
             - www-dev:/srv/jekyll/_site:rw
+
+    nginx-dockerize:
+        image: nginx-dockerize
+        build: ${CONTAINER_DIR}/nginx-dockerize
+
     nginx-http:
-        image: nginx
+        depends_on:
+            - nginx-dockerize
+        image: nginx-http
+        build: ${CONTAINER_DIR}/nginx-http
+        command: dockerize -template ${DOCKERIZE_CONF_DIR}/conf.d/:/etc/nginx/conf.d/ -template ${DOCKERIZE_CONF_DIR}/htpasswd:/etc/nginx/.htpasswd -stdout /var/log/nginx/access.log -stderr /var/log/nginx/error.log nginx
         ports:
             - 80:80
             - 8080:8080
         volumes:
-            - ${CONTAINER_DIR}/nginx-http/conf.d/:/etc/nginx/conf.d:ro
-            - ${CONTAINER_DIR}/nginx-http/htpasswd:/etc/nginx/.htpasswd:ro
-            - ${CONTAINER_DIR}/letsencrypt.sh/etc/.acme-challenges/:/usr/share/nginx/letsencrypt/.well-known/acme-challenge:ro
+            - ${CONTAINER_DIR}/nginx-http/conf.d/:${DOCKERIZE_CONF_DIR}/conf.d:ro
+            - ${CONTAINER_DIR}/nginx-http/htpasswd:${DOCKERIZE_CONF_DIR}/htpasswd:ro
+            - acme-challenge:/usr/share/nginx/letsencrypt/.well-known/acme-challenge:ro
             - www-dev:/usr/share/nginx/html:ro
         networks:
             backbone:
                 aliases:
                     - nginx-http
+
     nginx-https:
+        depends_on:
+            - nginx-dockerize
         build: ${CONTAINER_DIR}/nginx-https
+        command: dockerize -template ${DOCKERIZE_CONF_DIR}/conf.d/:/etc/nginx/conf.d/ -stdout /var/log/nginx/access.log -stderr /var/log/nginx/error.log -wait tcp://isso:8000 -wait file:///certs/duckpond.ch/cert.pem -wait file:///certs/duckpond.ch/privkey.pem -timeout 30s nginx
         ports:
             - 443:443
         volumes:
-            - ${CONTAINER_DIR}/nginx-https/conf.d/:/etc/nginx/conf.d:ro
-            - ${CONTAINER_DIR}/letsencrypt.sh/etc/certs:/certs:ro
+            - ${CONTAINER_DIR}/nginx-http/conf.d/:${DOCKERIZE_CONF_DIR}/conf.d:ro
+            - certs:/certs/:ro
             - www:/usr/share/nginx/html:ro
         networks:
             backbone:
                 aliases:
                     - duckpond.ch
                     - nginx-https
+
     letsencrypt:
         build: ${CONTAINER_DIR}/letsencrypt.sh
+        command: dehydrated -c 
         volumes:
-            - ${CONTAINER_DIR}/letsencrypt.sh/etc:/etc/letsencrypt.sh:rw
-        user: $UID
+            - ${CONTAINER_DIR}/dehydrated/etc:/etc/dehydrated:ro
+            - certs:/etc/dehydrated/certs:rw
+            - acme-challenge:/etc/dehydrated/acme-challenge:rw
+
     isso:
         build: ${CONTAINER_DIR}/isso
         environment:
-            - GID=1000
-            - UID=1000
+            - GID=${GID}
+            - UID=${UID}
         volumes:
             - ${CONTAINER_DIR}/isso/config:/config
             - ${CONTAINER_DIR}/isso/db:/db
@@ -57,6 +75,7 @@ services:
             backbone:
                 aliases:
                     - isso
+
     challenges:
         build: ${CONTAINER_DIR}/challenges
         ports:
@@ -71,6 +90,8 @@ services:
 volumes:
     www:
     www-dev:
+    certs:
+    acme-challenge:
 
 networks:
     backbone:
