@@ -42,7 +42,7 @@ services:
         depends_on:
             - nginx-dockerize
         build: ${CONTAINER_DIR}/nginx-https
-        command: dockerize -template ${DOCKERIZE_CONF_DIR}/conf.d/:/etc/nginx/conf.d/ -stdout /var/log/nginx/access.log -stderr /var/log/nginx/error.log -wait tcp://isso:8000 -wait file:///certs/duckpond.ch/cert.pem -wait file:///certs/duckpond.ch/privkey.pem -timeout 30s nginx
+        command: dockerize -template ${DOCKERIZE_CONF_DIR}/conf.d/:/etc/nginx/conf.d/ -stdout /var/log/nginx/access.log -stderr /var/log/nginx/error.log -wait file:///certs/duckpond.ch/cert.pem -wait file:///certs/duckpond.ch/privkey.pem -timeout 30s nginx
         ports:
             - 443:443
         volumes:
@@ -66,6 +66,8 @@ services:
             - acme-challenge:/etc/dehydrated/acme-challenge:rw
 
     isso:
+        depends_on:
+            - nginx-https
         build: ${CONTAINER_DIR}/isso
         environment:
             - GID=${GID}
