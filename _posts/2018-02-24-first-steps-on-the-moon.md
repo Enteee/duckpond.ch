@@ -111,7 +111,7 @@ The result is still red and blurry. This is why I then applied the following tra
 
 # Final Thoughts
 
-Compared to the imagery [on wikimedia](https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg) mine is a child's drawing. But it's mine! I am happy with the result. Not necessarily for the image per se. Mostly because I was able to identify a lot of things to improve and test:
+Compared to the imagery [on wikimedia](https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg) mine is a child's drawing. But it's mine! I am happy with the result because I was able to identify a lot of things to improve and test:
 
 * Write a program which finds automatically the best recording parameters
 * Come up with a procedure to calibrate the motor
