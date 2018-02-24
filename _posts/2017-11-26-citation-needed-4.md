@@ -1,7 +1,7 @@
 ---
 layout: post
 categories: [citation needed]
-keywords: [Superlumination root vim-adventures python windows2000]
+keywords: [Superlumination, root, vim-adventures, python, windows2000]
 ---
 
 ![citation-needed](/static/posts/citation-needed/xkcd_protester.png)
