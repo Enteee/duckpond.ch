@@ -12,7 +12,7 @@ function link(){
 }
 
 case "${event}" in
-  deploy_cert)
+  deploy_cert|unchanged_cert)
     domain="${1}" && shift
     privkey="${1}" && shift
     cert="${1}" && shift
