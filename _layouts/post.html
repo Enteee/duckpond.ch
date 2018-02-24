@@ -9,7 +9,7 @@ layout: default
 </span>
 {% endif %}
 
-{% assign chars_left = 140 %}
+{% assign chars_left = 280 %}
 
 {% assign url = site.url | append: page.url | uri_escape %}
 {% assign chars_left = chars_left | minus: 24 %}
@@ -36,13 +36,17 @@ layout: default
 {% assign chars_left = chars_left | minus: tags_size %}
 
 {% assign intro = content | strip_html | strip_newlines | replace: ',', '.' | replace: '!', '.' | replace: ':', '\.' | replace: '?', '\.' | split: '.' | first | strip %}
-{% assign title = page.title | append: ': ' | append: intro | strip_html | strip_newlines | truncate: chars_left | uri_escape | strip %}
+
+{% assign title = page.title | strip_html | strip_newlines | uri_escape | strip %}
+{% assign text = intro | uri_escape | strip %}
+
+{% assign tweet = page.title | append: ': ' | append: intro | strip_html | strip_newlines | truncate: chars_left | uri_escape | strip %}
 
 <div class="social-media">
-    <a class="reddit" href="https://www.reddit.com/submit?title={{ title }}&url={{ url }}">
+    <a class="reddit" href="https://www.reddit.com/submit?title={{ title }}&text={{ text }}&url={{ url }}">
         {% include img/reddit.svg %}
     </a>
-    <a class="twitter" href="https://twitter.com/intent/tweet?text={{ title }}&url={{ url }}&hashtags={{ tags }}&via={{ via }}">
+    <a class="twitter" href="https://twitter.com/intent/tweet?text={{ tweet }}&url={{ url }}&hashtags={{ tags }}&via={{ via }}">
         {% include img/twitter.svg %}
     </a>
 </div>
