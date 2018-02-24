@@ -2,4 +2,5 @@ FROM nginx-dockerize
 
 MAINTAINER Ente "ducksource@duckpond.ch"
 
-EXPOSE 443
+EXPOSE 80
+EXPOSE 8080
