@@ -68,7 +68,7 @@ services:
 
     isso:
         build: ${CONTAINER_DIR}/isso
-        command: -wait tcp://nginx-https:443 -timeout ${DOCKERIZE_TIMEOUT} ./start.sh
+        command: -wait tcp://nginx-https:443 -timeout ${DOCKERIZE_TIMEOUT} ./run.sh
         environment:
             - GID=${GID}
             - UID=${UID}
