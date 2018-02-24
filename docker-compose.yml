@@ -42,7 +42,7 @@ services:
         depends_on:
             - nginx-dockerize
         build: ${CONTAINER_DIR}/nginx-https
-        command: -template ${DOCKERIZE_CONF_DIR}/conf.d/:/etc/nginx/conf.d/ -stdout /var/log/nginx/access.log -stderr /var/log/nginx/error.log -wait file:///certs/duckpond.ch/cert.pem -wait file:///certs/duckpond.ch/privkey.pem -timeout ${DOCKERIZE_TIMEOUT} ./start.sh
+        command: -template ${DOCKERIZE_CONF_DIR}/conf.d/:/etc/nginx/conf.d/ -stdout /var/log/nginx/access.log -stderr /var/log/nginx/error.log -wait file:///certs/duckpond.ch/cert.pem -wait file:///certs/duckpond.ch/privkey.pem -wait file:///certs/duckpond.ch/fullchain.pem -timeout ${DOCKERIZE_TIMEOUT} ./start.sh
         ports:
             - 443:443
         volumes:
@@ -69,7 +69,7 @@ services:
         depends_on:
             - nginx-https
         build: ${CONTAINER_DIR}/isso
-        command: -wait tcp://nginx-https:443 -timeout ${DOCKERIZE_TIMEOUT} ./start.sh
+        command: -wait https://nginx-https -timeout ${DOCKERIZE_TIMEOUT} ./start.sh
         environment:
             - GID=${GID}
             - UID=${UID}
