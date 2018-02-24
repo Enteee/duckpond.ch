@@ -56,7 +56,7 @@ services:
                     - nginx-https
 
     letsencrypt:
-        build: ${CONTAINER_DIR}/letsencrypt.sh
+        build: ${CONTAINER_DIR}/dehydrated
         command: dehydrated -c 
         volumes:
             - ${CONTAINER_DIR}/dehydrated/etc:/etc/dehydrated:ro
