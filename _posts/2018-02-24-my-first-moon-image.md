@@ -4,7 +4,7 @@ categories: [astronomy]
 keywords: [moon, astrophotography]
 ---
 
-After a star tracking project I got hooked on astronomy. This post wraps up my first attempt photographing the Moon.
+[After a star tracking project I got hooked on astronomy](/static/posts/my-first-moon-image/startracking.png). This post wraps up my first attempt photographing the Moon.
 
 # The Rig
 
@@ -21,19 +21,19 @@ Astrophotography can get extremely expensive. I'm a rookie therefore I tried to 
 
 {%
   responsive_image 
-  path: static/posts/first-steps-on-the-moon/astro-pi.jpg
+  path: static/posts/my-first-moon-image/astro-pi.jpg
   caption: 'The Raspberry Pi 3 connected to the camera'
 %}
 
 {%
   responsive_image 
-  path: static/posts/first-steps-on-the-moon/extra-picam.jpg 
+  path: static/posts/my-first-moon-image/extra-picam.jpg 
   caption: 'An "extra" universal T-Adapter'
 %}
 
 {%
   responsive_image
-  path: static/posts/first-steps-on-the-moon/rig-outside.jpg
+  path: static/posts/my-first-moon-image/rig-outside.jpg
   caption: 'The rig assembled and ready'
 %}
 
@@ -43,7 +43,7 @@ Astrophotography can get extremely expensive. I'm a rookie therefore I tried to 
 
 {%
   responsive_image
-  path: static/posts/first-steps-on-the-moon/blue-moon.jpg
+  path: static/posts/my-first-moon-image/blue-moon.jpg
   caption: 'A Blue Moon has nothing to do with the color'
 %}
 
@@ -66,7 +66,7 @@ I choose to use BMP encoding for the images. Simply because I thought a bitmap i
 
 {%
   responsive_image
-  path: static/posts/first-steps-on-the-moon/moon1517436473.bmp
+  path: static/posts/my-first-moon-image/moon1517436473.bmp
   caption: 'moon1517436473.bmp: The first image'
 %}
 
@@ -78,13 +78,13 @@ First I manually removed distorted and extremely blurry images. Leaving me with 
 
 {%
   responsive_image
-  path: static/posts/first-steps-on-the-moon/hugin.png
+  path: static/posts/my-first-moon-image/hugin.png
   caption: 'Assembling the Moon in hugin'
 %}
 
 {%
   responsive_image
-  path: static/posts/first-steps-on-the-moon/panorama-unprocessed.png
+  path: static/posts/my-first-moon-image/panorama-unprocessed.png
   caption: 'The unprocessed panorama'
 %}
 
@@ -105,7 +105,7 @@ The result is still red and blurry. This is why I then applied the following tra
 
 {%
   responsive_image
-  path: static/posts/first-steps-on-the-moon/panorama-processed.png
+  path: static/posts/my-first-moon-image/panorama-processed.png
   caption: 'The processed image'
 %}
 
