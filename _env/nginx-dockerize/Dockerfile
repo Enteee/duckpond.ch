@@ -8,6 +8,7 @@ RUN set -ex \
   && apt-get install --no-install-recommends --no-install-suggests -y \
     ca-certificates \
     wget \
+    inotify-tools \
   && wget \
     https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
   && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
