@@ -1,0 +1,22 @@
+---
+layout: post
+categories: []
+keywords: []
+---
+
+Syntactical sugar for your bash parallelism. `:for` calls a function for each argument in parallel.
+If at lest one call exits with a non zero exit code, `:for` retains this code and kills all running instances.
+
+# Usage
+
+<script src="https://gist.github.com/Enteee/c8c11d46a95568be4d331ba58a702b62.js?file=usage"></script>
+
+```bash
+$ ./usage; echo $?
+1
+```
+
+# Source
+
+<script src="https://gist.github.com/Enteee/c8c11d46a95568be4d331ba58a702b62.js?file=:for"></script>
+
