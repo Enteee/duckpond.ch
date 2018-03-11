@@ -58,36 +58,38 @@
         </div>
         <!-- Navigation -->
         <div class="container">
-            <div class="col-sm-3">
-                <a class="logo" href="/">
-                    {% include img/duck.svg %}
-                </a>
-                <h1 class="author-name">{{ site.author }}</h1>
-                {% if site.about %}
-                <div id="about">
-                    {{ site.about }}
-                </div>
-                {% endif %}
+            <div class="row">
+              <div class="col-sm-3">
+                  <a class="logo" href="/">
+                      {% include img/duck.svg %}
+                  </a>
+                  <h1 class="author-name">{{ site.author }}</h1>
+                  {% if site.about %}
+                  <div id="about">
+                      {{ site.about }}
+                  </div>
+                  {% endif %}
 
-                <br />                
-                <strong>Navigation</strong><br />
-                    &raquo; <a href="/">Home</a> <br />
-                {% for i in site.urls %}
-                    &raquo; <a class="about" href="{{ i.url }}">{{ i.text }}</a><br />
-                {% endfor %}
-            </div>
+                  <br />                
+                  <strong>Navigation</strong><br />
+                      &raquo; <a href="/">Home</a> <br />
+                  {% for i in site.urls %}
+                      &raquo; <a class="about" href="{{ i.url }}">{{ i.text }}</a><br />
+                  {% endfor %}
+              </div>
 
-            <div class="col-sm-8 col-offset-1">
-                {{ content }}
+              <div class="col-sm-8 col-offset-1">
+                  {{ content }}
 
-                <footer>
-                    &copy; {{ site.author }}
-                    {% if site.github %} 
-                    - <a href="{{ site.github }}">{{ site.github }}</a>
-                    {% endif %}
+                  <footer>
+                      &copy; {{ site.author }}
+                      {% if site.github %} 
+                      - <a href="{{ site.github }}">{{ site.github }}</a>
+                      {% endif %}
 
-                </footer>
-            </div><!-- end /.col-sm-8 -->
+                  </footer>
+              </div><!-- end /.col-sm-8 -->
+            </div><!-- end /.row -->
         </div><!-- end /.container -->
 
         <!-- Bootstrap core JavaScript
