@@ -145,6 +145,29 @@ a:hover {
  * Container element
  * /////////////////
  */
+
+ol {
+    padding: 0px; 
+    counter-reset: ctr; /* update with javascript */
+    display: table;
+}
+
+ol > li {
+    counter-increment: ctr -1;
+    display: table-row;
+}
+
+ol > li::before {
+    content: counter(ctr, upper-roman) ".";
+    display: table-cell;
+    text-align: right;
+}
+
+ol > li > span {
+    position: relative;
+    left: 20px;
+}
+
 .pagination {
     height: 36px;
     width: 100%;
