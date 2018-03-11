@@ -63,6 +63,33 @@ blockquote {
 }
 */
 
+div.highlighter-rouge {
+    line-height: 1em;
+}
+
+code.highlighter-rouge {
+    line-height: 1em;
+    padding: 2px 4px;
+    white-space: nowrap;
+    background-color: #f9f2f4;
+    border-radius: 4px;
+}
+
+blockquote {
+    padding: 10px 20px;
+    margin: 0 0 20px;
+    border-left: 5px solid #b3b3b3;
+}
+
+blockquote > p {
+    margin-bottom: 0;
+}
+
+pre {
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
 /**
  * //////////////////////////
  * Font and link declarations
@@ -77,6 +104,7 @@ span.time, span.categories {
 h1 {
     font-weight: normal;
     color: #696969;
+    margin-top: 20px;
     margin-bottom: 10px;
     font-size: 25px;
 }
