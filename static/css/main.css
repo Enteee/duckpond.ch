@@ -322,7 +322,13 @@ div.right .post ul {
  * ///////////////////////////////////
  */
 nav {
-    margin-top: 100px;
+    margin-top: 30px;
+}
+
+@media only screen and (min-width: 600px) {
+    nav {
+        margin-top: 100px;
+    }
 }
 
 nav .nav-item,
