@@ -25,14 +25,4 @@ $(function(){
     }
   });
 
-  // reverse counted ol
-  $("ol[reversed='']").each(function(){
-      $(this).css(
-        'counter-reset', 
-        'ctr ' + (
-          parseInt($(this).attr('start')) + 1
-        )
-      )
-  });
-
 });
