@@ -13,7 +13,7 @@ urls:
     - text: Atom-feed
       url: /feed.xml
 url: "https://duckpond.ch"
-paginate: 5
+paginate: 20
 paginate_path: "/page:num/"
 markdown: kramdown
 host: localhost
