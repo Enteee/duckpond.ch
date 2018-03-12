@@ -148,17 +148,16 @@ a:hover {
 
 ol {
     padding: 0px; 
-    counter-reset: ctr; /* update with javascript */
     display: table;
 }
 
 ol > li {
-    counter-increment: ctr -1;
+    counter-increment: post_ctr -1;
     display: table-row;
 }
 
 ol > li::before {
-    content: counter(ctr, upper-roman) ".";
+    content: counter(post_ctr, upper-roman) ".";
     display: table-cell;
     text-align: right;
 }
@@ -250,13 +249,13 @@ div#container {
  * ////////////////////
  */
 div.social-media {
+    height: 0px;
     float: right;
 }
 
 div.social-media svg {
     width: 1.5em;
     height: 1.5em;
-    
 }
 
 /**
@@ -269,12 +268,6 @@ div.right {
     float: left;
 }
            
-div.content {
-    border-top: 1px solid #E6E6E6;
-    margin-top: 5px;
-    padding-top: 5px;
-}
-
 div.content pre {
     background: #333333;
     padding: 10px;
@@ -328,45 +321,19 @@ div.right .post ul {
  * Left column aka nav bar formatting
  * ///////////////////////////////////
  */
-div.col-sm-3 {
+nav {
     margin-top: 100px;
+}
+
+nav .nav-item,
+nav .nav-link {
     font-size: 11px;
     color: #666;
+    padding: 0px;
 }
 
-div.col-sm-3 strong {
-    font-size: 16px;
-    color: #4A4A4A;
-    font-weight: normal;
-}
-
-div.col-sm-3 div#about {
-    margin-top: 10px;
-    color: #8C8C8C;
-}
-
-div.col-sm-3 img#about {
-    -webkit-border-radius: 150px;
-    margin-bottom: 10px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.PageNavigation {
-    font-size: 14px;
-    display: block;
-    width: auto;
-    overflow: hidden;
-    margin: 0 auto;
-}
-
-.PageNavigation .next {
-    float: left;
-    text-align: right;
-}
-.PageNavigation .prev {
-    float: right;
-    text-align: left;
+nav .nav-link {
+    display: inline;
 }
 
 /**
