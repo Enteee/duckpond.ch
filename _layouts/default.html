@@ -56,29 +56,31 @@
             <input type="text" placeholder="$   " class="super-search__input" id="js-super-search__input">
             <ul class="super-search__results" id="js-super-search__results"></ul>
         </div>
-        <!-- Navigation -->
         <div class="container">
             <div class="row">
-              <div class="col-sm-3">
-                  <a class="logo" href="/">
-                      {% include img/duck.svg %}
-                  </a>
-                  <h1 class="author-name">{{ site.author }}</h1>
-                  {% if site.about %}
-                  <div id="about">
-                      {{ site.about }}
-                  </div>
-                  {% endif %}
+              <!-- Navigation -->
+              <div class="col-sm-2">
+                  <nav class="nav flex-sm-column">
 
-                  <br />                
-                  <strong>Navigation</strong><br />
-                      &raquo; <a href="/">Home</a> <br />
-                  {% for i in site.urls %}
-                      &raquo; <a class="about" href="{{ i.url }}">{{ i.text }}</a><br />
-                  {% endfor %}
+                      <div class="navbar-brand">
+                          <a class="logo" href="/">{% include img/duck.svg %}</a>
+                          <h1 class="author-name">{{ site.author }}</h1>
+                          <span class="nav-item">{{ site.about }}</span>
+                      </div>
+                      <div>
+                          <div class="nav-item">
+                              &raquo; <a class="nav-link navbar-toggler" href="/">Home</a>
+                          </div>
+                          {% for i in site.urls %}
+                          <div class="nav-item">
+                              &raquo; <a class="nav-link navbar-toggler" href="{{ i.url }}">{{ i.text }}</a>
+                          </div>
+                          {% endfor %}
+                      </div>
+                  </nav>
               </div>
 
-              <div class="col-sm-8 col-offset-1">
+              <div class="col-sm-10 content">
                   {{ content }}
 
                   <footer>
@@ -88,7 +90,7 @@
                       {% endif %}
 
                   </footer>
-              </div><!-- end /.col-sm-8 -->
+              </div><!-- end /.col- -->
             </div><!-- end /.row -->
         </div><!-- end /.container -->
 
