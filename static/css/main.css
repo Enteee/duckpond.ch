@@ -232,6 +232,17 @@ div#container {
     margin: auto;
 }
 
+
+/**
+ * ////////////////
+ * Post navigation
+ * ////////////////
+ */
+
+.post-navigation {
+    font-size: 14px;
+}
+
 /**
  * ////
  * Logo
