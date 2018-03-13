@@ -1,6 +1,6 @@
 ---
 layout: post
-categories: [meta]
+categories: [web, meta]
 keywords: [bootstrap, html list, dockerize, dehydrated, jekyll-responsive-images, jekyll-minifier, MathJax CDN]
 ---
 
