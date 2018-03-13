@@ -79,16 +79,20 @@ layout: default
     </div>
 {% endif %}
 
-<div class="PageNavigation">
-    <div class="next">
-        {% if page.next.url %}
-            <a href="{{ page.next.url }}">&laquo; {{ page.next.title }} &laquo;</a>
-          {% endif %}
+<div class="row post-navigation">
+    <div class="col-md-6 text-center">
+        <span class="float-md-left">
+            {% if page.next.url %}
+                <a href="{{ page.next.url }}">&laquo; {{ page.next.title }} &laquo;</a>
+            {% endif %}
+        </span>
     </div>
-    <div class="prev">
-        {% if page.previous.url %}
-            <a href="{{ page.previous.url }}">&raquo; {{ page.previous.title }} &raquo;</a>
-        {% endif %}
+    <div class="col-md-6 text-center">
+        <span class="float-md-right">
+            {% if page.previous.url %}
+                <a href="{{ page.previous.url }}">&raquo; {{ page.previous.title }} &raquo;</a>
+            {% endif %}
+        </span>
     </div>
 </div>
 
