@@ -1,7 +1,5 @@
 /**
- * //////////////
  * Master styling
- * //////////////
  */
 body {
     font-family: "Inconsolata", monospace, sans-serif;
@@ -12,6 +10,9 @@ body {
     font-weight: 300;
 }
 
+/**
+ * Images
+ */
 .post > p > img,
 .post > p > a > img 
 {
@@ -39,7 +40,7 @@ img + em::first-letter {
 
 hr {
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     border: 0;
     border-top: 1px solid #F7F1F1;
     border-bottom: 1px solid #fff;
@@ -51,31 +52,50 @@ sup {
     margin-right: 0.3em;
 }
 
-blockquote {
-    font-size: 0.9em;
-}
-
 /*
-@media (min-width: 768px) {
-  .container {
-    max-width: 780px;
-  }
-}
-*/
+ * Multiline Code:
+ * ```bash
+ * $ ls
+ * ```
+ */
 
-div.highlighter-rouge {
-    line-height: 1em;
+div[class^="language-"] {
+    background: #333333;
+    padding: 1em;
+    color: #FFF;
+    overflow-x: auto;
+    font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+    font-size: 12px;
+    border: none;
+    line-height: initial;
 }
+
+div[class^="language-"] > div > pre {
+    margin: 0px;
+}
+
+div[class^="language-"] > div > pre > code {
+    white-space: pre-wrap;
+}
+
+/**
+ * Inline Code: `test`
+ */
 
 code.highlighter-rouge {
     line-height: 1em;
     padding: 2px 4px;
+    margin: 0px;
     white-space: nowrap;
     background-color: #f9f2f4;
     border-radius: 4px;
 }
 
+/*
+ * Quotes
+ */
 blockquote {
+    font-size: 0.9em;
     padding: 10px 20px;
     margin: 0 0 20px;
     border-left: 5px solid #b3b3b3;
@@ -85,15 +105,9 @@ blockquote > p {
     margin-bottom: 0;
 }
 
-pre {
-    white-space: pre-wrap;
-    word-break: break-all;
-}
 
 /**
- * //////////////////////////
  * Font and link declarations
- * //////////////////////////
  */
 span.time, span.categories {
     color: #ADADAD;
@@ -141,31 +155,45 @@ a:hover {
 }
 
 /**
- * /////////////////
- * Container element
- * /////////////////
+ * Reverse roman numbering
  */
 
-ol {
-    padding: 0px; 
-    display: table;
+@media only screen and (min-width: 768px) {
+    ol.reverse-roman {
+        padding: 0px; 
+        display: table;
+    }
+
+    ol.reverse-roman > li {
+        counter-increment: post_ctr -1;
+        display: table-row;
+    }
+
+    ol.reverse-roman > li::before {
+        content: counter(post_ctr, upper-roman) ".";
+        display: table-cell;
+        text-align: right;
+    }
+
+    ol.reverse-roman > li > span {
+        position: relative;
+        left: 20px;
+    }
 }
 
-ol > li {
-    counter-increment: post_ctr -1;
-    display: table-row;
+ol.reverse-roman {
+    list-style-type: upper-roman;
+    list-style-position: inside;
+    padding: 0px;
 }
 
-ol > li::before {
-    content: counter(post_ctr, upper-roman) ".";
-    display: table-cell;
-    text-align: right;
+ol.reverse-roman > li {
+    padding-bottom: 1em;
 }
 
-ol > li > span {
-    position: relative;
-    left: 20px;
-}
+/**
+ * Pagination
+ */
 
 .pagination {
     height: 36px;
@@ -175,7 +203,7 @@ ol > li > span {
     text-align: center;
 }
 
-.pagination ul {
+div.pagination {
     display: inline-block;
     margin: 0;
     padding: 0;
@@ -187,24 +215,24 @@ ol > li > span {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-.pagination li {
+div.pagination li {
     display: inline;
 }
 
-.pagination li:first-child a {
+div.pagination li:first-child a {
     border-left-width: 1px;
     -webkit-border-radius: 3px 0 0 3px;
     -moz-border-radius: 3px 0 0 3px;
     border-radius: 3px 0 0 3px;
 }
 
-.pagination li:last-child a {
+div.pagination li:last-child a {
     -webkit-border-radius: 0 3px 3px 0;
     -moz-border-radius: 0 3px 3px 0;
     border-radius: 0 3px 3px 0;
 }
 
-.pagination a {
+div.pagination a {
     float: left;
     padding: 0 14px;
     line-height: 20px;
@@ -213,9 +241,13 @@ ol > li > span {
     font-size: 11px;
 }
 
-.pagination a:hover, .active a {
+div.pagination a:hover, .active a {
     background-color: whiteSmoke;
 }
+
+/*
+ * Links
+ */
 
 .disabled a, .disabled a:hover,
 .active a, .active a:hover {
@@ -234,9 +266,7 @@ div#container {
 
 
 /**
- * ////////////////
  * Post navigation
- * ////////////////
  */
 
 .post-navigation {
@@ -244,9 +274,7 @@ div#container {
 }
 
 /**
- * ////
  * Logo
- * ////
  */
 
 .logo svg {
@@ -255,38 +283,18 @@ div#container {
 }
 
 /**
- * /////////////////////
  * Social media buttons
- * ////////////////////
  */
+/*
 div.social-media {
     height: 0px;
     float: right;
 }
+*/
 
 div.social-media svg {
     width: 1.5em;
     height: 1.5em;
-}
-
-/**
- * //////////////////////////////////
- * Right aka content column formatting
- * //////////////////////////////////
- */
-div.right {
-    width: 500px;
-    float: left;
-}
-           
-div.content pre {
-    background: #333333;
-    padding: 10px;
-    color: #FFF;
-    overflow-x: auto;
-    font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
-    font-size: 12px;
-    border: none;
 }
 
 footer {
@@ -328,15 +336,14 @@ div.right .post ul {
 }
 
 /**
- * ///////////////////////////////////
- * Left column aka nav bar formatting
- * ///////////////////////////////////
+ * Nav
  */
 nav {
     margin-top: 30px;
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 768px) {
+    /* not mobilde: */
     nav {
         margin-top: 100px;
     }
@@ -354,9 +361,7 @@ nav .nav-link {
 }
 
 /**
- * ///////////////////////////////////
  * Footnotes
- * ///////////////////////////////////
  */
 
 .footnotes {

@@ -1,13 +1,6 @@
 ---
 layout: default
 ---
-<h1>{{ page.title }}</h1>
-<span class="time">{{ page.date | date_to_string }}</span>
-{% if page.categories %}
-<span class="categories">
-    &raquo; {% for category in page.categories %}<a href="/category/{{ category }}">{{ category }}</a>{% if forloop.last == false %}, {% endif %}{% endfor %}
-</span>
-{% endif %}
 
 {% assign chars_left = 280 %}
 
@@ -38,17 +31,31 @@ layout: default
 {% assign intro = content | strip_html | strip_newlines | replace: ',', '.' | replace: '!', '.' | replace: ':', '\.' | replace: '?', '\.' | split: '.' | first | strip %}
 {% assign text = page.title | append: ': ' | append: intro | strip_html | strip_newlines | truncate: chars_left | uri_escape | strip %}
 
-<div class="social-media">
-    <a class="reddit" href="https://www.reddit.com/submit?title={{ text }}&url={{ url }}">
-        {% include img/reddit.svg %}
-    </a>
-    <a class="twitter" href="https://twitter.com/intent/tweet?text={{ text }}&url={{ url }}&hashtags={{ tags }}&via={{ via }}">
-        {% include img/twitter.svg %}
-    </a>
+<div class="row">
+    <div class="col-md-10 text-center">
+        <span class="float-md-left">
+            <span class="time">{{ page.date | date_to_string }}</span>
+            {% if page.categories %}
+            <span class="categories">
+                &raquo; {% for category in page.categories %}<a href="/category/{{ category }}">{{ category }}</a>{% if forloop.last == false %}, {% endif %}{% endfor %}
+            </span>
+            {% endif %}
+        </span>
+    </div>
+    <div class="col-md-2 text-center social-media">
+        <span class="float-md-right">
+            <a class="reddit" href="https://www.reddit.com/submit?title={{ text }}&url={{ url }}">
+                {% include img/reddit.svg %}
+            </a>
+            <a class="twitter" href="https://twitter.com/intent/tweet?text={{ text }}&url={{ url }}&hashtags={{ tags }}&via={{ via }}">
+                {% include img/twitter.svg %}
+            </a>
+        </span>
+    </div>
 </div>
 
-<div class="content">
-    <div class="post">{{ content }}</div>
+<div class="post">
+    {{ content }}
 </div>
 
 {% assign hasSimilar = '' %}

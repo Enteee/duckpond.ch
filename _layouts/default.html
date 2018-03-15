@@ -64,8 +64,10 @@
 
                       <div class="navbar-brand">
                           <a class="logo" href="/">{% include img/duck.svg %}</a>
-                          <h1 class="author-name">{{ site.author }}</h1>
-                          <span class="nav-item">{{ site.about }}</span>
+                          <div class="d-none d-sm-block">
+                              <h1 class="author-name">{{ site.author }}</h1>
+                              <span class="nav-item">{{ site.about }}</span>
+                          </div>
                       </div>
                       <div>
                           <div class="nav-item">
@@ -81,6 +83,17 @@
               </div>
 
               <div class="col-sm-10 content">
+                  <header class="d-none d-sm-block">
+                      <h1>
+                      {% if page.title %}
+                        {{ page.title }}
+                      {% else %}
+                        {{ site.title }}
+                      {% endif %}
+                      </h1>
+                      <hr />
+                  </header>
+
                   {{ content }}
 
                   <footer>
