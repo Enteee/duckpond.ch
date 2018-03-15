@@ -2,10 +2,9 @@
 layout: default
 ---
 
-<div id="home">
-    <h1>{{ site.title }}</h1>
-    <hr />
-    <ol class="posts" style="counter-reset: post_ctr {{ paginator.page | minus: 1 | times: paginator.per_page | times: -1 | plus: paginator.total_posts | plus: 1 }}" reversed>
+<div>
+    {% assign post_ctr = paginator.page | minus: 1 | times: paginator.per_page | times: -1 | plus: paginator.total_posts | plus: 1 %}
+    <ol class="reverse-roman" style="counter-reset: post_ctr {{ post_ctr }}" start="{{ post_ctr }}" reversed>
     {% for post in paginator.posts %}
         <li>
             <span>
