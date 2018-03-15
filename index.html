@@ -2,66 +2,48 @@
 layout: default
 ---
 
-<div>
-    {% assign post_ctr = paginator.page | minus: 1 | times: paginator.per_page | times: -1 | plus: paginator.total_posts | plus: 1 %}
-    <ol class="reverse-roman" style="counter-reset: post_ctr {{ post_ctr }}" start="{{ post_ctr }}" reversed>
-    {% for post in paginator.posts %}
-        <li>
-            <span>
-                <a href="{{ post.url }}">{{ post.title }}</a> &raquo; <i><span>{{ post.date | date_to_string }} [<a href="{{ post.url }}#isso-thread"></a>]:</span></i>
-                <span>{{ post.content | strip_html | truncatewords:20 }}</span>
-            <span>
-        </li>
-    {% endfor %}
-    </ol>
-</div>
+{% assign post_ctr = paginator.page | minus: 1 | times: paginator.per_page | times: -1 | plus: paginator.total_posts %}
+<ol class="reverse-roman" style="counter-reset: post_ctr {{ post_ctr | plus: 1 }}" start="{{ post_ctr }}" reversed>
+{% for post in paginator.posts %}
+    <li>
+        <span>
+            <a href="{{ post.url }}">{{ post.title }}</a> &raquo; <i><span>{{ post.date | date_to_string }} [<a href="{{ post.url }}#isso-thread"></a>]:</span></i>
+            <span>{{ post.content | strip_html | truncatewords:20 }}</span>
+        <span>
+    </li>
+{% endfor %}
+</ol>
 
-<div class="pagination">
-  <ul>
-    {% if paginator.previous_page %}
-      {% if paginator.previous_page == 1 %}
-        <li>
-          <a href="/">&laquo;</a>
-        </li>
-      {% else %}
-        <li>
-          <a href="/page{{paginator.previous_page}}">&laquo;</a>
-        </li>
-      {% endif %}
-    {% else %}
-      <li class="disabled">
-        <a href="#">&laquo;</a>
-      </li>
-    {% endif %}
-    {% if paginator.page == 1 %}
-      <li class="active">
-        <a href="#">1</a>
-      </li>
-    {% else %}
-      <li>
-        <a href="/">1</a>
-      </li>
-    {% endif %}
-    {% for count in (2..paginator.total_pages) %}
-      {% if count == paginator.page %}
-        <li class="active">
-          <a href="#">{{count}}</a>
-        </li>
-      {% else %}
-        <li>
-          <a href="/page{{count}}">{{count}}</a>
-        </li>
-      {% endif %}
-    {% endfor %}
-    {% if paginator.next_page %}
-      <li>
-        <a href="/page{{paginator.next_page}}">&raquo;</a>
-      </li>
-    {% else %}
-      <li class="disabled">
-        <a href="#">&raquo;</a>
-      </li>
-    {% endif %}
-  </ul>
-</div>
+<div class="row">
+    <div class="mx-auto btn-group" role="group">
+        {% if paginator.previous_page %}
+            {% if paginator.previous_page == 1 %}
+                <a href="/" class="btn">&laquo;</a>
+            {% else %}
+                <a href="/page{{paginator.previous_page}}" class="btn" >&laquo;</a>
+            {% endif %}
+        {% else %}
+            <a href="#" class="btn disabled">&laquo;</a>
+        {% endif %}
 
+        {% if paginator.page == 1 %}
+            <a href="#" class="btn">1</a>
+        {% else %}
+            <a href="/" class="btn">1</a>
+        {% endif %}
+
+        {% for count in (2..paginator.total_pages) %}
+            {% if count == paginator.page %}
+                <a href="#" class="btn">{{count}}</a>
+            {% else %}
+                <a href="/page{{count}}" class="btn">{{count}}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if paginator.next_page %}
+            <a href="/page{{paginator.next_page}}" class="btn">&raquo;</a>
+        {% else %}
+            <a href="#" class="btn disabled">&raquo;</a>
+        {% endif %}
+    </div>
+</div>
