@@ -232,6 +232,10 @@ div#container {
  * Social media buttons
  */
 
+div.social-media {
+    height: 1.5em;
+}
+
 div.social-media svg {
     width: 1.5em;
     height: 1.5em;
