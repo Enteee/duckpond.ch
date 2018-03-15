@@ -191,60 +191,6 @@ ol.reverse-roman > li {
     padding-bottom: 1em;
 }
 
-/**
- * Pagination
- */
-
-.pagination {
-    height: 36px;
-    width: 100%;
-    margin: 0 auto; 
-    display: block;
-    text-align: center;
-}
-
-div.pagination {
-    display: inline-block;
-    margin: 0;
-    padding: 0;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-div.pagination li {
-    display: inline;
-}
-
-div.pagination li:first-child a {
-    border-left-width: 1px;
-    -webkit-border-radius: 3px 0 0 3px;
-    -moz-border-radius: 3px 0 0 3px;
-    border-radius: 3px 0 0 3px;
-}
-
-div.pagination li:last-child a {
-    -webkit-border-radius: 0 3px 3px 0;
-    -moz-border-radius: 0 3px 3px 0;
-    border-radius: 0 3px 3px 0;
-}
-
-div.pagination a {
-    float: left;
-    padding: 0 14px;
-    line-height: 20px;
-    border: 1px solid #DDD;
-    border-left-width: 0;
-    font-size: 11px;
-}
-
-div.pagination a:hover, .active a {
-    background-color: whiteSmoke;
-}
-
 /*
  * Links
  */
