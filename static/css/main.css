@@ -158,7 +158,7 @@ a:hover {
  * Reverse roman numbering
  */
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 992px) {
     ol.reverse-roman {
         padding: 0px; 
         display: table;
@@ -286,7 +286,7 @@ nav {
     margin-top: 30px;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 992px) {
     /* not mobilde: */
     nav {
         margin-top: 100px;
