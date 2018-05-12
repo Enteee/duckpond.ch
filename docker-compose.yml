@@ -2,6 +2,7 @@ version: '2'
 
 services:
     jekyll:
+        restart: always
         build: ${CONTAINER_DIR}/jekyll
         command: jekyll build --watch
         volumes:
@@ -9,6 +10,7 @@ services:
             - www:/srv/jekyll/_site:rw
 
     jekyll-dev:
+        restart: always
         build: ${CONTAINER_DIR}/jekyll
         command: jekyll build --drafts --watch
         volumes:
@@ -20,6 +22,7 @@ services:
         build: ${CONTAINER_DIR}/nginx-dockerize
 
     nginx-http:
+        restart: always
         depends_on:
             - nginx-dockerize
         image: nginx-http
@@ -39,6 +42,7 @@ services:
                     - nginx-http
 
     nginx-https:
+        restart: always
         depends_on:
             - nginx-dockerize
             - isso
@@ -67,6 +71,7 @@ services:
             - acme-challenge:/etc/dehydrated/acme-challenge:rw
 
     isso:
+        restart: always
         build: ${CONTAINER_DIR}/isso
         command: -wait tcp://nginx-https:443 -timeout ${DOCKERIZE_TIMEOUT} /sbin/tini -- run.sh
         environment:
@@ -81,6 +86,7 @@ services:
                     - isso
 
     challenges:
+        restart: always
         build: ${CONTAINER_DIR}/challenges
         ports:
             - 8888:8888
