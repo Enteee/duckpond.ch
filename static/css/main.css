@@ -53,42 +53,37 @@ sup {
 }
 
 /*
+* Highlighter
+*/
+.highlighter-rouge {
+    padding: 2px 4px;
+    white-space: nowrap;
+    color: inherit;
+}
+/*
+* Inlide Code: `code`
+*/
+code.highlighter-rouge {
+    background-color: #f9f2f4;
+}
+
+/*
  * Multiline Code:
  * ```bash
  * $ ls
  * ```
- */
-
-div[class^="language-"] {
-    background: #333333;
-    padding: 1em;
-    color: #FFF;
-    overflow-x: auto;
-    font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
-    font-size: 12px;
-    border: none;
-    line-height: initial;
-}
-
-div[class^="language-"] > div > pre {
-    margin: 0px;
-}
-
-div[class^="language-"] > div > pre > code {
-    white-space: pre-wrap;
-}
-
-/**
- * Inline Code: `test`
- */
-
-code.highlighter-rouge {
-    line-height: 1em;
-    padding: 2px 4px;
-    margin: 0px;
-    white-space: nowrap;
-    background-color: #f9f2f4;
+*/
+div.highlighter-rouge {
+    border: 1px #b3b3b3 solid;
     border-radius: 4px;
+}
+
+div.highlighter-rouge > div > pre {
+    margin: 0px;
+}
+
+div.highlighter-rouge > div > pre > code {
+    white-space: pre-wrap;
 }
 
 /*
@@ -110,30 +105,23 @@ blockquote > p {
  * Font and link declarations
  */
 span.time, span.categories {
-    color: #ADADAD;
+    color: #adadad;
     margin-bottom: 5px;
     font-size: 11px;
 }
 
-h1 {
-    font-weight: normal;
+h1, h2, h3, h4, h5, h6 {
     color: #696969;
+}
+
+h1 {
+    font-size: 2.25rem;
+}
+
+h1.author-name, header > h1 {
+    font-weight: normal;
     margin-top: 20px;
     margin-bottom: 10px;
-    font-size: 25px;
-}
-
-h2 {
-    font-weight: normal;
-    color: #666;
-    margin-bottom: 5px;
-    font-size: 20px;
-}
-
-h3 {
-    font-weight: normal;
-    color: #666666;
-    font-size: 15px;
 }
 
 a, a:link, a:active {
