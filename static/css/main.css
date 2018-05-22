@@ -76,6 +76,7 @@ code.highlighter-rouge {
 div.highlighter-rouge {
     border: 1px #b3b3b3 solid;
     border-radius: 4px;
+    word-break: break-all;
 }
 
 div.highlighter-rouge > div > pre {
