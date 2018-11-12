@@ -17,7 +17,7 @@ Upgrade using `pip` is as simple as:
 $ sudo pip install --upgrade pdml2flow
 ```
 
-# Plugin interface version 2
+# Plugin Interface Version 2
 
 Before 5.0 plugins were configure with environment variables. Now, plugins are loaded and configured from the command line. In order to support multiple output sink all the flow writing logic was moved into plugin as well. Using `pdml2flow` with the JSON output plugin:
 ```
