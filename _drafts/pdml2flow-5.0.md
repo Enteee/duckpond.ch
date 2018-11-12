@@ -24,7 +24,7 @@ Before 5.0 plugins were configure with environment variables. Now, plugins are l
 $ pdml2flow +json '-h'
 ```
 
-The argument after the plugin invocation is passed straight to the plugin. Which means that `-h` from the example above, is passed to the JSON plugin. To support this the plugin interface was changed. Now `__init__` will be passed all arguments from the command line. In this case `[ '-h' ]`.
+The argument after the plugin invocation is passed straight to the plugin. Which means that the `-h` from the example above is passed to the JSON plugin. To support this, the plugin interface was changed. Now `__init__` will be passed all arguments (`*args`) from the command line. In this case `[ '-h' ]`.
 
 ```diff
 diff --git a/pdml2flow/plugin.py b/pdml2flow/plugin.py
@@ -56,7 +56,7 @@ index db016a3..06f7425 100644
          """Called every time a new flow is opened."""
 ```
 
-This change alone is not the reason for the interface bump. The true interface break comes from the change in the `flow` class. Before 5.0 frames of the flow were accessible using a getter called `get_frames()`. This was replaced with a more pythonic getter `frames`. Example usage:
+This change alone is not the reason for the interface bump. The true interface break comes from a change in the `flow` class. Before 5.0 frames of the flow were accessible using a getter called `get_frames()`. This was replaced with a more pythonic getter `frames`. Example usage:
 
 ```python
 flow.frames['frame']['time_relative']['raw']
