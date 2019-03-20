@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+    jekyll-dev:
+        restart: "no"
+        volumes:
+            - ./:/srv/jekyll:rw
+
+    nginx-http:
+        restart: "no"
