@@ -26,7 +26,7 @@ The message stream $$ m $$ equals the repeated [base64] encoded [PNG] image. The
 
 Variants of the following graphic are used to visualize the two streams. The outer ring represents the key stream $$ k $$. The inner the message stream $$ m $$. The upper right corner magnifies a section of the two streams.
 
-![repeating pad](/static/posts/broken-one-time-pad-solved/repeating_pad.svg)
+![repeating pad](/static/posts/broken-one-time-pad-solved/repeating_pad.svg){: .stretch }
 *The two streams aligned*
 
 # svvw's solution
@@ -45,14 +45,14 @@ Which tells us $$ \vert c \vert = 14028800 $$ bytes (13.37890625 MiB).
 
 $$ \vert k \vert = 1024 \cdot 100 $$, this number comes directly from the [broken one-time pad].
 
-![repeating pad](/static/posts/broken-one-time-pad-solved/repeating_pad_k_known.svg)
+![repeating pad](/static/posts/broken-one-time-pad-solved/repeating_pad_k_known.svg){: .stretch }
 *Known $$ \vert k \vert $$*
 
 > ... such that each character in block i was encrypted with key-byte i. This means we can simply look for each key-byte separately.
 
 For $$ i = 1 $$ this would correspond to the red lines in the following visualization:
 
-![repeating pad](/static/posts/broken-one-time-pad-solved/repeating_pad_ieq1.svg)
+![repeating pad](/static/posts/broken-one-time-pad-solved/repeating_pad_ieq1.svg){: .stretch }
 *e.g. $$ i = 1 $$*
 
 > When assessing whether or not some byte k could be a key-byte, one simply checks that only valid base64 characters ...
@@ -141,7 +141,7 @@ In order to isolate the image we can either look for the [base64] padding `==`, 
 
 A brute-force attack on the keystream $$ k $$ is possible because $$ M $$ contains only $$ 65 $$ out of $$ 2^8 = 256 $$ possible elements. This means with every $$ c_{i+j \vert k \vert} $$ tested, we can exclude $$ 1 - \frac{65}{256} = 0.74609375 \rightarrow ~ 74.6 \% $$ of the possible $$ k_{i} $$. The huge amount of data $$ \vert c \vert = 14028800 $$ allows for a total of $$ \frac{\vert c \vert}{\vert k \vert} = 137 $$ tests, which reduces the chance for an ambiguity of a certain $$ k_{i} $$ down to $$ (\frac{65}{256})^{137} = 2.7558438890447563 \cdot 10^{-82} $$.
 
-![probability for an ambiguity](/static/posts/broken-one-time-pad-solved/probability_ambiguity.svg)
+![probability for an ambiguity](/static/posts/broken-one-time-pad-solved/probability_ambiguity.svg){: .stretch }
 *"Go towards the light"*
 
 # Ente's solution
@@ -193,7 +193,7 @@ and with the observation from above
     (k_{i} \oplus m_{i}) \oplus (k_{i} \oplus m_{i + s}) = m_{i} \oplus m_{i + s} = m^{'} \qquad \Box
 \end{equation}
 
-![repeating pad](/static/posts/broken-one-time-pad-solved/repeating_pad_xor.svg)
+![repeating pad](/static/posts/broken-one-time-pad-solved/repeating_pad_xor.svg){: .stretch }
 *e.g. $$ m^{'}_{1} = (k_{1} \oplus m_{1}) \oplus (k_{1} \oplus m_{1+s}) $$*
 
 We lack only one last piece of information: $$ \vert m \vert $$. Once we notice that $$ \vert m \vert = \vert m^{'} \vert $$, we can write a python script which searches for repeating sub lists in $$ m^{'} $$ and derive $$ \vert m \vert $$ accordingly.
