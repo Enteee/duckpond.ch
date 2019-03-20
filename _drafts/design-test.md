@@ -20,12 +20,25 @@ keywords: [Design, test]
 ![duck.png](/static/posts/design-test/duck.png)
 *This is a duck. Who would have guessed that?*
 
-### Responsive 
+### Stretched
+
+![duck.png](/static/posts/design-test/duck.png){: .stretch }
+*This is a streched duck.*
+
+### Responsive
 
 {%
-  responsive_image 
+  responsive_image
+  path: static/posts/my-first-moon-image/panorama-processed.png
+  caption: 'A hidden because the duck is smaller than the smallest'
+%}
+
+### Broken Responsive
+
+{%
+  responsive_image
   path: static/posts/design-test/duck.png
-  caption: 'A responsive version'
+  caption: 'Not displayed because the source is smaller than the smallest responsive image'
 %}
 
 ### Broken link
