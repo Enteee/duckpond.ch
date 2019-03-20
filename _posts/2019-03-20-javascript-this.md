@@ -136,6 +136,7 @@ module.exports = function() {
 > However, even though `infoPrintingFunctionB` is being called in the same scope, it was not defined in the same scope. Therefore, it cannot access variables from the calling scope.
 > But this all has to do with the variables and closures; what about this and arrow functions?
 > The this of arrow functions works the same as the closure of other variables in functions. Basically, an arrow function is just saying to include this in the closure that is created. And in the same way you couldn't expect the variables of `fileA` to be accessible to the functions of `fileB`, you can't expect the this of the calling module (`fileA`) to be able to be referenced from the body of the called module (`fileB`).
+
 > TLDR: How do we define "surrounding code", in the expression "lexical this is taken from the surrounding code?" The surrounding code is the scope where the function is defined, not necessarily where it is called.
 
 
