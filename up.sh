@@ -27,7 +27,11 @@ EOF
 done
 
 if [ $DEVELOP = true ]; then
-    docker-compose up jekyll-dev nginx-http
+    docker-compose \
+      -f docker-compose.yml \
+      -f docker-compose-develop.yml \
+      up \
+      jekyll-dev nginx-http
 else
     docker-compose up
 fi
