@@ -1,16 +1,51 @@
 ---
 layout: post
+title: NixOS Lessons Learned & Setup
 categories: []
-keywords: []
+keywords: [NixOS]
 ---
 
-I recently installed nixos
+I recently installed [NixOS]. And I love it. (Thanks [Stuart Moss](https://github.com/stumoss)).
 
+> NixOS is a Linux distribution with a unique approach to package and configuration management.
+> Built on top of the Nix package manager, it is completely declarative, makes upgrading systems reliable, and has many other advantages.
+<< from [NixOS]. >>
+
+In this post I first sum up some lessons learned and then try to dig into some apsects of my configuration.
+Please note that I don't want to provide a full reference of the Nix language or the NixOS here.
+If you are looking for such, please have a look at the end of this article.
+
+I put my NixOS configuration on Github: [Enteee/nixcfg](https://github.com/Enteee/nixcfg).
+Feel free to fork, copy & paste, but note that there are much better configurations out there.
 
 ## Lessons Learned
 
-SSH identity files can not be stored in the nix store, because they are world readable ([Pull Request](https://github.com/NixOS/nix/issues/8)).
+SSH identity files can not be stored in the nix store, because they are world readable, and we all know ssh does not like this ([Pull Request](https://github.com/NixOS/nix/issues/8)).
 Convert those file paths to strings instead: `let IdentityFile= toString ../keys/private/ente-duckpond.ch;`
+
+Module imports binds the importet module to the namespace of the module imporing:
+```
+# users/default.nix
+
+  home-manager.users.ente = { ... }: {
+    imports = [
+      ./ente.nix
+    ];
+  };
+```
+```
+# users/ente.nix
+
+{ ... }:
+{
+  /*
+   * When imported from users/default,
+   * this defines a set in:
+   * home-manager.users.ente
+   */
+  programs = {};
+}
+```
 
 ## System Setup
 
@@ -44,32 +79,60 @@ Therefore I did put that store on duckpond.ch and mount it using sshfs. This is 
 In nix I configured the sshfs mount like this:
 
 ```
-
+  fileSystems."/mnt/keys" = { 
+    device = "ente@duckpond.ch:/home/ente/keys";
+    fsType = "sshfs";
+    options = [
+      "port=7410"
+      ("IdentityFile=" + IdentityFile)
+      "noauto"
+      "x-systemd.automount"
+      "x-systemd.device-timeout=30"
+      "_netdev"
+      "users"
+      "idmap=user"
+      "ControlMaster=no"
+      "allow_other"
+      "reconnect"
+    ];
+  };
 ```
 
 As a password store I am using [KeePass] and the HOTP functionality provided by [OtpKeeProv]. Sadly, [OtpKeeProv] is not packaged in nix, yet.
-Pull request [#57786](https://github.com/NixOS/nixpkgs/pull/57786) should fix this. 
+Pull request [#57786](https://github.com/NixOS/nixpkgs/pull/57786) should fix this. The following configuragion creates an overlay which
+will build the `[OtpKeeProv]` plugin as part of `pkg.keepass'
 
 
 ```
-# ~/.nixpkgs/config.nix
-
-{
-  packageOverrides = pkgs: {
-    keepass = pkgs.keepass.override {
-      plugins = [ pkgs.keepass-keepassotpkeyprov ];
-    };
-  };
-}
+  nixpkgs.overlays = [
+    (
+      self: super:
+      {
+        keepass = super.keepass.override {
+          plugins = [ pkgs.mine.keepass-keepassotpkeyprov ];
+        };
+      }
+    )
+  ];
 ```
+
+
+### Home-Manager integration
 
 ## Ressources
 
-Configurations I really liked:
+### References & Tutorials
+
+* [Nix Pills](https://nixos.org/nixos/nix-pills/)
+* [Nix by Example](https://medium.com/@MrJamesFisher/nix-by-example-a0063a1a4c55)
+* [Nix language Primer](http://www.binaryphile.com/nix/2018/07/22/nix-language-primer.html)
+
+### Configurations
+
 * https://gitlab.com/samueldr/nixos-configuration/tree/master
 * https://github.com/nocoolnametom/nix-configs
 
-[keepass-keepassotpkeyprov](https://github.com/NixOS/nixpkgs/pull/57786)
-
-[KeePass](https://keepass.info/)
-[OtpKeeProv](https://keepass.info/plugins.html#otpkeyprov)
+[NixOS]:https://nixos.org/
+[KeePass]:https://keepass.info/
+[OtpKeeProv]:https://keepass.info/plugins.html#otpkeyprov
+[keepass-keepassotpkeyprov]:https://github.com/NixOS/nixpkgs/pull/57786
