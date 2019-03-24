@@ -109,8 +109,8 @@ object.append().call(object2, ' and such');
 > So, as far as why that doesn't work in the case of `f3`, it's because it's a self-contained module being required. Therefore, it's base-level arrow functions will only use the this in the module, they cannot be bound with bind, call, etc etc as discussed. In order to use call on them, they must be regular functions, not arrow functions.
 > What does "lexical this" mean? It basically works the same as a closure. Take this code for example:
 
-fileA.js:
 ```javascript
+// fileA.js
 (function () {
     var info = 'im here!';
 
@@ -125,8 +125,8 @@ fileA.js:
 })();
 ```
 
-fileB.js:
 ```javascript
+// fileB.js
 module.exports = function() {
     console.log(info);
 };
