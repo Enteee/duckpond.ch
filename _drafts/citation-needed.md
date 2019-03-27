@@ -10,3 +10,4 @@ keywords: []
 * [Gardens as Crypto-Water-Computers](https://pruned.blogspot.com/2012/01/gardens-as-crypto-water-computers.html)
 * [SCRIPT-8 is a fantasy computer for making, sharing, and playing tiny retro-looking games](https://script-8.github.io/)
 * [Google Books - Ngram Viewer](https://books.google.com/ngrams)
+* [AIweirdness - Training neural networks to write unintentional humor as they struggle to imitate human datasets](http://aiweirdness.com/)
