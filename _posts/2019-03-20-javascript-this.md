@@ -8,7 +8,7 @@ keywords: [JavaScript, node.js, this, arrow-functions]
 ![Fuck-this.js](/static/posts/javascript-this/fuck-this.jpg)
 *Fuck-this.js: A reddit post in [r/ProgrammerHumor](https://www.reddit.com/r/ProgrammerHumor/comments/b252lc/javascript_pain/)*
 
-The snippet below tests if node.js [^1] forwards the `this`-objects in various scenarios.
+The snippet below tests if node.js [^1] forwards the `this`-object in various scenarios.
 I wrote it to solve [this issue](https://stackoverflow.com/questions/40135510/set-this-for-required-arrow-functions) when refactoring [FluentFlow].
 If you can think of any unintuitive handling of the `this`-object in JavaScript please share a snippet in the comment section.
 
