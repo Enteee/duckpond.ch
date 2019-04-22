@@ -11,3 +11,5 @@ keywords: []
 * [SCRIPT-8 is a fantasy computer for making, sharing, and playing tiny retro-looking games](https://script-8.github.io/)
 * [Google Books - Ngram Viewer](https://books.google.com/ngrams)
 * [AIweirdness - Training neural networks to write unintentional humor as they struggle to imitate human datasets](http://aiweirdness.com/)
+* [Has the Large Hadron Collider Destroyed the World yet?](http://hasthelargehadroncolliderdestroyedtheworldyet.com/)
+* [How the Boeing 737 Max Disaster Looks to a Software Developer](https://spectrum.ieee.org/aerospace/aviation/how-the-boeing-737-max-disaster-looks-to-a-software-developer)
