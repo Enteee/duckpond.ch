@@ -13,3 +13,4 @@ keywords: []
 * [AIweirdness - Training neural networks to write unintentional humor as they struggle to imitate human datasets](http://aiweirdness.com/)
 * [Has the Large Hadron Collider Destroyed the World yet?](http://hasthelargehadroncolliderdestroyedtheworldyet.com/)
 * [How the Boeing 737 Max Disaster Looks to a Software Developer](https://spectrum.ieee.org/aerospace/aviation/how-the-boeing-737-max-disaster-looks-to-a-software-developer)
+* [Secure Your Containers with this One Weird Trick](https://www.redhat.com/en/blog/secure-your-containers-one-weird-trick)
