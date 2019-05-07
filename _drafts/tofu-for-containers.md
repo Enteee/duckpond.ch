@@ -1,8 +1,8 @@
 ---
 layout: post
 title: TOFU for Containers
-categories: []
-keywords: []
+categories: [tls-tofu, git-sync-mirror, kamikaze, security]
+keywords: [TLS, SSL, TOFU, certificate, container]
 ---
 
 Running containers behind a HTTPS scanning proxy can be tricky. The proxy will
@@ -235,7 +235,8 @@ And then the [self-signed BadSSL] page.
 </html>
 ```
 
-To simulate the HTTPS scanning proxy scenario we first start [mitmproxy/mitmproxy]:
+Let us make the last step, and simulate the HTTPS scanning proxy scenario. For
+this we first start [mitmproxy/mitmproxy]:
 
 ```sh
 $ docker run \
@@ -420,19 +421,20 @@ $ docker run \
 This fails because we didn't specify the mandatory `SRC_REPO` for [enteee/git-sync-mirror].
 Nevertheless, we can still see [enteee/tls-tofu] connecting to google.com. But
 since all certificates are valid it does not add any new trusted ones. After
-this, [`kamikaze`] is destroyed and control is being handed over to [enteee/git-sync-mirror].
+this [`kamikaze`] is destroyed and control is being handed over to [enteee/git-sync-mirror].
 
 ## Caveat: Restart Policies
 
 If an attacker is in control of your network, it is very likely that they can
 also crash applications you are running in containers. If you restart the
 container in this case, your application will re-TOFU. This means an attacker
-can make the container trust every certificate they want. This is very, very bad.
-For this reason always disable automatic container restart with TLS-TOFU.
+can make the container trust every certificate they want. This is very, very
+bad. Always disable automatic container restart with TLS-TOFU exactly for this
+reason.
 
 ## Final Thoughts
 
-The [enteee/tls-tofu] implements a simple, yet powerful base image which allows
+[enteee/tls-tofu] implements a simple, yet powerful base image which allows
 containers to run in environments where something is tampering with the
 Internet's public key infrastructure. I generally disagree that HTTPS scanning
 proxies are leveraging security in a network. They create a single point of
