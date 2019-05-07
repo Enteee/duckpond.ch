@@ -438,8 +438,8 @@ reason.
 containers to run in environments where something is tampering with the
 Internet's public key infrastructure. I generally disagree that HTTPS scanning
 proxies are leveraging security in a network. They create a single point of
-failure, and considerably weaken a secure protocol design to protect privacy
-and confidentiality.
+failure and considerably weaken a secure protocol design to protect privacy and
+confidentiality.
 
 [`kamikaze`]:https://github.com/Enteee/kamikaze#readme
 [self-signed BadSSL]:https://self-signed.badssl.com
