@@ -21,8 +21,8 @@ silently gets up from his desk and punches you in the face. Because you deserve 
 **NEVER EVER DO THIS!**
 
 On the other hand, doing the right thing, forwarding and installing the certificate inside the container
-can be tricky. Because in order to achive this, there are steps needed by the image maintiner as well as
-the poor soul running the container. Woudln't it be nice if you don't need to worry about certificates when
+can be tricky. Because in order to achieve this, there are steps needed by the image maintainer as well as
+the poor soul running the container. Wouldn't it be nice if you don't need to worry about certificates when
 deploying a container?
 
 TOFU can be a good trade-off between security and usability. The idea is simple: Early on, we try to
@@ -84,7 +84,7 @@ But this file is only writable by root and we hopefully don't have those permiss
 a container. 
 
 This problem is solvable with [`kamikaze`]. [`kamikaze`] is a simple setuid binary which allows us to run a command
-as root once. Using the power of [`kamikaze`] we can now append certificates to our tursted list.
+as root once. Using the power of [`kamikaze`] we can now append certificates to our trusted list.
 
 ```sh
 #!/usr/bin/env sh
@@ -96,7 +96,7 @@ openssl s_client -showcerts ${@} 2>/dev/null < /dev/null \
 
 ## [enteee/tls-tofu] Container Image
 
-Based on the `tls-tofu.sh`-idea, I did create the [tls-tofu github project](https://github.com/Enteee/tls-tofu) and
+Based on the `tls-tofu.sh`-idea, I did create the [tls-tofu GitHub project](https://github.com/Enteee/tls-tofu) and
 published [enteee/tls-tofu] containers. Building your own tls-tofu enabled container image is as simple as:
 
 ```sh
@@ -109,7 +109,7 @@ $ docker run -ti tls-tofu-enabled-image
 ~ $
 ```
 
-For example with the just built image we can run a container which trusts the [self-signed badssl] certificate:
+For example with the just built image we can run a container which trusts the [self-signed BadSSL] certificate:
 
 ```sh
 $ docker run \
@@ -197,7 +197,7 @@ SSL-Session:
 ---
 ```
 
-And then the [self-signed badssl] page.
+And then the [self-signed BadSSL] page.
 
 ```html
 <!DOCTYPE html>
@@ -223,7 +223,7 @@ And then the [self-signed badssl] page.
 
 ## A Real World Example: [enteee/git-sync-mirror]
 
-[enteee/git-sync-mirror] is a simple, container image for synchronizaing a git mirror.
+[enteee/git-sync-mirror] is a simple, container image for synchronizing a git mirror.
 In the `Dockerfile` it installs a run script (`/run.sh`) and overwrites the default command. The
 `ENTRYPOINT` is still provided by [enteee/tls-tofu], which does all the TOFU magic.
 
@@ -244,16 +244,16 @@ CMD ["/run.sh"]
 
 ## Caveat: Restart Policies
 
-There is one obvious big mistake you can make when implemetning TOFU on container startup:
+There is one obvious big mistake you can make when implementing TOFU on container startup:
 Restart policies!
 
 Consider what happens if an attacker crash the application running in the container. If
 you restart the container on application crash, they can make the container trust any
 certificate they want. This is very, very bad. For this reason, disable automatic container
-restart when implemnting TLS-TOFU.
+restart when implementing TLS-TOFU.
 
 
 [`kamikaze`]:https://github.com/Enteee/kamikaze#readme
-[self-signed badssl]:https://self-signed.badssl.com
+[self-signed BadSSL]:https://self-signed.badssl.com
 [enteee/tls-tofu]:https://hub.docker.com/r/enteee/tls-tofu
 [enteee/git-sync-mirror]:https://hub.docker.com/r/enteee/git-sync-mirror
