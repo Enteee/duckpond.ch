@@ -20,18 +20,17 @@ In case you decide to disable certificate chain verification, I hope your code r
 silently gets up from his desk and punches you in the face. Because you deserve it.
 **NEVER EVER DO THIS!**
 
-On the other hand, doing the right thing, forwarding and installing the certificate inside the container
-can be tricky. Because in order to achieve this, there are steps needed by the image maintainer as well as
-the poor soul running the container. Wouldn't it be nice if you don't need to worry about certificates when
-deploying a container?
+On the other hand, doing the right thing means forwarding and installing the certificate inside the container.
+In order to achieve this, there are steps needed by the image maintainer as well as the poor soul running the
+container. Wouldn't it be nice if you didn't need to worry about certificates when deploying a container?
 
-TOFU can be a good trade-off between security and usability. The idea is simple: Early on, we try to
+TOFU can be a good trade-off between security and usability. The idea is simple: Early on we try to
 reach out to the internet and simply trust every certificate that we get in response. TOFU then caches
 those certificate and ensures that subsequent connections are secure.
 
 Well, yes, this is not perfectly secure as well. An attacker could make you trust a certificate if they
 are able to intercept the very first connection attempt made by TOFU. But in practice this deemed to be
-quite difficult, especially for long running containers. Also, there are other protocols which implement
+quite difficult. Especially for long running containers. Also, there are other protocols which implement
 TOFU successful.
 
 ```sh
@@ -44,15 +43,15 @@ Warning: Permanently added '[duckpond.ch]:7410,[71.19.149.209]:7410' (ECDSA) to 
 
 # TOFU Inside a Container
 
-Again, what we are trying to do is:
+What we are trying to do is:
 
 1. TLS handshake with the server (or a proxy) and download all certificates.
 2. Install the certificates.
 
 The first step is easy, [`openssl s_client`](https://www.openssl.org/docs/man1.0.2/man1/openssl-s_client.html)
-does most of the heavy TLS lifting for us. I am not a massive fan `openssl` installed in containers. But
-this is probably the right approach since most applications build on top of that library anyways. Using
-openssl we implement `tls-tofu.sh`:
+does most of the heavy TLS lifting for us. I am not a massive fan of having OpenSSL installed in containers.
+But in this case this is probably the right approach. Most applications build on top of that library anyways.
+Using OpenSSL we implement `tls-tofu.sh`:
 
 ```sh
 #!/usr/bin/env sh
@@ -84,7 +83,7 @@ But this file is only writable by root and we hopefully don't have those permiss
 a container. 
 
 This problem is solvable with [`kamikaze`]. [`kamikaze`] is a simple setuid binary which allows us to run a command
-as root once. Using the power of [`kamikaze`] we can now append certificates to our trusted list.
+as root once. Using the power of [`kamikaze`] we can now add trusted certificates.
 
 ```sh
 #!/usr/bin/env sh
@@ -97,24 +96,29 @@ openssl s_client -showcerts ${@} 2>/dev/null < /dev/null \
 ## [enteee/tls-tofu] Container Image
 
 Based on the `tls-tofu.sh`-idea, I did create the [tls-tofu GitHub project](https://github.com/Enteee/tls-tofu) and
-published [enteee/tls-tofu] containers. Building your own tls-tofu enabled container image is as simple as:
+published [enteee/tls-tofu] container images. Building and running your own TLS-TOFU enabled image is as simple as:
 
 ```sh
 $ docker build -t tls-tofu-enabled-image - <<EOF
   FROM enteee/tls-tofu
   # IMPORTANT: Drop privileges
   USER nobody
+
+  # Run the application
+  CMD ["echo", "Hello World!"]
 EOF
 $ docker run -ti tls-tofu-enabled-image
-~ $
+Hello World!
 ```
 
-For example with the just built image we can run a container which trusts the [self-signed BadSSL] certificate:
+In a more elaborate example, we can use the just built image to run a container which trusts the [self-signed BadSSL]
+certificate:
 
 ```sh
 $ docker run \
+  -ti \
   -e TLS_TOFU_HOST="self-signed.badssl.com" \
-  -ti tls-tofu-enabled-image \
+  tls-tofu-enabled-image \
   curl https://self-signed.badssl.com/
 ```
 
@@ -221,14 +225,155 @@ And then the [self-signed BadSSL] page.
 </html>
 ```
 
+To simulate the HTTPS scanning proxy scenario we first start [mitmproxy/mitmproxy]:
+
+```sh
+$ docker run \
+  -ti \
+  --name mitmproxy \
+  mitmproxy/mitmproxy mitmdump
+Proxy server listening at http://*:8080
+```
+
+And then connect to [duckpond.ch] through the proxy:
+
+```sh
+$ docker run \
+  -ti \
+  --link mitmproxy \
+  -e TLS_TOFU_HOST="mitmproxy" \
+  -e TLS_TOFU_PORT="8080" \
+  -e TLS_TOFU_S_CLIENT_ARGS="-servername duckpond.ch" \
+  tls-tofu-enabled-image \
+  curl -x http://mitmproxy:8080 https://duckpond.ch
+CONNECTED(00000003)
+---
+Certificate chain
+ 0 s:
+   i:CN = mitmproxy, O = mitmproxy
+-----BEGIN CERTIFICATE-----
+MIICwjCCAaqgAwIBAgIGDinF743TMA0GCSqGSIb3DQEBCwUAMCgxEjAQBgNVBAMM
+CW1pdG1wcm94eTESMBAGA1UECgwJbWl0bXByb3h5MB4XDTE5MDUwNTE5MzUyNVoX
+DTIxMDUwNjE5MzUyNVowADCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB
+AJh4sql+hJEvAstUd+gxcWIxy+vN9MC78WbT5Ox2oB7YO0r+3CCkeki3SehEBtHj
+5MolxsspJipxF3gHN9el36vcN9dbj1sIGGukT7az7u8M0al4cVnP3Dyt+Fhb1Y2K
+7UEiA2WibWEzeAlNbxASdHt7xqHTQfHMDBr+l1odg7eRe2QquFuLI8PhhSw1XSXw
+yxY+A6/xxwkMcqU9s9pgQhP51qzAlY86SgZqHtgzCn7K0p3gCO+H2jhQu5R45h3X
+1mJY6iRHf5WnEAPe/kdyjkme+8TsgeiZ13y7o+K9a6XwHQD1jTZFE9GW27cyVst/
+0RHt6R+50DRSDJ1onPHUCGcCAwEAAaMaMBgwFgYDVR0RBA8wDYILZHVja3BvbmQu
+Y2gwDQYJKoZIhvcNAQELBQADggEBAC7XwulSPQPHmESiQWiWjuDtyHu85lsGBvxS
+C31zJRva8NuPlzIi4w3wQXXkuH+skNvTZ81WJxfxw+WjwcglYfmKG6yQVtZ0tdVk
+uYUVq2Okn8oBSAI57XNaKqCGTioQhk7Mk/P93Y49UuNF/AC47IvxOWkj9QFm/wtu
++zRfko5VC7W7f1ji5tgnJduD46lR2hen12Px3tWyRWc1ECFjXZ4lBT1xUZIloPjQ
+5PGDEIrg0zTmr3ZqUBGBKEjF1zrzXC3myMStn5pn0mBHgH0Fgrooswad0UzLAoDL
+ECDdplotyGL9Wc1/CzLHsvsw8lvGCimi0ul0QOn9VQtnLKF/w/0=
+-----END CERTIFICATE-----
+ 1 s:CN = mitmproxy, O = mitmproxy
+   i:CN = mitmproxy, O = mitmproxy
+-----BEGIN CERTIFICATE-----
+MIIDoTCCAomgAwIBAgIGDinFhnrGMA0GCSqGSIb3DQEBCwUAMCgxEjAQBgNVBAMM
+CW1pdG1wcm94eTESMBAGA1UECgwJbWl0bXByb3h5MB4XDTE5MDUwNTE5MjM1N1oX
+DTIyMDUwNjE5MjM1N1owKDESMBAGA1UEAwwJbWl0bXByb3h5MRIwEAYDVQQKDAlt
+aXRtcHJveHkwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCYeLKpfoSR
+LwLLVHfoMXFiMcvrzfTAu/Fm0+TsdqAe2DtK/twgpHpIt0noRAbR4+TKJcbLKSYq
+cRd4BzfXpd+r3DfXW49bCBhrpE+2s+7vDNGpeHFZz9w8rfhYW9WNiu1BIgNlom1h
+M3gJTW8QEnR7e8ah00HxzAwa/pdaHYO3kXtkKrhbiyPD4YUsNV0l8MsWPgOv8ccJ
+DHKlPbPaYEIT+daswJWPOkoGah7YMwp+ytKd4Ajvh9o4ULuUeOYd19ZiWOokR3+V
+pxAD3v5Hco5JnvvE7IHomdd8u6PivWul8B0A9Y02RRPRltu3MlbLf9ER7ekfudA0
+UgydaJzx1AhnAgMBAAGjgdAwgc0wDwYDVR0TAQH/BAUwAwEB/zARBglghkgBhvhC
+AQEEBAMCAgQweAYDVR0lBHEwbwYIKwYBBQUHAwEGCCsGAQUFBwMCBggrBgEFBQcD
+BAYIKwYBBQUHAwgGCisGAQQBgjcCARUGCisGAQQBgjcCARYGCisGAQQBgjcKAwEG
+CisGAQQBgjcKAwMGCisGAQQBgjcKAwQGCWCGSAGG+EIEATAOBgNVHQ8BAf8EBAMC
+AQYwHQYDVR0OBBYEFAHmNa8e++bQ4Nr1XzdqPek/tp4eMA0GCSqGSIb3DQEBCwUA
+A4IBAQAxC9SNuBLjVhSY2ilJRQc21bv/WoJAcmGtxLxhXn43RwnYsNxKDmS3bRwj
+CbKOX2mhV7zqKRDvrA0iRoWndGwfQodnc9eairo3LSLCqg8+vFkwgaRQICyCkv18
+6ElxxHVQinNrd4XyaStqrweqK+gbB1NymR/87nOiRXzK9utGjESifaUNl97fymTg
+LL8BwQH5iHHlU5ud14AKkwr14QWrTzTbyP/McxLo/KfTjVCl30YO2onzMpwu2oW5
+cRRfx96ajPoKwtVFBJTX/hdBoqkovNFvRSITMU3VHEKRfoIG2OJRsA1dl7ezb6Ao
+Uf30567z+pXa2Dp8YOnUA3ARWBCu
+-----END CERTIFICATE-----
+---
+Server certificate
+subject=
+
+issuer=CN = mitmproxy, O = mitmproxy
+
+---
+No client certificate CA names sent
+Peer signing digest: SHA512
+Peer signature type: RSA
+Server Temp Key: ECDH, P-256, 256 bits
+---
+SSL handshake has read 2316 bytes and written 439 bytes
+Verification error: self signed certificate in certificate chain
+---
+New, TLSv1.2, Cipher is ECDHE-RSA-AES128-GCM-SHA256
+Server public key is 2048 bit
+Secure Renegotiation IS supported
+No ALPN negotiated
+SSL-Session:
+    Protocol  : TLSv1.2
+    Cipher    : ECDHE-RSA-AES128-GCM-SHA256
+    Session-ID: D15B53E637A92CF86580E51B8053626F50F3256138E5F5A55BAD5B37A903CE67
+    Session-ID-ctx: 
+    Master-Key: 72C569F0C2C5A4EF5EB666DE0CF7B908411854010BA303F53DB9199E7872F68EE0E524E780DDF003819CA8DFBB3A1C3E
+    PSK identity: None
+    PSK identity hint: None
+    SRP username: None
+    TLS session ticket lifetime hint: 300 (seconds)
+    TLS session ticket:
+    0000 - 24 fe cb 42 a8 12 eb b3-35 29 6a 12 11 79 af ba   $..B....5)j..y..
+    0010 - 63 50 85 58 bc 6f a7 5a-c5 5f 9b 11 21 97 23 ed   cP.X.o.Z._..!.#.
+    0020 - 54 9c 99 0c 5a 26 a8 75-21 06 b8 26 e1 57 f7 f0   T...Z&.u!..&.W..
+    0030 - f1 a0 c1 5f a3 d8 25 36-4f de cc 6d 76 c2 d9 89   ..._..%6O..mv...
+    0040 - 99 46 ec 64 8d d8 c1 41-04 58 4c 7a bf 8f 1c a8   .F.d...A.XLz....
+    0050 - 8e b4 42 bd 2b 73 03 07-05 26 36 66 66 53 ac 63   ..B.+s...&6ffS.c
+    0060 - 52 98 c9 31 cb ea 5d c4-b6 76 4a d7 c4 79 1c 4c   R..1..]..vJ..y.L
+    0070 - f1 3b 76 04 ed 15 07 ff-d0 2d c7 92 6c d8 56 f9   .;v......-..l.V.
+    0080 - 94 19 5a 61 9b 58 db 68-1d 2e 0c 87 fb f9 64 38   ..Za.X.h......d8
+    0090 - 56 5a 8f 4e 2e a9 31 f6-ac db c9 30 51 5e 84 00   VZ.N..1....0Q^..
+    00a0 - 29 fc 48 d9 70 f3 87 3f-07 b9 11 9b 2a 7a 72 ce   ).H.p..?....*zr.
+
+    Start Time: 1557257748
+    Timeout   : 7200 (sec)
+    Verify return code: 19 (self signed certificate in certificate chain)
+    Extended master secret: no
+---
+<!DOCTYPE html>
+<html>
+    <head>
+...
+```
+
+From the [mitmproxy/mitmproxy] output we get that the request did actually go through the 
+proxy. Without `curl` complaining about certificate verification issues.
+
+```
+172.17.0.3:47120: clientconnect
+172.17.0.3:47120: Client Handshake failed. The client may not trust the proxy's certificate for mitmproxy.
+172.17.0.3:47120: clientdisconnect
+172.17.0.3:47122: clientconnect
+172.17.0.3:47122: Client Handshake failed. The client may not trust the proxy's certificate for mitmproxy.
+172.17.0.3:47122: clientdisconnect
+172.17.0.3:47124: clientconnect
+172.17.0.3:47124: GET https://duckpond.ch/
+               << 200 OK 20.86k
+172.17.0.3:47124: clientdisconnect
+```
+
+Mission accomplished.
+
 ## A Real World Example: [enteee/git-sync-mirror]
 
-[enteee/git-sync-mirror] is a simple, container image for synchronizing a git mirror.
+[enteee/git-sync-mirror] is a simple container image for synchronizing a git mirror.
 In the `Dockerfile` it installs a run script (`/run.sh`) and overwrites the default command. The
-`ENTRYPOINT` is still provided by [enteee/tls-tofu], which does all the TOFU magic.
+`ENTRYPOINT` is still provided by [enteee/tls-tofu] which does all the TOFU magic.
 
 ```sh
 FROM enteee/tls-tofu:alpine-latest
+
+# Disable TLS-TOFU by default
+ENV TLS_TOFU false
 
 RUN set -exuo pipefail \
   && apk add \
@@ -242,18 +387,45 @@ COPY run.sh /run.sh
 CMD ["/run.sh"]
 ```
 
+When running this container with `-e TLS_TOFU=true` [enteee/git-sync-mirror] silently does TLS-TOFU.
+And if we additionaly specify `-e TLS_TOFU_DEBUG=true`, we can see what is happening under to hood.
+
+```sh
+$ docker run \
+  -e TLS_TOFU=true \
+  -e TLS_TOFU_DEBUG=true \
+  git-sync-mirror
++ '[' true '=' true ]
++ openssl s_client -verify_return_error -connect google.com:443 -servername google.com
++ destroy_kamikaze
++ '[' -x /kamikaze ]
++ /kamikaze true
++ exec sh -c /run.sh
+/run.sh: line 5: SRC_REPO: Missing source repository
+```
+
+This fails because we didn't specify the mandatory `SRC_REPO` for [enteee/git-sync-mirror]. Nevertheless,
+we can still see [enteee/tls-tofu] connecting to google.com. But since all certificates are valid it does
+not add any new trusted ones. After this, [`kamikaze`] is destroyed and control is beeing handed over
+to [enteee/git-sync-mirror].
+
 ## Caveat: Restart Policies
 
-There is one obvious big mistake you can make when implementing TOFU on container startup:
-Restart policies!
+If an attacker is in control of your network, it is very likely that they can also crash applications you
+are running in containers. If you restart the container in this case, your application will re-TOFU. This
+means an attacker can make the container trust every certificate they want. This is very, very bad. For
+this reason always disable automatic container restart with TLS-TOFU.
 
-Consider what happens if an attacker crash the application running in the container. If
-you restart the container on application crash, they can make the container trust any
-certificate they want. This is very, very bad. For this reason, disable automatic container
-restart when implementing TLS-TOFU.
+## Final Thoughts
 
+The [enteee/tls-tofu] implements a simple, yet powerful base image which allows containers to run in 
+environments where something is tampering with the internet's public key infrastructure. I generally disagree
+that HTTPS scanning proxies are leveraging security in a network. They create a single point of faiure,
+and considerably weaken a secure protocol design to protect privacy and confidentiality.
 
 [`kamikaze`]:https://github.com/Enteee/kamikaze#readme
 [self-signed BadSSL]:https://self-signed.badssl.com
 [enteee/tls-tofu]:https://hub.docker.com/r/enteee/tls-tofu
 [enteee/git-sync-mirror]:https://hub.docker.com/r/enteee/git-sync-mirror
+[mitmproxy/mitmproxy]:https://hub.docker.com/r/mitmproxy/mitmproxy
+[duckpond.ch]:https://duckpond.ch
