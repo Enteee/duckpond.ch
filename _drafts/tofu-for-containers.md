@@ -388,7 +388,7 @@ CMD ["/run.sh"]
 ```
 
 When running this container with `-e TLS_TOFU=true` [enteee/git-sync-mirror] silently does TLS-TOFU.
-And if we additionaly specify `-e TLS_TOFU_DEBUG=true`, we can see what is happening under to hood.
+And if we additionally specify `-e TLS_TOFU_DEBUG=true`, we can see what is happening under to hood.
 
 ```sh
 $ docker run \
@@ -406,7 +406,7 @@ $ docker run \
 
 This fails because we didn't specify the mandatory `SRC_REPO` for [enteee/git-sync-mirror]. Nevertheless,
 we can still see [enteee/tls-tofu] connecting to google.com. But since all certificates are valid it does
-not add any new trusted ones. After this, [`kamikaze`] is destroyed and control is beeing handed over
+not add any new trusted ones. After this, [`kamikaze`] is destroyed and control is being handed over
 to [enteee/git-sync-mirror].
 
 ## Caveat: Restart Policies
@@ -419,8 +419,8 @@ this reason always disable automatic container restart with TLS-TOFU.
 ## Final Thoughts
 
 The [enteee/tls-tofu] implements a simple, yet powerful base image which allows containers to run in 
-environments where something is tampering with the internet's public key infrastructure. I generally disagree
-that HTTPS scanning proxies are leveraging security in a network. They create a single point of faiure,
+environments where something is tampering with the Internet's public key infrastructure. I generally disagree
+that HTTPS scanning proxies are leveraging security in a network. They create a single point of failure,
 and considerably weaken a secure protocol design to protect privacy and confidentiality.
 
 [`kamikaze`]:https://github.com/Enteee/kamikaze#readme
