@@ -5,33 +5,38 @@ categories: []
 keywords: []
 ---
 
-Running containers behind a HTTPS scanning proxy can be tricky. The proxy will send a certificate which is
-not trusted by the container with the effect of breaking the internet.
+Running containers behind a HTTPS scanning proxy can be tricky. The proxy will
+send a certificate which is not trusted by the container with the effect of
+breaking the internet.
 
 ![broken internet](/static/posts/tofu-for-containers/broken-internet.gif)
 
-There are three possible ways how to make the internet work again:
+There are three possible ways to make the internet work again:
 
 * Disable SSL/TLS certificate chain verification
 * Forward and install the scanning certificate
 * Implement Trust On First Use (TOFU)
 
-In case you decide to disable certificate chain verification, I hope your code reviewing fellow just
-silently gets up from his desk and punches you in the face. Because you deserve it.
-**NEVER EVER DO THIS!**
+In case you decide to disable certificate chain verification, I hope your code
+reviewing fellow just silently gets up from his desk and punches you in the
+face. Because you deserve it. **NEVER EVER DO THIS!**
 
-On the other hand, doing the right thing means forwarding and installing the certificate inside the container.
-In order to achieve this, there are steps needed by the image maintainer as well as the poor soul running the
-container. Wouldn't it be nice if you didn't need to worry about certificates when deploying a container?
+On the other hand, doing the right thing means forwarding and installing the
+certificate inside the container. In order to achieve this there are steps
+needed by the image maintainer as well as the poor soul running the container.
+Wouldn't it be nice if you didn't need to worry about certificates when
+deploying a container?
 
-TOFU can be a good trade-off between security and usability. The idea is simple: Early on we try to
-reach out to the internet and simply trust every certificate that we get in response. TOFU then caches
-those certificate and ensures that subsequent connections are secure.
+TOFU can be a good trade-off between security and usability. The idea is simple:
+Early on we try to reach out to the internet and simply trust every certificate
+that we get in response. TOFU then caches those certificate and ensures that
+subsequent connections are secure.
 
-Well, yes, this is not perfectly secure as well. An attacker could make you trust a certificate if they
-are able to intercept the very first connection attempt made by TOFU. But in practice this deemed to be
-quite difficult. Especially for long running containers. Also, there are other protocols which implement
-TOFU successful.
+Well, yes, this is not perfectly secure as well. An attacker could make you
+trust a certificate if they are able to intercept the very first connection
+attempt made by TOFU. But in practice this deemed to be quite difficult.
+Especially for long running containers. Also there are other protocols which
+implement TOFU successful.
 
 ```sh
 $ ssh duckpond.ch
@@ -49,9 +54,10 @@ What we are trying to do is:
 2. Install the certificates.
 
 The first step is easy, [`openssl s_client`](https://www.openssl.org/docs/man1.0.2/man1/openssl-s_client.html)
-does most of the heavy TLS lifting for us. I am not a massive fan of having OpenSSL installed in containers.
-But in this case this is probably the right approach. Most applications build on top of that library anyways.
-Using OpenSSL we implement `tls-tofu.sh`:
+does most of the heavy TLS lifting for us. I am not a massive fan of having
+OpenSSL installed in containers. But in this case this is probably the right
+approach. Most applications build on top of that library anyways. Using OpenSSL
+we implement `tls-tofu.sh`:
 
 ```sh
 #!/usr/bin/env sh
@@ -60,7 +66,8 @@ openssl s_client -showcerts ${@} 2>/dev/null < /dev/null \
 | sed -n '/-----BEGIN/,/-----END/p'
 ```
 
-Now we can easily print all the certificates sent to us either by the server or a transparent proxy:
+Now we can easily print all the certificates sent to us either by the server or
+a transparent proxy:
 
 ```sh
 $ ./tls-tofu.sh -connect duckpond.ch:443 -servername duckpond.ch
@@ -78,12 +85,14 @@ KOqkqm57TH2H3eDJAkSnh6/DNFu0Qg==
 -----END CERTIFICATE-----
 ```
 
-In order to make the system trust those certificates, we need to store them in `/etc/ssl/certs/ca-certificates.crt`.
-But this file is only writable by root and we hopefully don't have those permissions when running scripts inside
-a container. 
+In order to make the system trust those certificates, we need to store them in
+`/etc/ssl/certs/ca-certificates.crt`. But this file is only writable by root and
+we hopefully don't have those permissions when running scripts inside a
+container.
 
-This problem is solvable with [`kamikaze`]. [`kamikaze`] is a simple setuid binary which allows us to run a command
-as root once. Using the power of [`kamikaze`] we can now add trusted certificates.
+This problem is solvable with [`kamikaze`]. [`kamikaze`] is a simple setuid
+binary which allows us to run a command as root once. Using the power of
+[`kamikaze`] we can now add trusted certificates.
 
 ```sh
 #!/usr/bin/env sh
@@ -95,8 +104,9 @@ openssl s_client -showcerts ${@} 2>/dev/null < /dev/null \
 
 ## [enteee/tls-tofu] Container Image
 
-Based on the `tls-tofu.sh`-idea, I did create the [tls-tofu GitHub project](https://github.com/Enteee/tls-tofu) and
-published [enteee/tls-tofu] container images. Building and running your own TLS-TOFU enabled image is as simple as:
+Based on the `tls-tofu.sh`-idea, I did create the [tls-tofu GitHub project](https://github.com/Enteee/tls-tofu)
+and published [enteee/tls-tofu] container images. Building and running your own
+TLS-TOFU enabled image is as simple as:
 
 ```sh
 $ docker build -t tls-tofu-enabled-image - <<EOF
@@ -111,8 +121,8 @@ $ docker run -ti tls-tofu-enabled-image
 Hello World!
 ```
 
-In a more elaborate example, we can use the just built image to run a container which trusts the [self-signed BadSSL]
-certificate:
+In a more elaborate example, we can use the just built image to run a container
+which trusts the [self-signed BadSSL] certificate.
 
 ```sh
 $ docker run \
@@ -345,8 +355,9 @@ SSL-Session:
 ...
 ```
 
-From the [mitmproxy/mitmproxy] output we get that the request did actually go through the 
-proxy. Without `curl` complaining about certificate verification issues.
+From the [mitmproxy/mitmproxy] output we get that the request did actually go
+through the proxy. All this without `curl` complaining about certificate
+verification issues.
 
 ```
 172.17.0.3:47120: clientconnect
@@ -365,9 +376,10 @@ Mission accomplished.
 
 ## A Real World Example: [enteee/git-sync-mirror]
 
-[enteee/git-sync-mirror] is a simple container image for synchronizing a git mirror.
-In the `Dockerfile` it installs a run script (`/run.sh`) and overwrites the default command. The
-`ENTRYPOINT` is still provided by [enteee/tls-tofu] which does all the TOFU magic.
+[enteee/git-sync-mirror] is a simple container image for synchronizing a git
+mirror. Inside the `Dockerfile` it installs a run script (`/run.sh`) and
+overwrites the default command. The `ENTRYPOINT` is still provided by
+[enteee/tls-tofu] which does all the TOFU magic.
 
 ```sh
 FROM enteee/tls-tofu:alpine-latest
@@ -387,8 +399,9 @@ COPY run.sh /run.sh
 CMD ["/run.sh"]
 ```
 
-When running this container with `-e TLS_TOFU=true` [enteee/git-sync-mirror] silently does TLS-TOFU.
-And if we additionally specify `-e TLS_TOFU_DEBUG=true`, we can see what is happening under to hood.
+When running this container with `-e TLS_TOFU=true` [enteee/git-sync-mirror]
+silently does TLS-TOFU. And if we additionally specify `-e TLS_TOFU_DEBUG=true`,
+we can see what is happening under to hood.
 
 ```sh
 $ docker run \
@@ -404,24 +417,27 @@ $ docker run \
 /run.sh: line 5: SRC_REPO: Missing source repository
 ```
 
-This fails because we didn't specify the mandatory `SRC_REPO` for [enteee/git-sync-mirror]. Nevertheless,
-we can still see [enteee/tls-tofu] connecting to google.com. But since all certificates are valid it does
-not add any new trusted ones. After this, [`kamikaze`] is destroyed and control is being handed over
-to [enteee/git-sync-mirror].
+This fails because we didn't specify the mandatory `SRC_REPO` for [enteee/git-sync-mirror].
+Nevertheless, we can still see [enteee/tls-tofu] connecting to google.com. But
+since all certificates are valid it does not add any new trusted ones. After
+this, [`kamikaze`] is destroyed and control is being handed over to [enteee/git-sync-mirror].
 
 ## Caveat: Restart Policies
 
-If an attacker is in control of your network, it is very likely that they can also crash applications you
-are running in containers. If you restart the container in this case, your application will re-TOFU. This
-means an attacker can make the container trust every certificate they want. This is very, very bad. For
-this reason always disable automatic container restart with TLS-TOFU.
+If an attacker is in control of your network, it is very likely that they can
+also crash applications you are running in containers. If you restart the
+container in this case, your application will re-TOFU. This means an attacker
+can make the container trust every certificate they want. This is very, very bad.
+For this reason always disable automatic container restart with TLS-TOFU.
 
 ## Final Thoughts
 
-The [enteee/tls-tofu] implements a simple, yet powerful base image which allows containers to run in 
-environments where something is tampering with the Internet's public key infrastructure. I generally disagree
-that HTTPS scanning proxies are leveraging security in a network. They create a single point of failure,
-and considerably weaken a secure protocol design to protect privacy and confidentiality.
+The [enteee/tls-tofu] implements a simple, yet powerful base image which allows
+containers to run in environments where something is tampering with the
+Internet's public key infrastructure. I generally disagree that HTTPS scanning
+proxies are leveraging security in a network. They create a single point of
+failure, and considerably weaken a secure protocol design to protect privacy
+and confidentiality.
 
 [`kamikaze`]:https://github.com/Enteee/kamikaze#readme
 [self-signed BadSSL]:https://self-signed.badssl.com
