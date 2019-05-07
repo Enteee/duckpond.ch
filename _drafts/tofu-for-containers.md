@@ -1,26 +1,38 @@
 ---
 layout: post
+title: TOFU for Containers
 categories: []
 keywords: []
 ---
 
-Running containers behind a HTTPS scanning proxy can be tricky.
-The proxy will send a certificate which is not trusted by the container, with the effect of breaking the internet for the container.
+Running containers behind a HTTPS scanning proxy can be tricky. The proxy will send a certificate which is
+not trusted by the container with the effect of breaking the internet.
 
 ![broken internet](/static/posts/tofu-for-containers/broken-internet.gif)
 
 There are three possible ways how to make the internet work again:
+
 * Disable SSL/TLS certificate chain verification
-* Forward and install the scanning certificate inside the container
+* Forward and install the scanning certificate
 * Implement Trust On First Use (TOFU)
 
-In case you decide to disable certificate chain verification, I hope your code reviewing fellow just silently gets up from his desk and punches you in the face. Because you deserve it. **NEVER EVER DO THIS!**
+In case you decide to disable certificate chain verification, I hope your code reviewing fellow just
+silently gets up from his desk and punches you in the face. Because you deserve it.
+**NEVER EVER DO THIS!**
 
-On the other hand, doing the right thing, forwarding and installing the certificate inside the container can be tricky. Because in order to achivet this, there are steps needed by the image maintiner as well as the poor soul running the container. Woudln't it be nice if you don't need to worry about certificates when deploying a container?
+On the other hand, doing the right thing, forwarding and installing the certificate inside the container
+can be tricky. Because in order to achive this, there are steps needed by the image maintiner as well as
+the poor soul running the container. Woudln't it be nice if you don't need to worry about certificates when
+deploying a container?
 
-TOFU can be a good trade-off between security and usability. The idea is simple: Early on we try to reach out to the internet and simply trust every certificate that we get in response. TOFU then caches those certificate and ensures that subsequent connections are secure.
+TOFU can be a good trade-off between security and usability. The idea is simple: Early on, we try to
+reach out to the internet and simply trust every certificate that we get in response. TOFU then caches
+those certificate and ensures that subsequent connections are secure.
 
-Well, yes, this is not secure as well. An attacker could make you trust a certificate if they are able to intercept the very first connection attempt made by TOFU. But in practice this deemed to be quite difficult, especially for long running containers. Also, there are other protocols which implement TOFU successful.
+Well, yes, this is not perfectly secure as well. An attacker could make you trust a certificate if they
+are able to intercept the very first connection attempt made by TOFU. But in practice this deemed to be
+quite difficult, especially for long running containers. Also, there are other protocols which implement
+TOFU successful.
 
 ```sh
 $ ssh duckpond.ch
@@ -35,9 +47,12 @@ Warning: Permanently added '[duckpond.ch]:7410,[71.19.149.209]:7410' (ECDSA) to 
 Again, what we are trying to do is:
 
 1. TLS handshake with the server (or a proxy) and download all certificates.
-2. Install the certificates as trusted.
+2. Install the certificates.
 
-The first step is easy, [`openssl s_client`](https://www.openssl.org/docs/man1.0.2/man1/openssl-s_client.html) does most of the heavy TLS lifting for us. I am not a massive fan `openssl` installed in containers. But since most applications build on top of openssl, this is probably the right approch. Using openssl we implement `tls-tofu.sh`:
+The first step is easy, [`openssl s_client`](https://www.openssl.org/docs/man1.0.2/man1/openssl-s_client.html)
+does most of the heavy TLS lifting for us. I am not a massive fan `openssl` installed in containers. But
+this is probably the right approach since most applications build on top of that library anyways. Using
+openssl we implement `tls-tofu.sh`:
 
 ```sh
 #!/usr/bin/env sh
@@ -46,7 +61,7 @@ openssl s_client -showcerts ${@} 2>/dev/null < /dev/null \
 | sed -n '/-----BEGIN/,/-----END/p'
 ```
 
-Using this, we can easily optain all the certificates sent to us either by the server or a transparent proxy:
+Now we can easily print all the certificates sent to us either by the server or a transparent proxy:
 
 ```sh
 $ ./tls-tofu.sh -connect duckpond.ch:443 -servername duckpond.ch
@@ -64,9 +79,12 @@ KOqkqm57TH2H3eDJAkSnh6/DNFu0Qg==
 -----END CERTIFICATE-----
 ```
 
-In order to make the system trust those certificates, we need to store them in `/etc/ssl/certs/ca-certificates.crt`. But the `ca-certificates.crt` file is only writable by root and we hopefully don't have those permissions when running scripts inside a container. 
+In order to make the system trust those certificates, we need to store them in `/etc/ssl/certs/ca-certificates.crt`.
+But this file is only writable by root and we hopefully don't have those permissions when running scripts inside
+a container. 
 
-This problem is solvable with [`kamikaze`]. [`kamikaze`] is a simple setuid binary which allows us to run a command as root once. Using the power of [`kamikaze`] we can now append the certificates to our tursted list of certificates ugint `tee`:
+This problem is solvable with [`kamikaze`]. [`kamikaze`] is a simple setuid binary which allows us to run a command
+as root once. Using the power of [`kamikaze`] we can now append certificates to our tursted list.
 
 ```sh
 #!/usr/bin/env sh
@@ -76,9 +94,10 @@ openssl s_client -showcerts ${@} 2>/dev/null < /dev/null \
 | /kamikaze tee -a /etc/ssl/certs/ca-certificates.crt > /dev/null
 ```
 
-## `tls-tofu.sh` in a Container
+## [enteee/tls-tofu] Container Image
 
-Based on the `tls-tofu.sh`-idea, I did create the [tls-tofu github project](https://github.com/Enteee/tls-tofu) and published [tls-tofu containers](https://hub.docker.com/r/enteee/tls-tofu). Building your own tls-tofu enabled container image is as simple as:
+Based on the `tls-tofu.sh`-idea, I did create the [tls-tofu github project](https://github.com/Enteee/tls-tofu) and
+published [enteee/tls-tofu] containers. Building your own tls-tofu enabled container image is as simple as:
 
 ```sh
 $ docker build -t tls-tofu-enabled-image - <<EOF
@@ -90,11 +109,11 @@ $ docker run -ti tls-tofu-enabled-image
 ~ $
 ```
 
-Using this image could now run a container which trusts the [self-signed badssl] certificate:
+For example with the just built image we can run a container which trusts the [self-signed badssl] certificate:
 
 ```sh
 $ docker run \
-  -e TLS_TOFU="-connect self-signed.badssl.com:443" \
+  -e TLS_TOFU_HOST="self-signed.badssl.com" \
   -ti tls-tofu-enabled-image \
   curl https://self-signed.badssl.com/
 ```
@@ -202,14 +221,39 @@ And then the [self-signed badssl] page.
 </html>
 ```
 
-## Does it work?
+## A Real World Example: [enteee/git-sync-mirror]
 
-## Don'ts: Restart Policies
+[enteee/git-sync-mirror] is a simple, container image for synchronizaing a git mirror.
+In the `Dockerfile` it installs a run script (`/run.sh`) and overwrites the default command. The
+`ENTRYPOINT` is still provided by [enteee/tls-tofu], which does all the TOFU magic.
 
-There is one obvious big mistake you can make when implemetning TOFU on container startup: Restart policies! Consider what happens if an attacker crash the application running in the container. If you restart the container and re-TOFU, they can make the container trust any certificate. This is very, very bad.
+```sh
+FROM enteee/tls-tofu:alpine-latest
 
-Therefore, disable automatic container restart when implemnting TOFU or store certificates trusted by TOFU in a persistent volume.
+RUN set -exuo pipefail \
+  && apk add \
+    git \
+  && addgroup -g 1000 -S git \
+  && adduser -u 1000 -S git -G git
+
+USER git:git
+
+COPY run.sh /run.sh
+CMD ["/run.sh"]
+```
+
+## Caveat: Restart Policies
+
+There is one obvious big mistake you can make when implemetning TOFU on container startup:
+Restart policies!
+
+Consider what happens if an attacker crash the application running in the container. If
+you restart the container on application crash, they can make the container trust any
+certificate they want. This is very, very bad. For this reason, disable automatic container
+restart when implemnting TLS-TOFU.
 
 
 [`kamikaze`]:https://github.com/Enteee/kamikaze#readme
 [self-signed badssl]:https://self-signed.badssl.com
+[enteee/tls-tofu]:https://hub.docker.com/r/enteee/tls-tofu
+[enteee/git-sync-mirror]:https://hub.docker.com/r/enteee/git-sync-mirror
