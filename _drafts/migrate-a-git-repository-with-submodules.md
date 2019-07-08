@@ -5,13 +5,13 @@ keywords: []
 ---
 
 With [git-sync-mirror], migrating or mirroring a git repository is a piece of
-cake. But there are additional steps needed, when when the git repository
-references submodules.
+cake. But when the migrated repository contains submodules additional steps are
+required.
 
 # The Problem
 
-They key problem is that when mirroring git repositires submodule references
-are not updated. This is because those references are tracked in a `.gitmodules`
+They key problem is that submodule references are not updated when mirroring
+git repositires. This is because those references are tracked in a `.gitmodules`
 file inside the repository. Which is not changed during the migration process.
 
 As an example, imagine you want to mirror the [githubtraining/example-dependency]
@@ -47,11 +47,10 @@ $ cat example-dependency/.gitmodules
 
 For a full migration we now also have to mirror [githubtraining/example-submodule]
 to [Enteee/example-submodule]. We can do this exactly the same way as we did it
-before with [githubtraining/example-dependency].
-
-But since we were creating 1:1 mirrors, the first repository [Enteee/example-dependency]
-still points to [githubtraining/example-submodule]. Which is probably not what we
-want. The repository [Enteee/example-dependency] should point to [Enteee/example-submodule]
+before with [githubtraining/example-dependency]. But since we were creating 1:1
+mirrors, the first repository [Enteee/example-dependency] still points to
+[githubtraining/example-submodule]. Which is probably not what we want. The
+repository [Enteee/example-dependency] should point to [Enteee/example-submodule]
 instead.
 
 # The Solution: [git-submodule-url-rewrite]
