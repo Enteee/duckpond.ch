@@ -1,20 +1,21 @@
 ---
 layout: post
-categories: []
-keywords: []
+title: Migrate a git Repository with Submodules
+categories: [git-submodule-url-rewrite, git-sync-mirror]
+keywords: [git, submodule, sync, bash, mirror, migrate]
 ---
 
-With [git-sync-mirror], migrating or mirroring a git repository is a piece of
+With [git-sync-mirror] migrating or mirroring a git repository is a piece of
 cake. But when the migrated repository contains submodules additional steps are
 required.
 
 # The Problem
 
-They key problem is that submodule references are not updated when mirroring
-git repositires. This is because those references are tracked in a `.gitmodules`
-file inside the repository. Which is not changed during the migration process.
+Submodule references are not updated when mirroring git repositories. This is
+because those references are tracked in a file called `.gitmodules` inside the
+repository. This file is not changed during migration.
 
-As an example, imagine you want to mirror the [githubtraining/example-dependency]
+As an example imagine you want to mirror the [githubtraining/example-dependency]
 repository to [Enteee/example-dependency]. Using [git-sync-mirror] this is simple:
 
 ```sh
@@ -28,8 +29,9 @@ $ docker run \
   enteee/git-sync-mirror
 ```
 
-The just mirrored [githubtraining/example-dependency] repository contains one submodule at `js`.
-This submodule references the [githubtraining/example-submodule] repository.
+The just mirrored [githubtraining/example-dependency] repository contains one
+submodule at `js`. This submodule references the [githubtraining/example-submodule]
+repository.
 
 ```sh
 $ git clone https://github.com/githubtraining/example-dependency.git
@@ -49,15 +51,15 @@ For a full migration we now also have to mirror [githubtraining/example-submodul
 to [Enteee/example-submodule]. We can do this exactly the same way as we did it
 before with [githubtraining/example-dependency]. But since we were creating 1:1
 mirrors, the first repository [Enteee/example-dependency] still points to
-[githubtraining/example-submodule]. Which is probably not what we want. The
+[githubtraining/example-submodule]. This is probably not what we want. The
 repository [Enteee/example-dependency] should point to [Enteee/example-submodule]
 instead.
 
 # The Solution: [git-submodule-url-rewrite]
 
-[git-submodule-url-rewrite] is a simple git command that lets you rewrite git
-submodule urls. Installation of the command is as simple as copying the script
-somewhere to your `${PATH}` and making it executable.
+[git-submodule-url-rewrite] is a git command that lets you rewrite submodule
+urls. Installing the command is as simple as copying the script somewhere to
+your `${PATH}` and making it executable.
 
 ```sh
 $ cd /usr/local/bin
@@ -86,7 +88,12 @@ options:
 sed-command: A sed command used to transform urls.
 ```
 
-Using this command we can now simply rewrite all urls in [Enteee/example-dependency].
+Using this command we can now rewrite all urls in [Enteee/example-dependency].
+We just have to use a substituting `sed` command (`s`) which replaces all
+`githubtraining` strings with `Enteee`. The following command does this:
+`'s|githubtraining|Enteee|'`. For more information about `sed` commands I
+recommend [this tutorial on computerhope.com](https://www.computerhope.com/unix/used.htm).
+
 ```sh
 $ cd example-dependency/
 $ git submodule-url-rewrite 's|githubtraining|Enteee|'
@@ -98,10 +105,11 @@ rewrite url for submodule 'js' in '/tmp/example-dependency' from 'https://github
 ## Why should I use this?
 
 In this section I try to answer a few common questions. Keep in mind that
-[git-submodule-url-rewrite] is a simple `git` command I found useful in the past
-and decided to open source. Nobody forces you to use the command and if you find
-good reasons not to, then don't. I would still be interested in those reasons.
-Why not sharing them here?
+[git-submodule-url-rewrite] is a very simple `git` command which I found useful
+in the past. Hence, I decided to open source it. Nobody forces you to use it.
+If you find good reasons not to, then don't. In order to improve
+[git-submodule-url-rewrite], I would still be interested in those reasons.
+Why not share them here?
 
 > Rewriting a a submodule url is a simple as:
 ```sh
@@ -112,10 +120,10 @@ $ git submodule sync
 >
 > -- unknown git user
 
-This is exactly what [git-submodule-url-rewrite] does. No magic there. But
-additionaly [git-submodule-url-rewrite] does provide the convenience of regex
-and a recursive (`-r`) switch. Using this recursion you can simply rewrite
-submodules of submodules of submodules of ... You get the idea.
+This is exactly what [git-submodule-url-rewrite] does. No magic involved. But
+in addition, [git-submodule-url-rewrite] provides the convenience of regex
+and a recursive (`[-r|--recursive]`) switch. Using recursion you can simply rewrite submodules
+of submodules of submodules of ... You get the idea.
 
 > But I can just implement the same recursion with
 `git submodule foreach --recursive 'git config ...'`.
@@ -126,11 +134,18 @@ Yes. Almost. Please note that `git submodule foreach` evaluates an arbitrary
 shell command in each **checked out submodule** [^1]. This means you have to run
 `git submodule update --init --recursive` first. Which will connect and clone
 to the originally referenced repository. This was not possible in my environment.
-Hence I had to implement [a looping mechanism](https://github.com/Enteee/git-submodule-url-rewrite/blob/3d52c605330bebe48c5373fcb5b13dfe8e2264c0/git-submodule-url-rewrite#L109) which does
+Also, looping over all submodules in a shell script, without `git submodule foreach`,
+is not trivial [^2][^3]. Hence, I had to implement [a looping mechanism](https://github.com/Enteee/git-submodule-url-rewrite/blob/3d52c605330bebe48c5373fcb5b13dfe8e2264c0/git-submodule-url-rewrite#L109) which does
 not rely on `git submodule foreach`.
+
+By open sourcing [git-submodule-url-rewrite], I do hope I can provide functionality
+which maybe does help others. If you find a bug or have a feature request, please
+open an issue on GitHub. All comments and thoughts are welcome here on this page.
 
 
 [^1]: From the [manpage](https://git-scm.com/docs/git-submodule#Documentation/git-submodule.txt-foreach--recursiveltcommandgt)
+[^2]: See: [this answer on StackOverflow](https://stackoverflow.com/questions/12641469/list-submodules-in-a-git-repository/56912913#56912913)
+[^3]: Maybe I should implement a command that does just that at some point.
 
 [git-sync-mirror]:https://hub.docker.com/r/enteee/git-sync-mirror
 [githubtraining/example-dependency]:https://github.com/githubtraining/example-dependency.git
