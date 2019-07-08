@@ -1,7 +1,8 @@
 ---
 layout: post
-categories: []
-keywords: []
+title: Migrate a git Repository with Submodules
+categories: [git-submodule-url-rewrite git-sync-mirror]
+keywords: [git submodule sync bash mirror migrate]
 ---
 
 With [git-sync-mirror] migrating or mirroring a git repository is a piece of
