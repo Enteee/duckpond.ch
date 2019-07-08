@@ -28,7 +28,7 @@ layout: default
 {% assign tags = tags_raw | uri_escape %}
 {% assign chars_left = chars_left | minus: tags_size %}
 
-{% assign intro = content | strip_html | strip_newlines | replace: ',', '.' | replace: '!', '.' | replace: ':', '\.' | replace: '?', '\.' | split: '.' | first | strip %}
+{% assign intro = content | newline_to_br | strip_newlines | replace: '<br />', ' ' | strip_html | strip_newlines | replace: ',', '.' | replace: '!', '.' | replace: ':', '\.' | replace: '?', '\.' | split: '.' | first | strip %}
 {% assign text = page.title | append: ': ' | append: intro | strip_html | strip_newlines | truncate: chars_left | uri_escape | strip %}
 
 <div class="row">
