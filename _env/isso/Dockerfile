@@ -11,4 +11,3 @@ RUN set -ex \
   && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
 ENTRYPOINT ["dockerize"]
-CMD ["./start.sh"]
