@@ -5,13 +5,13 @@ categories: [git-submodule-url-rewrite, git-sync-mirror]
 keywords: [git, submodule, sync, bash, mirror, migrate]
 ---
 
-With [git-sync-mirror] migrating or mirroring a git repository is a piece of
+With [git-sync-mirror] migrating or mirroring a `git` repository is a piece of
 cake. But when the migrated repository contains submodules additional steps are
 required.
 
 # The Problem
 
-Submodule references are not updated when mirroring git repositories. This is
+Submodule references are not updated when mirroring `git` repositories. This is
 because those references are tracked in a file called `.gitmodules` inside the
 repository. This file is not changed during migration.
 
@@ -57,7 +57,7 @@ instead.
 
 # The Solution: [git-submodule-url-rewrite]
 
-[git-submodule-url-rewrite] is a git command that lets you rewrite submodule
+[git-submodule-url-rewrite] is a `git` command that lets you rewrite submodule
 urls. Installing the command is as simple as copying the script somewhere to
 your `${PATH}` and making it executable.
 
@@ -69,7 +69,7 @@ $ curl \
 $ chmod a+x git-submodule-url-rewrite
 ```
 
-Now, [git-submodule-url-rewrite] should be available as a git command.
+Now, [git-submodule-url-rewrite] should be available as a `git` command.
 
 ```sh
 $ git submodule-url-rewrite -h
@@ -118,7 +118,7 @@ $ git submodule sync
 ```
 > why should I use [git-submodule-url-rewrite]?
 >
-> -- unknown git user
+> -- unknown `git` user
 
 This is exactly what [git-submodule-url-rewrite] does. No magic involved. But
 in addition, [git-submodule-url-rewrite] provides the convenience of regex
@@ -128,7 +128,7 @@ of submodules of submodules of ... You get the idea.
 > But I can just implement the same recursion with
 `git submodule foreach --recursive 'git config ...'`.
 >
-> -- the same unknown git user
+> -- the same unknown `git` user
 
 Yes. Almost. Please note that `git submodule foreach` evaluates an arbitrary
 shell command in each **checked out submodule** [^1]. This means you have to run
