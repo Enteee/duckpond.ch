@@ -50,7 +50,7 @@ For a full migration we now also have to mirror [githubtraining/example-submodul
 to [Enteee/example-submodule]. We can do this exactly the same way as we did it
 before with [githubtraining/example-dependency]. But since we were creating 1:1
 mirrors, the first repository [Enteee/example-dependency] still points to
-[githubtraining/example-submodule]. Which is probably not what we want. The
+[githubtraining/example-submodule]. This is probably not what we want. The
 repository [Enteee/example-dependency] should point to [Enteee/example-submodule]
 instead.
 
@@ -133,7 +133,7 @@ Yes. Almost. Please note that `git submodule foreach` evaluates an arbitrary
 shell command in each **checked out submodule** [^1]. This means you have to run
 `git submodule update --init --recursive` first. Which will connect and clone
 to the originally referenced repository. This was not possible in my environment.
-Also looping over all submodules in a shell script, without `git submodule foreach`,
+Also, looping over all submodules in a shell script, without `git submodule foreach`,
 is not trivial [^2][^3]. Hence, I had to implement [a looping mechanism](https://github.com/Enteee/git-submodule-url-rewrite/blob/3d52c605330bebe48c5373fcb5b13dfe8e2264c0/git-submodule-url-rewrite#L109) which does
 not rely on `git submodule foreach`.
 
@@ -144,7 +144,7 @@ open an issue on GitHub. All comments and thoughts are welcome here on this page
 
 [^1]: From the [manpage](https://git-scm.com/docs/git-submodule#Documentation/git-submodule.txt-foreach--recursiveltcommandgt)
 [^2]: See: [this answer on StackOverflow](https://stackoverflow.com/questions/12641469/list-submodules-in-a-git-repository/56912913#56912913)
-[^3]: Maybe I should impement a command that does just that at some point.
+[^3]: Maybe I should implement a command that does just that at some point.
 
 [git-sync-mirror]:https://hub.docker.com/r/enteee/git-sync-mirror
 [githubtraining/example-dependency]:https://github.com/githubtraining/example-dependency.git
