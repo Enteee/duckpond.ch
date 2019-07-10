@@ -1,0 +1,32 @@
+version: '2.1'
+
+services:
+    jekyll:
+        restart: always
+
+    jekyll-dev:
+        restart: always
+
+    nginx-dockerize:
+
+    nginx-http:
+        restart: always
+        ports:
+            - 80:80
+            - 8080:8080
+
+    nginx-https:
+        restart: always
+        ports:
+            - 443:443
+
+    letsencrypt:
+
+    isso:
+        restart: always
+
+    challenges:
+        restart: always
+        ports:
+            - 8888:8888
+            - 8889:8889
