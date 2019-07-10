@@ -18,6 +18,8 @@ Options:
 
 vnv:
   prod    production environment
+  bprod   blog production environment
+  mprod   mail production environment
   dev     devlopment envrionment
 EOF
 }
