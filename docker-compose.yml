@@ -76,7 +76,7 @@ services:
                     - isso
             mailcow-network:
                 aliases:
-                    - isso
+                    - mailcow-isso
 
     challenges:
         build: ${CONTAINER_DIR}/challenges
