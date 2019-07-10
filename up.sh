@@ -85,7 +85,7 @@ while [[ $# -gt 0 ]]; do
       decrypt=true && shift
       decrypt_password="${1?missing password}" && shift
       ;;
-    ?)
+    *|?)
       echo "Invalid argument: '${1}'" >&2
       usage >&2
       exit 1
