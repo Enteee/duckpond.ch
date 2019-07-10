@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+DH_OUTFILE="${DH_OUTFILE:-dhparam.pem}"
+
 deploy_challenge() {
     local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}"
 
@@ -212,6 +214,7 @@ startup_hook() {
 
 exit_hook() {
   local ERROR="${1:-}"
+  set -x
 
   # This hook is called at the end of the cron command and can be used to
   # do some final (cleanup or other) tasks.
