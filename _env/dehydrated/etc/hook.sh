@@ -1,6 +1,29 @@
 #!/usr/bin/env bash
+set -exuo pipefail
 
-DH_OUTFILE="${DH_OUTFILE:-dhparam.pem}"
+DH_OUTFILE="${DH_OUTFILE:-dhparams.pem}"
+
+generate_dh(){
+    local dir="${1}" && shift
+    local outfile "${dir}/${DH_OUTFILE}"
+
+    if [ ! -f "${outfile}" ]; then
+      openssl dhparam -out "${outfile}" 4096
+    fi
+}
+
+ln_key(){
+    local keyfile="${1}" && shift
+    local link="$(dirname "${keyfile}")/key.pem"
+
+    # Create key.pem - file
+    ln \
+      --force \
+      --symbolic \
+      "${keyfile}" \
+      "${link}"
+}
+
 
 deploy_challenge() {
     local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}"
@@ -91,12 +114,11 @@ deploy_cert() {
     # cp "${KEYFILE}" "${FULLCHAINFILE}" /etc/nginx/ssl/; chown -R nginx: /etc/nginx/ssl
     # systemctl reload nginx
 
-    # Create key.pem - file
-    ln \
-      --force \
-      --symbolic \
-      "${KEYFILE}" key.pem
+    # create key link
+    ln_key "${KEYFILE}"
 
+    # generate diffie hellman parameters
+    generate_dh "$(dirname "${CERTFILE}")"
 }
 
 deploy_ocsp() {
@@ -139,6 +161,12 @@ unchanged_cert() {
     #   The path of the file containing the full certificate chain.
     # - CHAINFILE
     #   The path of the file containing the intermediate certificate(s).
+
+    # create key link
+    ln_key "${KEYFILE}"
+
+    # generate diffie hellman parameters
+    generate_dh "$(dirname "${CERTFILE}")"
 }
 
 invalid_challenge() {
@@ -214,7 +242,6 @@ startup_hook() {
 
 exit_hook() {
   local ERROR="${1:-}"
-  set -x
 
   # This hook is called at the end of the cron command and can be used to
   # do some final (cleanup or other) tasks.
@@ -222,11 +249,6 @@ exit_hook() {
   # Parameters:
   # - ERROR
   #   Contains error message if dehydrated exits with error
-
-  # generate diffie hellman parameters
-  if [ ! -f "${DH_OUTFILE}" ]; then
-    openssl dhparam -out "${DH_OUTFILE}" 4096
-  fi
 }
 
 HANDLER="$1"; shift
