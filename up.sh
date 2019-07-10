@@ -71,8 +71,7 @@ env_development(){
     -f docker-compose.yml \
     -f docker-compose-dev.yml \
     -f _env/mailcow/docker-compose.yml \
-    --verbose \
-    up
+    up "${@}"
   exit
 }
 
@@ -80,7 +79,7 @@ env_production(){
   exec "${DOCKER_COMPOSE}" \
     -f docker-compose.yml \
     -f docker-compose-prod.yml \
-    up
+    up "${@}"
 }
 
 verbose=false
@@ -116,9 +115,15 @@ while [[ $# -gt 0 ]]; do
       ;;
     prod|production)
       environment="env_production" && shift
+      break
     ;;
     dev|development)
       environment="env_development" && shift
+      break
+    ;;
+    --)
+      shift
+      break
     ;;
     *|?)
       echo "Invalid argument: '${1}'" >&2
@@ -149,4 +154,4 @@ if [ "${decrypt}" == true ];then
 fi
 
 # Run envionrment
-${environment}
+${environment} "${@}"
