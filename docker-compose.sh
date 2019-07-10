@@ -21,8 +21,7 @@ TMP_FILE="${PWD}/docker-compose-generated.$$.yaml"
 DOCKER_COMPOSE_CONFIG_VERSION="${DOCKER_COMPOSE_CONFIG_VERSION:-2.1}"
 
 finish() {
-  #rm "${TMP_FILE}" 2>/dev/null
-  echo
+  rm "${TMP_FILE}" 2>/dev/null
 }
 
 trap finish EXIT
@@ -30,11 +29,8 @@ trap finish EXIT
 compose-config() {
   local dir="$(dirname "${1}")"
   local file="$(basename "${1}")"
-  (
-    cd "${dir}"
-    docker-compose -f "${file}" -f "${TMP_FILE}" config \
-    | sponge "${TMP_FILE}"
-  )
+  docker-compose -f "${1}" -f "${TMP_FILE}" config \
+  | sponge "${TMP_FILE}"
 }
 
 args=()
