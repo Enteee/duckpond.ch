@@ -71,7 +71,7 @@ services:
             - ${CONTAINER_DIR}/isso/config:/config
             - ${CONTAINER_DIR}/isso/db:/db
         networks:
-            backbone:
+            mailcow-network:
                 aliases:
                     - isso
 
