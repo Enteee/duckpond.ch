@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 set -euo pipefail
-set -x
 
 PWD="$(pwd)"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
@@ -61,6 +60,8 @@ function decrypt(){
 }
 export -f decrypt
 
+verbose=false
+
 develop=false
 
 encrypt=false
@@ -70,6 +71,9 @@ decrypt_password=""
 
 while [[ $# -gt 0 ]]; do
   case "${1}" in
+    -v|--verbose)
+      verbose=true && shift
+      ;;
     -d|--develop)
       develop=true && shift
       ;;
@@ -92,6 +96,10 @@ while [[ $# -gt 0 ]]; do
       ;;
   esac
 done
+
+if [ "${verbose}" == true ];then
+  set -x
+fi
 
 if [ "${encrypt}" == true ];then
   find \
