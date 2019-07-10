@@ -71,12 +71,12 @@ services:
             - ${CONTAINER_DIR}/isso/config:/config
             - ${CONTAINER_DIR}/isso/db:/db
         networks:
+            backbone:
+                aliases:
+                    - blog-isso
             mailcow-network:
                 aliases:
                     - mailcow-isso
-            backbone:
-                aliases:
-                    - isso
 
     challenges:
         build: ${CONTAINER_DIR}/challenges
