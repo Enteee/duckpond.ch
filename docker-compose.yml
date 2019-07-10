@@ -55,7 +55,7 @@ services:
         depends_on:
             - nginx-http
         build: ${CONTAINER_DIR}/dehydrated
-        command: dehydrated -c
+        command: dehydrated -c --accept-terms
         volumes:
             - ${CONTAINER_DIR}/dehydrated/etc:/etc/dehydrated:ro
             - certs:/etc/dehydrated/certs:rw
