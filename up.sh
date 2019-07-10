@@ -113,16 +113,12 @@ while [[ $# -gt 0 ]]; do
       decrypt=true && shift
       decrypt_password="${1?missing password}" && shift
       ;;
-    prod|production)
+    --|prod|production)
       environment="env_production" && shift
       break
     ;;
     dev|development)
       environment="env_development" && shift
-      break
-    ;;
-    --)
-      shift
       break
     ;;
     *|?)
