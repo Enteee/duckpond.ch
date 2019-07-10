@@ -2,13 +2,17 @@
 set -exuo pipefail
 
 DH_OUTFILE="${DH_OUTFILE:-dhparams.pem}"
+DH_KEYLENGTH="${DH_KEYLENGTH:-4096}"
 
 generate_dh(){
     local dir="${1}" && shift
+
     local outfile="${dir}/${DH_OUTFILE}"
 
     if [ ! -f "${outfile}" ]; then
-      openssl dhparam -out "${outfile}" 4096
+      openssl dhparam \
+        -out "${outfile}" \
+        "${DH_KEYLENGTH}"
     fi
 }
 
