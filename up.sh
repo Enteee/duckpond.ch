@@ -8,11 +8,17 @@ DOCKER_COMPOSE="${DIR}/docker-compose.sh"
 
 function usage(){
 cat <<EOF
-up.sh: run the blog
+up.sh env: run the blog
 
 Options:
   -h|--help       print this help
-  -d|--develop    develop mode
+  -v|--verbose    make verbose
+  -ec|--encrypt   encrypt all .pgp files
+  -dc|--decrypt   decrypt all .pgp files
+
+vnv:
+  prod    production environment
+  dev     devlopment envrionment
 EOF
 }
 
@@ -60,6 +66,23 @@ function decrypt(){
 }
 export -f decrypt
 
+env_development(){
+  exec "${DOCKER_COMPOSE}" \
+    -f docker-compose.yml \
+    -f docker-compose-dev.yml \
+    -f _env/mailcow/docker-compose.yml \
+    --verbose \
+    up
+  exit
+}
+
+env_production(){
+  exec "${DOCKER_COMPOSE}" \
+    -f docker-compose.yml \
+    -f docker-compose-prod.yml \
+    up
+}
+
 verbose=false
 
 develop=false
@@ -68,6 +91,8 @@ encrypt=false
 encrypt_password=""
 decrypt=false
 decrypt_password=""
+
+environment="exit"
 
 while [[ $# -gt 0 ]]; do
   case "${1}" in
@@ -89,6 +114,12 @@ while [[ $# -gt 0 ]]; do
       decrypt=true && shift
       decrypt_password="${1?missing password}" && shift
       ;;
+    prod|production)
+      environment="env_production" && shift
+    ;;
+    dev|development)
+      environment="env_development" && shift
+    ;;
     *|?)
       echo "Invalid argument: '${1}'" >&2
       usage >&2
@@ -117,17 +148,5 @@ if [ "${decrypt}" == true ];then
     -execdir bash -c "decrypt \"{}\" \"${decrypt_password}\"" \;
 fi
 
-if [ "$develop" = true ]; then
-    exec "${DOCKER_COMPOSE}" \
-      -f docker-compose.yml \
-      -f docker-compose-dev.yml \
-      -f _env/mailcow/docker-compose.yml \
-      --verbose \
-      up
-    exit
-fi
-
-exec "${DOCKER_COMPOSE}" \
-  -f docker-compose.yml \
-  -f docker-compose-prod.yml \
-  up
+# Run envionrment
+${environment}
