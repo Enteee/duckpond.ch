@@ -73,7 +73,7 @@ services:
         networks:
             backbone:
                 aliases:
-                    - isso
+                    - blog-isso
             mailcow-network:
                 aliases:
                     - mailcow-isso
