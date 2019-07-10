@@ -22,7 +22,7 @@ ln_key(){
     ln \
       --force \
       --symbolic \
-      --target-directory "${dir}"
+      --target-directory "${dir}" \
       "${key}" \
       "key.pem"
 }
