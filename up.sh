@@ -70,15 +70,28 @@ env_development(){
   exec "${DOCKER_COMPOSE}" \
     -f docker-compose.yml \
     -f docker-compose-dev.yml \
-    -f _env/mailcow/docker-compose.yml \
     up "${@}"
   exit
+}
+
+env_blogproduction(){
+  exec "${DOCKER_COMPOSE}" \
+    -f docker-compose.yml \
+    -f docker-compose-prod.yml \
+    up "${@}"
+}
+
+env_mailproduction(){
+  exec "${DOCKER_COMPOSE}" \
+    -f _env/mailcow/docker-compose.yml \
+    up "${@}"
 }
 
 env_production(){
   exec "${DOCKER_COMPOSE}" \
     -f docker-compose.yml \
     -f docker-compose-prod.yml \
+    -f _env/mailcow/docker-compose.yml \
     up "${@}"
 }
 
@@ -115,6 +128,14 @@ while [[ $# -gt 0 ]]; do
       ;;
     --|prod|production)
       environment="env_production" && shift
+      break
+    ;;
+    bprod|blogproduction)
+      environment="env_blogproduction" && shift
+      break
+    ;;
+    mprod|mailproduction)
+      environment="env_mailproduction" && shift
       break
     ;;
     dev|development)
