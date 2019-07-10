@@ -1,8 +1,7 @@
-version: '2'
+version: '2.1'
 
 services:
     jekyll:
-        restart: always
         build: ${CONTAINER_DIR}/jekyll
         command: jekyll build --watch
         volumes:
@@ -10,7 +9,6 @@ services:
             - www:/srv/jekyll/_site:rw
 
     jekyll-dev:
-        restart: always
         build: ${CONTAINER_DIR}/jekyll
         command: jekyll build --drafts --watch
         volumes:
@@ -22,15 +20,11 @@ services:
         build: ${CONTAINER_DIR}/nginx-dockerize
 
     nginx-http:
-        restart: always
         depends_on:
             - nginx-dockerize
         image: nginx-http
         build: ${CONTAINER_DIR}/nginx-http
         command: -template ${DOCKERIZE_CONF_DIR}/conf.d/:/etc/nginx/conf.d/ -template ${DOCKERIZE_CONF_DIR}/htpasswd:/etc/nginx/.htpasswd -poll ./start.sh
-        ports:
-            - 80:80
-            - 8080:8080
         volumes:
             - ${CONTAINER_DIR}/nginx-http/conf.d/:${DOCKERIZE_CONF_DIR}/conf.d:ro
             - ${CONTAINER_DIR}/nginx-http/htpasswd:${DOCKERIZE_CONF_DIR}/htpasswd:ro
@@ -42,14 +36,11 @@ services:
                     - nginx-http
 
     nginx-https:
-        restart: always
         depends_on:
             - nginx-dockerize
             - isso
         build: ${CONTAINER_DIR}/nginx-https
         command: -template ${DOCKERIZE_CONF_DIR}/conf.d/:/etc/nginx/conf.d/ -wait file:///certs/duckpond.ch/cert.pem -wait file:///certs/duckpond.ch/privkey.pem -wait file:///certs/duckpond.ch/fullchain.pem -timeout ${DOCKERIZE_TIMEOUT} ./start.sh
-        ports:
-            - 443:443
         volumes:
             - ${CONTAINER_DIR}/nginx-https/conf.d/:${DOCKERIZE_CONF_DIR}/conf.d:ro
             - certs:/certs/:ro
@@ -64,14 +55,13 @@ services:
         depends_on:
             - nginx-http
         build: ${CONTAINER_DIR}/dehydrated
-        command: dehydrated -c 
+        command: dehydrated -c
         volumes:
             - ${CONTAINER_DIR}/dehydrated/etc:/etc/dehydrated:ro
             - certs:/etc/dehydrated/certs:rw
             - acme-challenge:/etc/dehydrated/acme-challenge:rw
 
     isso:
-        restart: always
         build: ${CONTAINER_DIR}/isso
         command: -wait tcp://nginx-https:443 -timeout ${DOCKERIZE_TIMEOUT} /sbin/tini -- run.sh
         environment:
@@ -86,11 +76,7 @@ services:
                     - isso
 
     challenges:
-        restart: always
         build: ${CONTAINER_DIR}/challenges
-        ports:
-            - 8888:8888
-            - 8889:8889
         networks:
             backbone:
                 aliases:

@@ -1,37 +1,133 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
 
-DIR=$(dirname $0)
-DEVELOP=false
+PWD="$(pwd)"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-while getopts "dh" opt; do
-  case $opt in
-    d)
-      DEVELOP=true
-      ;;
-    h)
-      cat<<EOF
-$0: run the blog
+DOCKER_COMPOSE="${DIR}/docker-compose.sh"
+
+function usage(){
+cat <<EOF
+up.sh: run the blog
 
 Options:
-  -h    print this help
-  -d    develop mode
+  -h|--help       print this help
+  -d|--develop    develop mode
 EOF
+}
+
+#
+# encrypt out pw
+function encrypt(){
+  local out="${1}" && shift
+  local pw="${1}" && shift
+  local in="$(basename --suffix ".gpg" "${out}")"
+
+  if [ ! -f "${in}" ]; then
+    return
+  fi
+
+  echo "${pw}" \
+  | gpg \
+    --batch \
+    --yes \
+    --symmetric \
+    --passphrase-fd 0 \
+    --output "${out}"\
+    "${in}"
+}
+export -f encrypt
+
+#
+# decrypt in pw
+function decrypt(){
+  local in="${1}" && shift
+  local pw="${1}" && shift
+  local out="$(basename --suffix ".gpg" "${in}")"
+
+  if [ ! -f "${in}" ]; then
+    return
+  fi
+
+  echo "${pw}" \
+  | gpg \
+    --decrypt \
+    --batch \
+    --yes \
+    --passphrase-fd 0 \
+    --output "${out}"\
+    "${in}"
+}
+export -f decrypt
+
+verbose=false
+
+develop=false
+
+encrypt=false
+encrypt_password=""
+decrypt=false
+decrypt_password=""
+
+while [[ $# -gt 0 ]]; do
+  case "${1}" in
+    -v|--verbose)
+      verbose=true && shift
+      ;;
+    -d|--develop)
+      develop=true && shift
+      ;;
+    -h|--help)
+      usage
       exit
       ;;
-    \?)
-      echo "Invalid option: -$OPTARG" >&2
+    -ec|--encrypt)
+      encrypt=true && shift
+      encrypt_password="${1?missing password}" && shift
+      ;;
+    -dc|--decrypt)
+      decrypt=true && shift
+      decrypt_password="${1?missing password}" && shift
+      ;;
+    *|?)
+      echo "Invalid argument: '${1}'" >&2
+      usage >&2
       exit 1
       ;;
   esac
 done
 
-if [ $DEVELOP = true ]; then
-    docker-compose \
-      -f docker-compose.yml \
-      -f docker-compose-develop.yml \
-      up \
-      jekyll-dev nginx-http
-else
-    docker-compose up
+if [ "${verbose}" == true ];then
+  set -x
 fi
+
+if [ "${encrypt}" == true ];then
+  find \
+    "${DIR}" \
+    -type f \
+    -name "*.gpg" \
+    -execdir bash -c "encrypt \"{}\" \"${encrypt_password}\"" \;
+fi
+
+if [ "${decrypt}" == true ];then
+  find \
+    "${DIR}" \
+    -type f \
+    -name "*.gpg" \
+    -execdir bash -c "decrypt \"{}\" \"${decrypt_password}\"" \;
+fi
+
+if [ "$develop" = true ]; then
+    exec "${DOCKER_COMPOSE}" \
+      -f docker-compose.yml \
+      -f docker-compose-dev.yml \
+      -f _env/mailcow/docker-compose.yml \
+      --verbose \
+      up
+    exit
+fi
+
+exec "${DOCKER_COMPOSE}" \
+  -f docker-compose.yml \
+  -f docker-compose-prod.yml \
+  up
