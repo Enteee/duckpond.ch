@@ -5,7 +5,7 @@ DH_OUTFILE="${DH_OUTFILE:-dhparams.pem}"
 
 generate_dh(){
     local dir="${1}" && shift
-    local outfile "${dir}/${DH_OUTFILE}"
+    local outfile="${dir}/${DH_OUTFILE}"
 
     if [ ! -f "${outfile}" ]; then
       openssl dhparam -out "${outfile}" 4096
@@ -14,14 +14,17 @@ generate_dh(){
 
 ln_key(){
     local keyfile="${1}" && shift
-    local link="$(dirname "${keyfile}")/key.pem"
+
+    local dir="$(dirname "${keyfile}")"
+    local key="$(basename "${keyfile}")"
 
     # Create key.pem - file
     ln \
       --force \
       --symbolic \
-      "${keyfile}" \
-      "${link}"
+      --target-directory "${dir}"
+      "${key}" \
+      "key.pem"
 }
 
 
