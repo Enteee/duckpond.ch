@@ -1,6 +1,7 @@
 ---
 layout: post
 categories: [citation needed]
+featured-image: /static/posts/citation-needed/xkcd_protester.png
 keywords: [naughty strings, water-computers, retro games, ngram, aiweirdness, lhc, boing 737, docker capabilities, kalman filter, deep neural networks]
 ---
 
