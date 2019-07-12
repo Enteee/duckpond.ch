@@ -2,6 +2,7 @@
 layout: post
 title: "Broken One-time pad [Solved]"
 categories: [security, math]
+featured-image: /static/posts/broken-one-time-pad-solved/repeating_pad_xor.png
 keywords: [one-time pad, challenge]
 ---
 
