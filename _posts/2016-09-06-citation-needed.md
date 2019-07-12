@@ -1,6 +1,7 @@
 ---
 layout: post
 categories: [citation needed]
+featured-image: /static/posts/citation-needed/xkcd_protester.png
 keywords: [zkp, jpeg, climate change, isometric boxes, cadavers, big o, album, pink, philea, antibiotic]
 ---
 
