@@ -29,9 +29,9 @@
         <meta name="description" content="{% if page.title %}{{ page.title }}{% else %}{{ site.description }}{% endif %}" />
         <meta name="keywords" content="{% if page.title %}{{ page.title }}, {{ site.title }}, {% for keyword in page.keywords %}{{ keyword }}{% if forloop.last == false or page.categories %}, {% endif %}{% endfor %}{% for categ in page.categories %}{{ categ }}{% if forloop.last == false %}, {% endif %}{% endfor %}{% else %}{{ site.title }}, {% for category in site.categories %}{% capture categories_slug %}{{ category | first }}{% endcapture %}{% for categ in categories_slug %}{{ categ }}{% endfor %}{% if forloop.last == false %}, {% endif %}{% endfor %}{% endif %}" />
 
-        <meta name="twitter:card" content="{{ page.title }}" />
-        <meta name="twitter:site" content="{{ page.twitter }}" />
-        <meta name="twitter:creator" content="{{ page.twitter }}" />
+        <meta name="twitter:card" content="{% if page.title %}{{ page.title }}{% else %}{{ site.description }}{% endif %}" />
+        <meta name="twitter:site" content="{{ site.twitter }}" />
+        <meta name="twitter:creator" content="{{ site.twitter }}" />
 
         <link rel="alternate" type="application/atom+xml" title="Atom" href="/feed.xml">
 
