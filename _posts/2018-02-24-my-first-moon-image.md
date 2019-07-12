@@ -1,7 +1,7 @@
 ---
 layout: post
 categories: [astronomy]
-featured-image: /static/posts/my-first-moon-image/panorama-processed.png
+featured-image: /static/resized/panorama-processed-800x807.png
 keywords: [moon, astrophotography]
 ---
 
