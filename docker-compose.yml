@@ -2,14 +2,20 @@ version: '2.1'
 
 services:
     jekyll:
-        build: ${CONTAINER_DIR}/jekyll
+        build:
+            context: ${CONTAINER_DIR}/jekyll
+            args:
+                - jekyll_version=${JEKYLL_VERSION}
         command: jekyll build --watch
         volumes:
             - ./:/srv/jekyll:ro
             - www:/srv/jekyll/_site:rw
 
     jekyll-dev:
-        build: ${CONTAINER_DIR}/jekyll
+        build:
+            context: ${CONTAINER_DIR}/jekyll
+            args:
+                - jekyll_version=${JEKYLL_VERSION}
         command: jekyll build --drafts --watch
         volumes:
             - ./:/srv/jekyll:ro
@@ -17,7 +23,11 @@ services:
 
     nginx-dockerize:
         image: nginx-dockerize
-        build: ${CONTAINER_DIR}/nginx-dockerize
+        build:
+            context: ${CONTAINER_DIR}/nginx-dockerize
+            args:
+                - nginx_version=${NGINX_VERSION}
+                - dockerize_version=${DOCKERIZE_VERSION}
 
     nginx-http:
         depends_on:
@@ -54,7 +64,10 @@ services:
     letsencrypt:
         depends_on:
             - nginx-http
-        build: ${CONTAINER_DIR}/dehydrated
+        build:
+            context: ${CONTAINER_DIR}/dehydrated
+            args:
+                - debian_version=${DEBIAN_VERSION}
         command: dehydrated -c --accept-terms
         volumes:
             - ${CONTAINER_DIR}/dehydrated/etc:/etc/dehydrated:ro
@@ -62,7 +75,10 @@ services:
             - acme-challenge:/etc/dehydrated/acme-challenge:rw
 
     isso:
-        build: ${CONTAINER_DIR}/isso
+        build:
+            context: ${CONTAINER_DIR}/isso
+            args:
+                - dockerize_version=${DOCKERIZE_VERSION}
         command: -wait tcp://nginx-https:443 -timeout ${DOCKERIZE_TIMEOUT} /sbin/tini -- run.sh
         environment:
             - GID=${GID}
@@ -79,16 +95,50 @@ services:
                     - mailcow-isso
 
     challenges:
-        build: ${CONTAINER_DIR}/challenges
+        build:
+            context: ${CONTAINER_DIR}/challenges
+            args:
+                - python_version=${PYTHON_VERSION}
         networks:
             backbone:
                 aliases:
                     - challenges
+    openvpn-as:
+        build:
+            context: ${CONTAINER_DIR}/openvpn-as
+            args:
+                - openvpnas_version=${OPENVPNAS_VERSION}
+                - dockerize_version=${DOCKERIZE_VERSION}
+        command: -wait file:///certs/duckpond.ch/cert.pem -wait file:///certs/duckpond.ch/privkey.pem -wait file:///certs/duckpond.ch/fullchain.pem -timeout ${DOCKERIZE_TIMEOUT} /init
+        cap_add:
+            - NET_ADMIN
+        environment:
+            - PUID=1000
+            - PGID=100
+            - TZ=Europe/London
+        volumes:
+            - ${CONTAINER_DIR}/openvpn-as/config/etc:/config/etc
+            - certs:/certs/:ro
+        ports:
+            - 943:943
+            - 9443:9443
+            - 1194:1194/udp
+        restart: unless-stopped
+        networks:
+            backbone:
+                aliases:
+                    - openvpn
+            mailcow-network:
+                aliases:
+                    - mailcow-openvpn
+
 volumes:
     www:
     www-dev:
     certs:
     acme-challenge:
+    openvpn-as:
 
 networks:
     backbone:
+    mailcow-network:

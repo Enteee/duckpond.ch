@@ -1,3 +1,4 @@
+ARG python_version=3.6-slim
 FROM python:3.6-slim
 
 MAINTAINER Ente "ducksource@duckpond.ch"
