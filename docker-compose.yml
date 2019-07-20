@@ -123,7 +123,6 @@ services:
             - 943:943
             - 9443:9443
             - 1194:1194/udp
-        restart: unless-stopped
         networks:
             backbone:
                 aliases:
@@ -141,4 +140,4 @@ volumes:
 
 networks:
     backbone:
-    mailcow-network:
+    #mailcow-network:
