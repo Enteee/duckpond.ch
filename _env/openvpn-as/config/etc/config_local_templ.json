@@ -1,0 +1,31 @@
+{
+  "_INTERNAL": {
+    "run_api.active_profile": "Default", 
+    "webui.edit_profile": "Default"
+  },     
+  "Default": {
+    "admin_ui.https.ip_address": "", 
+    "admin_ui.https.port": "", 
+    "cs.https.ip_address": "", 
+    "cs.https.port": "", 
+    "host.name": "", 
+    "vpn.client.routing.inter_client": "false", 
+    "vpn.client.routing.reroute_gw": "false", 
+    "vpn.server.daemon.enable": "true",
+    "vpn.server.daemon.tcp.n_daemons": "1",
+    "vpn.server.daemon.udp.n_daemons": "1",
+    "vpn.daemon.0.client.netmask_bits": "20", 
+    "vpn.daemon.0.client.network": "172.27.224.0", 
+    "vpn.daemon.0.listen.ip_address": "", 
+    "vpn.daemon.0.listen.port": "443", 
+    "vpn.daemon.0.listen.protocol": "tcp", 
+    "vpn.daemon.0.server.ip_address": "", 
+    "vpn.server.daemon.tcp.port": "443",
+    "vpn.server.daemon.udp.port": "1194",
+    "vpn.server.port_share.enable": "true", 
+    "vpn.server.port_share.ip_address": "1.2.3.4", 
+    "vpn.server.port_share.port": "1234", 
+    "vpn.server.port_share.service": "admin+client", 
+    "vpn.server.routing.private_access": "no"
+  }
+}

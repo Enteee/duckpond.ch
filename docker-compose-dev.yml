@@ -26,3 +26,5 @@ services:
         entrypoint: "/bin/true"
 
     challenges:
+
+    openvpn-as:
