@@ -1,0 +1,31 @@
+{
+  "_INTERNAL": {
+    "run_api.active_profile": "Default", 
+    "webui.edit_profile": "Default"
+  }, 
+  "Default": {
+    "auth.ldap.0.name": "My LDAP servers", 
+    "auth.ldap.0.ssl_verify": "internal", 
+    "auth.ldap.0.timeout": "4", 
+    "auth.ldap.0.use_ssl": "never", 
+    "auth.module.type": "local", 
+    "auth.pam.0.service": "openvpnas", 
+    "auth.radius.0.acct_enable": "false", 
+    "auth.radius.0.name": "My Radius servers", 
+    "cs.prof_sign_web": "true",
+    "cs.cws_proto_v2": "true",
+    "cs.ssl_method": "SSLv3",
+    "cs.tls_version_min": "1.1",
+    "sa.initial_run_groups.0": "web_group", 
+    "sa.initial_run_groups.1": "openvpn_group",
+    "vpn.client.basic" : "false",
+    "vpn.general.osi_layer": "3",
+    "vpn.client.cipher" : "AES-256-CBC",
+    "vpn.server.group_pool.0": "172.27.240.0/20",
+    "vpn.server.tls_version_min" : "1.2",
+    "vpn.server.tls_auth" : "true",
+    "vpn.server.cipher" : "AES-256-CBC",
+    "vpn.tls_refresh.do_reauth": "true", 
+    "vpn.tls_refresh.interval": "360"
+  }
+}
