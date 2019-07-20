@@ -16,7 +16,7 @@ Options:
   -ec|--encrypt   encrypt all .pgp files
   -dc|--decrypt   decrypt all .pgp files
 
-vnv:
+environments:
   prod    production environment
   bprod   blog production environment
   mprod   mail production environment
@@ -73,7 +73,6 @@ env_development(){
     -f docker-compose.yml \
     -f docker-compose-dev.yml \
     up "${@}"
-  exit
 }
 
 env_blogproduction(){

@@ -1,4 +1,5 @@
-FROM debian:10.0
+ARG debian_version=10.0
+FROM debian:${debian_version}
 
 MAINTAINER Ente "ducksource@duckpond.ch"
 
