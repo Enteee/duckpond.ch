@@ -19,11 +19,5 @@ RUN set -ex \
 # Add local files
 COPY /root /
 
-# make db directory so that we can copy
-# some configuration files to it before
-# the application starts
-RUN set -ex \
-  && mkdir -p /config/etc/db/
-
 ENTRYPOINT [ "dockerize" ]
 CMD ["true"]
