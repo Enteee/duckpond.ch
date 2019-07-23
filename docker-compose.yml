@@ -109,7 +109,7 @@ services:
             args:
                 - openvpnas_version=${OPENVPNAS_VERSION}
                 - dockerize_version=${DOCKERIZE_VERSION}
-        command: -wait file:///certs/duckpond.ch/cert.pem -wait file:///certs/duckpond.ch/privkey.pem -wait file:///certs/duckpond.ch/fullchain.pem -timeout ${DOCKERIZE_TIMEOUT} /init
+            command: -template /config-template:/config  -wait file:///certs/duckpond.ch/cert.pem -wait file:///certs/duckpond.ch/privkey.pem -wait file:///certs/duckpond.ch/fullchain.pem -timeout ${DOCKERIZE_TIMEOUT} /init
         cap_add:
             - NET_ADMIN
         environment:
@@ -117,7 +117,7 @@ services:
             - PGID=100
             - TZ=Europe/London
         volumes:
-            - ${CONTAINER_DIR}/openvpn-as/config/etc:/config/etc
+            - ${CONTAINER_DIR}/openvpn-as/config:/config-template:ro
             - certs:/certs/:ro
         ports:
             - 943:943
