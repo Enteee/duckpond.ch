@@ -1,0 +1,10 @@
+#!/usr/bin/with-contenv bash
+set -exuo pipefail
+
+# Apply template#
+if [ -d /config-template ]; then
+  cp -r /config-template /config
+fi
+
+chown -R abc:abc \
+  /config
