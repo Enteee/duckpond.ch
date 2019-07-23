@@ -116,6 +116,7 @@ services:
             - PUID=1000
             - PGID=100
             - TZ=Europe/London
+            - INTERFACE=eth0
         volumes:
             - certs:/certs/:ro
         ports:
