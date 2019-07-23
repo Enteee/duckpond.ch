@@ -116,17 +116,12 @@ services:
             - PUID=1000
             - PGID=100
             - TZ=Europe/London
-            - INTERFACE=eth0
         volumes:
             - certs:/certs/:ro
         ports:
             - 943:943
             - 9443:9443
             - 1194:1194/udp
-        networks:
-            backbone:
-                aliases:
-                    - openvpn
 
 volumes:
     www:
