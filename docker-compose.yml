@@ -122,6 +122,13 @@ services:
             - 943:943
             - 9443:9443
             - 1194:1194/udp
+        networks:
+            backbone:
+                aliases:
+                    - openvpn
+            mailcow-network:
+                aliases:
+                    - openvpn-mailcow
 
 volumes:
     www:
