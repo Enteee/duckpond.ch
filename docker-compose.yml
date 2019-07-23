@@ -126,9 +126,6 @@ services:
             backbone:
                 aliases:
                     - openvpn
-            mailcow-network:
-                aliases:
-                    - mailcow-openvpn
 
 volumes:
     www:
