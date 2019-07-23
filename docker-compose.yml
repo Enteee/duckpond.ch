@@ -109,7 +109,7 @@ services:
             args:
                 - openvpnas_version=${OPENVPNAS_VERSION}
                 - dockerize_version=${DOCKERIZE_VERSION}
-        command: -template /config-template:/config  -wait file:///certs/duckpond.ch/cert.pem -wait file:///certs/duckpond.ch/privkey.pem -wait file:///certs/duckpond.ch/fullchain.pem -timeout ${DOCKERIZE_TIMEOUT} /init
+        command: -template /config-template/etc/as.conf:/config/etc/as.conf /config-template/etc/db/userprop.db:/config/etc/db/userprop.db  -wait file:///certs/duckpond.ch/cert.pem -wait file:///certs/duckpond.ch/privkey.pem -wait file:///certs/duckpond.ch/fullchain.pem -timeout ${DOCKERIZE_TIMEOUT} /init
         cap_add:
             - NET_ADMIN
         environment:
