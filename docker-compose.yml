@@ -116,7 +116,6 @@ services:
             - PUID=1000
             - PGID=100
             - TZ=Europe/London
-            - INTERFACE=eth0 #optional
         volumes:
             - ${CONTAINER_DIR}/openvpn-as/config/etc:/config/etc
             - certs:/certs/:ro
