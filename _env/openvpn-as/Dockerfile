@@ -15,5 +15,11 @@ RUN set -ex \
   && tar -C "/usr/local/bin" -xzvf "dockerize-linux-amd64-v${dockerize_version}.tar.gz" \
   && rm "dockerize-linux-amd64-v${dockerize_version}.tar.gz"
 
+# make db directory so that we can copy
+# some configuration files to it before
+# the application starts
+RUN set -ex \
+  && mkdir -p /config/etc/db/
+
 ENTRYPOINT [ "dockerize" ]
 CMD ["true"]
