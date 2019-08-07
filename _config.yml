@@ -8,8 +8,8 @@ timezone: "Europe/Zurich"
 urls:
     - text: About
       url: /about/
-    - text: Issues
-      url: https://github.com/Enteee/duckpond.ch/issues
+    - text: Donate
+      url: https://liberapay.com/Ente/
     - text: Atom-feed
       url: /feed.xml
 url: "https://duckpond.ch"
