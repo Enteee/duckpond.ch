@@ -4,8 +4,6 @@ title: About
 permalink: /about/
 ---
 
-# Get in Touch
-
 {:.table}
 | where | how   |
 | ----- | ----- |
@@ -16,24 +14,6 @@ permalink: /about/
 | stack overflow | <a href="https://stackoverflow.com/users/3215929/ente"><img src="https://stackoverflow.com/users/flair/3215929.png?theme=clean" width="208" height="58" alt="profile for Ente at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for Ente at Stack Overflow, Q&amp;A for professional and enthusiast programmers"></a> |
 | twitter | <a href="https://twitter.com/Enteeeeeee" class="twitter-follow-button" data-show-count="false" data-size="large" data-dnt="true">Follow @Enteeeeeee</a> |
 | reddit  | [u/Enteeeee](https://www.reddit.com/user/Enteeeee) |
-
-# Tip
-
-duckpond.ch is not supposed to be [ramen profitable](http://www.paulgraham.com/ramenprofitable.html), but if you would like to buy me a beer or something...
-
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-<input type="hidden" name="cmd" value="_donations">
-<input type="hidden" name="business" value="buy@duckpond.ch">
-<input type="hidden" name="lc" value="CH">
-<input type="hidden" name="item_name" value="duckpond.ch - tip">
-<input type="hidden" name="no_note" value="0">
-<input type="hidden" name="currency_code" value="USD">
-<input type="hidden" name="bn" value="PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest">
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-</form>
-
-...thanks!
 
 <!-- scrtips needed for buttons -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
