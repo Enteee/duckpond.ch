@@ -12,7 +12,7 @@ keywords: [MegaPixel, Apollo-11, latex, change the world, tech stuff, secure ran
 * [Easy readable collection of tech stuff](http://www.zytrax.com/tech/)
 * [Make your own mini MegaPixel, or help them with the main one](http://www.manchestermegapixel.com/minimegapixel/)
 * [How to generate secure random numbers in various programming languages](https://paragonie.com/blog/2016/05/how-generate-secure-random-numbers-in-various-programming-languages)
-* [Unskilled and unaware of it: How difficulties in recognizing one's own incompetence lead to inflated self-assessments](http://psych.colorado.edu/~vanboven/teaching/p7536_heurbias/p7536_readings/kruger_dunning.pdf)
+* [Unskilled and unaware of it: How difficulties in recognizing one's own incompetence lead to inflated self-assessments](https://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.64.2655)
 * [Implementing full text search in PostgreSQL](https://www.postgresql.org/docs/8.3/static/textsearch.html)
 * [How Reddit ranking algorithms work](https://medium.com/hacking-and-gonzo/how-reddit-ranking-algorithms-work-ef111e33d0d9)
 * [Original Apollo 11 guidance computer (AGC) source code](https://github.com/chrislgarry/Apollo-11)
