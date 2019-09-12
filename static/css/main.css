@@ -180,12 +180,11 @@ a:hover {
 
 @media only screen and (min-width: 992px) {
     ol.reverse-roman {
-        padding: 0px; 
+        padding: 0px;
         display: table;
     }
 
     ol.reverse-roman > li {
-        counter-increment: post_ctr -1;
         display: table-row;
     }
 
@@ -209,7 +208,13 @@ ol.reverse-roman {
 
 ol.reverse-roman > li {
     padding-bottom: 1em;
+    counter-increment: post_ctr -1;
 }
+
+ol.reverse-roman > li::marker {
+    content: counter(post_ctr, upper-roman) ".";
+}
+
 
 /*
  * Links
