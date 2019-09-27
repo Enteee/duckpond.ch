@@ -11,3 +11,4 @@ keywords: []
 * [Bash One-Liners Explained, Part III: All about redirections](https://catonmat.net/bash-one-liners-explained-part-three)
 * [Online Meme Generator](https://www.kapwing.com)
 * [How to Fake Dynamic Binding in Nix](http://r6.ca/blog/20140422T142911Z.html)
+* [npm trends: Compare package download counts over time](https://www.npmtrends.com/)
