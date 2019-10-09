@@ -25,16 +25,14 @@ ln_key(){
     keyfile="${1}" && shift
     local dir
     dir="$(dirname "${keyfile}")"
-    local key
-    key="$(basename "${keyfile}")"
 
     # Create key.pem - file
     ln \
       --force \
       --symbolic \
-      --target-directory "${dir}" \
-      "${key}" \
-      "key.pem"
+      --relative \
+      "${keyfile}" \
+      "${dir}/key.pem"
 }
 
 deploy_challenge() {
