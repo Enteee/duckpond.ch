@@ -157,7 +157,7 @@ if [ "${encrypt}" == true ];then
     "${DIR}" \
     -type f \
     -name "*.gpg" \
-    -execdir bash -c "encrypt \"${1}\" \"${encrypt_password}\"" _ "{}" \;
+    -execdir bash -c 'encrypt "${1}" "${2}"' _ "{}" "${encrypt_password}" \;
 fi
 
 if [ "${decrypt}" == true ];then
@@ -165,7 +165,7 @@ if [ "${decrypt}" == true ];then
     "${DIR}" \
     -type f \
     -name "*.gpg" \
-    -execdir bash -c "decrypt \"${1}\" \"${decrypt_password}\"" _ "{}" \;
+    -execdir bash -c 'decrypt "${1}" "${2}"' _ "{}" "${decrypt_password}" \;
 fi
 
 # Run envionrment
