@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
 set -exuo pipefail
 
+MAILCOW_CERTS_DIR="/certs_mailcow"
+
 DH_OUTFILE="${DH_OUTFILE:-dhparams.pem}"
 DH_KEYLENGTH="${DH_KEYLENGTH:-4096}"
 
 generate_dh(){
-    local dir="${1}" && shift
+    local dir
+    dir="${1}" && shift
 
-    local outfile="${dir}/${DH_OUTFILE}"
+    local outfile
+    outfile="${dir}/${DH_OUTFILE}"
 
     if [ ! -f "${outfile}" ]; then
       openssl dhparam \
@@ -17,10 +21,12 @@ generate_dh(){
 }
 
 ln_key(){
-    local keyfile="${1}" && shift
-
-    local dir="$(dirname "${keyfile}")"
-    local key="$(basename "${keyfile}")"
+    local keyfile
+    keyfile="${1}" && shift
+    local dir
+    dir="$(dirname "${keyfile}")"
+    local key
+    key="$(basename "${keyfile}")"
 
     # Create key.pem - file
     ln \
@@ -30,7 +36,6 @@ ln_key(){
       "${key}" \
       "key.pem"
 }
-
 
 deploy_challenge() {
     local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}"
@@ -126,6 +131,9 @@ deploy_cert() {
 
     # generate diffie hellman parameters
     generate_dh "$(dirname "${CERTFILE}")"
+
+    # copy certificates to mailcow ssl dir
+    cp -r "$(dirname "${CERTFILE}")" "${MAILCOW_CERTS_DIR}"
 }
 
 deploy_ocsp() {
@@ -174,6 +182,9 @@ unchanged_cert() {
 
     # generate diffie hellman parameters
     generate_dh "$(dirname "${CERTFILE}")"
+
+    # copy certificates to mailcow ssl dir
+    cp -r "$(dirname "${CERTFILE}")" "${MAILCOW_CERTS_DIR}"
 }
 
 invalid_challenge() {
