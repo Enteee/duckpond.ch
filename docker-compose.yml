@@ -68,10 +68,11 @@ services:
             context: ${CONTAINER_DIR}/dehydrated
             args:
                 - debian_version=${DEBIAN_VERSION}
-        command: dehydrated -c --accept-terms
+        command: dehydrated -c --accept-terms --hook /etc/dehydrated/hook.sh
         volumes:
             - ${CONTAINER_DIR}/dehydrated/etc:/etc/dehydrated:ro
             - certs:/etc/dehydrated/certs:rw
+            - ${CONTAINER_DIR}/mailcow/data/assets/ssl:/certs_mailcow:rw
             - acme-challenge:/etc/dehydrated/acme-challenge:rw
 
     isso:
