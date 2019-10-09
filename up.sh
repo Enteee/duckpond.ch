@@ -8,7 +8,7 @@ DOCKER_COMPOSE="${DIR}/docker-compose.sh"
 
 function usage(){
 cat <<EOF
-up.sh env [-- docker-compose-arguments]: run the blog
+up.sh env [docker-compose-arguments]: run the blog
 
 Options:
   -h|--help       print this help
@@ -141,10 +141,6 @@ while [[ $# -gt 0 ]]; do
     ;;
     dev|development)
       environment="env_development" && shift
-      break
-    ;;
-    --)
-      shift
       break
     ;;
     *|?)
