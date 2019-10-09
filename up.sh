@@ -8,7 +8,7 @@ DOCKER_COMPOSE="${DIR}/docker-compose.sh"
 
 function usage(){
 cat <<EOF
-up.sh env: run the blog
+up.sh env [-- docker-compose-arguments]: run the blog
 
 Options:
   -h|--help       print this help
@@ -111,22 +111,22 @@ while [[ $# -gt 0 ]]; do
   case "${1}" in
     -v|--verbose)
       verbose=true && shift
-      ;;
+    ;;
     -d|--develop)
       develop=true && shift
-      ;;
+    ;;
     -h|--help)
       usage
       exit
-      ;;
+    ;;
     -ec|--encrypt)
       encrypt=true && shift
       encrypt_password="${1?missing password}" && shift
-      ;;
+    ;;
     -dc|--decrypt)
       decrypt=true && shift
       decrypt_password="${1?missing password}" && shift
-      ;;
+    ;;
     --|prod|production)
       environment="env_production" && shift
       break
@@ -143,11 +143,15 @@ while [[ $# -gt 0 ]]; do
       environment="env_development" && shift
       break
     ;;
+    --)
+      shift
+      break
+    ;;
     *|?)
       echo "Invalid argument: '${1}'" >&2
       usage >&2
       exit 1
-      ;;
+    ;;
   esac
 done
 
