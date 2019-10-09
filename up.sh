@@ -29,7 +29,8 @@ EOF
 function encrypt(){
   local out="${1}" && shift
   local pw="${1}" && shift
-  local in="$(basename --suffix ".gpg" "${out}")"
+  local in
+  in="$(basename --suffix ".gpg" "${out}")"
 
   if [ ! -f "${in}" ]; then
     return
@@ -51,7 +52,8 @@ export -f encrypt
 function decrypt(){
   local in="${1}" && shift
   local pw="${1}" && shift
-  local out="$(basename --suffix ".gpg" "${in}")"
+  local out
+  out="$(basename --suffix ".gpg" "${in}")"
 
   if [ ! -f "${in}" ]; then
     return
@@ -98,8 +100,6 @@ env_production(){
 
 verbose=false
 
-develop=false
-
 encrypt=false
 encrypt_password=""
 decrypt=false
@@ -111,9 +111,6 @@ while [[ $# -gt 0 ]]; do
   case "${1}" in
     -v|--verbose)
       verbose=true && shift
-    ;;
-    -d|--develop)
-      develop=true && shift
     ;;
     -h|--help)
       usage
@@ -143,7 +140,7 @@ while [[ $# -gt 0 ]]; do
       environment="env_development" && shift
       break
     ;;
-    *|?)
+    *)
       echo "Invalid argument: '${1}'" >&2
       usage >&2
       exit 1
@@ -160,7 +157,7 @@ if [ "${encrypt}" == true ];then
     "${DIR}" \
     -type f \
     -name "*.gpg" \
-    -execdir bash -c "encrypt \"{}\" \"${encrypt_password}\"" \;
+    -execdir bash -c 'encrypt "${1}" "${2}"' _ "{}" "${encrypt_password}" \;
 fi
 
 if [ "${decrypt}" == true ];then
@@ -168,7 +165,7 @@ if [ "${decrypt}" == true ];then
     "${DIR}" \
     -type f \
     -name "*.gpg" \
-    -execdir bash -c "decrypt \"{}\" \"${decrypt_password}\"" \;
+    -execdir bash -c 'decrypt "${1}" "${2}"' _ "{}" "${decrypt_password}" \;
 fi
 
 # Run envionrment
