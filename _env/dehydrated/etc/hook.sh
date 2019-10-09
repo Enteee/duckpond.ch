@@ -133,7 +133,7 @@ deploy_cert() {
     generate_dh "$(dirname "${CERTFILE}")"
 
     # copy certificates to mailcow ssl dir
-    cp -r "$(dirname "${CERTFILE}")" "${MAILCOW_CERTS_DIR}"
+    cp -r "$(dirname "${CERTFILE}")/." "${MAILCOW_CERTS_DIR}"
 }
 
 deploy_ocsp() {
@@ -184,7 +184,7 @@ unchanged_cert() {
     generate_dh "$(dirname "${CERTFILE}")"
 
     # copy certificates to mailcow ssl dir
-    cp -r "$(dirname "${CERTFILE}")" "${MAILCOW_CERTS_DIR}"
+    cp -r "$(dirname "${CERTFILE}")/." "${MAILCOW_CERTS_DIR}"
 }
 
 invalid_challenge() {
