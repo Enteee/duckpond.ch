@@ -13,3 +13,4 @@ keywords: []
 * [How to Fake Dynamic Binding in Nix](http://r6.ca/blog/20140422T142911Z.html)
 * [npm trends: Compare package download counts over time](https://www.npmtrends.com/)
 * [A Huge Collection of MS-DOS Games](https://archive.org/details/softwarelibrary_msdos_games)
+* [Quick IPython shells with nix-shell](https://theshortlog.com/2016/02/11/ipython-nix/)
