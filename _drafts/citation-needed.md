@@ -14,3 +14,4 @@ keywords: []
 * [npm trends: Compare package download counts over time](https://www.npmtrends.com/)
 * [A Huge Collection of MS-DOS Games](https://archive.org/details/softwarelibrary_msdos_games)
 * [Quick IPython shells with nix-shell](https://theshortlog.com/2016/02/11/ipython-nix/)
+* [Migrate to travis-ci.com](https://docs.travis-ci.com/user/migrate/open-source-repository-migration)
