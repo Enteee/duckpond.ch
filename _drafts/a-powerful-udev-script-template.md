@@ -27,7 +27,7 @@ env
 #
 ```
 
-We can use such scripts in in a udev rule like this:
+We can use such scripts in a udev rule like this:
 
 ```shell
 SUBSYSTEM=="usb", \
