@@ -48,4 +48,4 @@ Oct 25 22:58:35 puddle undock.sh[32366]: ACTION=remove
 ```
 
 The template also supports debug output. Setting the first argument to `true`
-will print every command before it is run to stderr.
+will print commands and their arguments as they are executed to stderr.
