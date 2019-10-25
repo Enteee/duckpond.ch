@@ -1,7 +1,8 @@
 ---
 layout: post
+title: A udev Script Template
 categories: [bash]
-keywords: []
+keywords: [udev, log, debug]
 ---
 
 When writing shell scripts invoked by udev rules, I almost always use the
