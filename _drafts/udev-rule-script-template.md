@@ -5,8 +5,8 @@ categories: [bash]
 keywords: [udev, log, debug]
 ---
 
-When writing shell scripts invoked by udev rules, I almost always use the
-following template:
+When writing shell scripts invoked by udev rules, I find the following template
+particularly useful:
 
 ```shell
 #!/usr/bin/env bash
@@ -25,7 +25,7 @@ env
 # Actual script starts here
 ```
 
-We can then use such a script in a udev rule like this:
+We can then use such a script in a udev rule like we always would:
 
 ```shell
 SUBSYSTEM=="usb", \
@@ -35,9 +35,9 @@ SUBSYSTEM=="usb", \
   RUN+="/usr/lib/udev/scripts/undock.sh"
 ```
 
-When the udev rule runs the script, everything printed is appended to the system
-log. Stderr messages will be prefixed with `[stderr]`. Checking what your script
-does is then as simple as:
+And when the rule runs the script, everything printed is sent to the system
+log. Stderr messages will be prefixed with `[stderr]`. Which makes checking what
+the script does as simple as:
 
 ```shell
 $ journalctl -e -t undock.sh
