@@ -9,7 +9,6 @@ following template:
 
 ```shell
 #!/usr/bin/env bash
-# Commands run after docking
 set -euo pipefail
 
 CMD="`basename "${0:-udevscript}"`"
@@ -37,9 +36,9 @@ SUBSYSTEM=="usb", \
   RUN+="/usr/lib/udev/scripts/undock.sh"
 ```
 
-When the udev rule runs the script, everything written by the script is appended
-to the system log. Stderr messages will be prefixed with `[stderr]`. Getting all
-the output of a script run again is then as simple as:
+When the udev rule runs the script, everything written is appended to the system
+log. Stderr messages will be prefixed with `[stderr]`. Getting all the output of
+a script run is then as simple as:
 
 ```shell
 $ journalctl -e -t undock.sh
@@ -50,13 +49,5 @@ Oct 25 22:58:35 puddle undock.sh[32366]: ACTION=remove
 ...
 ```
 
-For debugging set the first argument to `true`. This will print every command
-before it is run to stderr.
-
-```shell
-SUBSYSTEM=="usb", \
-  ACTION=="remove", \
-  ENV{ID_VENDOR_ID}=="17e9", \
-  ENV{ID_MODEL_ID}=="6015", \
-  RUN+="/usr/lib/udev/scripts/undock.sh true"
-```
+The template also supports debug output. Setting the first argument to `true`
+will print every command before it is run to stderr.
