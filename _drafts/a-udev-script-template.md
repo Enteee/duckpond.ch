@@ -34,7 +34,7 @@ SUBSYSTEM=="usb", \
   RUN+="/usr/lib/udev/scripts/undock.sh"
 ```
 
-When the udev rule runs the script, everything written is appended to the system
+When the udev rule runs the script, everything printed is appended to the system
 log. Stderr messages will be prefixed with `[stderr]`. Checking what your script
 does is then as simple as:
 
