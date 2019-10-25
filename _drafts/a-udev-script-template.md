@@ -37,8 +37,8 @@ SUBSYSTEM=="usb", \
 ```
 
 When the udev rule runs the script, everything written is appended to the system
-log. Stderr messages will be prefixed with `[stderr]`. Getting all the output of
-a script run is then as simple as:
+log. Stderr messages will be prefixed with `[stderr]`. Checking what your script
+does is then as simple as:
 
 ```shell
 $ journalctl -e -t undock.sh
