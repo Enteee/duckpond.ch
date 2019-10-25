@@ -1,6 +1,6 @@
 ---
 layout: post
-title: A udev Script Template
+title: udev Rule Script Template
 categories: [bash]
 keywords: [udev, log, debug]
 ---
