@@ -21,12 +21,10 @@ if [ "${DEBUG}" = true ]; then set -x; fi
 echo "running: ${0}"
 env
 
-#
 # Actual script starts here
-#
 ```
 
-We can use such scripts in a udev rule like this:
+We can then use such a script in a udev rule like this:
 
 ```shell
 SUBSYSTEM=="usb", \
