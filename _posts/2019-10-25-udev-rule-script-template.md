@@ -1,8 +1,10 @@
 ---
 layout: post
 title: udev Rule Script Template
-categories: [bash]
+categories: [bash, nix]
 keywords: [udev, log, debug]
+redirect_from:
+  - /bash/2019/10/25/udev-rule-script-template.html
 ---
 
 When writing shell scripts invoked by udev rules, I find the following template
