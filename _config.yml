@@ -24,6 +24,7 @@ plugins:
     - jekyll-sitemap
     - jekyll-responsive-image
     - jekyll-minifier
+    - jekyll-redirect-from
 
 responsive_image:
   # [Required]
