@@ -55,7 +55,7 @@ will print commands and their arguments as they are executed to stderr.
 
 # Bonus: A Nix Expression
 
-In fact the script above is derived from the following nix package:
+The script above is derived from the following nix expression.
 
 ```nix
 { pkgs ? import <nixpkgs> {}, ... }:
@@ -108,4 +108,15 @@ in name : script: {
 
       ${script}
     ''
+```
+
+If invoked, the expression writes such a script to the nix store.
+
+```shell
+nix-repl> writeLoggedScript = import ./writeLoggedScript.nix {}
+
+nix-repl> :b writeLoggedScript "test.sh" "echo this is just a test" {}
+
+this derivation produced the following outputs:
+  out -> /nix/store/bzjllwyhy0zwm2f352a0gya8fp13qc7q-test.sh
 ```
