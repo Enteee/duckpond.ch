@@ -1,7 +1,7 @@
 ---
 layout: post
 title: udev Rule Script Template
-categories: [bash, nix]
+categories: [bash]
 keywords: [udev, log, debug]
 ---
 
