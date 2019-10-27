@@ -13,8 +13,8 @@ particularly useful:
 set -euo pipefail
 
 CMD="`basename "${0:-udevscript}"`"
-exec 1> >(logger -t "${CMD}")
-exec 2> >(ts '[stderr]' | logger -t "${CMD}")
+exec 1> >(tee >(logger -t "${CMD}"))
+exec 2> >(ts '[stderr]' | tee >(logger -t "${CMD}"))
 
 DEBUG="${1:-false}"
 if [ "${DEBUG}" = true ]; then set -x; fi
@@ -50,3 +50,60 @@ Oct 25 22:58:35 puddle undock.sh[32366]: ACTION=remove
 
 The template also supports debug output. Setting the first argument to `true`
 will print commands and their arguments as they are executed to stderr.
+
+# Bonus: A Nix Expression
+
+In fact the script above is derived from the following nix package:
+
+```nix
+{ pkgs ? import <nixpkgs> {}, ... }:
+
+let
+
+  logger = "${pkgs.utillinux}/bin/logger";
+  ts = "${pkgs.moreutils}/bin/ts";
+  tee = "${pkgs.coreutils}/bin/tee";
+
+in name : script: {
+    strict ? true,
+    log ? true,
+    debug ? false,
+    printenv ? true,
+  }: let
+
+    strictCmd = if strict then
+      ''
+      set -euo pipefail
+      ''
+    else "";
+
+    logCmd = if log then
+      ''
+      exec 1> >(${tee} >(${logger} -t "${name}"))
+      exec 2> >(${ts} '[stderr]' | ${tee} >(${logger} -t "${name}"))
+      ''
+    else "";
+
+    debugCmd = if debug then
+      ''
+      set -x
+      ''
+    else "";
+
+    printenvCmd = if printenv then
+      ''
+      echo "running: ${name}"
+      env
+      ''
+    else "";
+
+  in pkgs.writeShellScript name
+    ''
+      ${strictCmd}
+      ${logCmd}
+      ${debugCmd}
+      ${printenvCmd}
+
+      ${script}
+    ''
+```
