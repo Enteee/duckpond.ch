@@ -9,7 +9,7 @@ urls:
     - text: About
       url: /about/
     - text: Donate
-      url: https://liberapay.com/Ente/
+      url: https://github.com/sponsors/Enteee
     - text: Atom-feed
       url: /feed.xml
 url: "https://duckpond.ch"
