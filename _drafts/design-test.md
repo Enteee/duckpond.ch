@@ -154,6 +154,11 @@ and code blocks:
 > Here's some example code:
 > 
 >     return shell_exec("echo $input | $markdown_script");
+> 
+> Here's an image:
+> 
+> ![duck.png](/static/posts/design-test/duck.png)
+
 
 Any decent text editor should make email-style quoting easy. For
 example, with BBEdit, you can make a selection and choose Increase

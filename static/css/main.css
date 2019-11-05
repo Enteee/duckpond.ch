@@ -22,7 +22,8 @@ strong {
  * Images
  */
 .post > p > img,
-.post > p > a > img 
+.post > p > a > img,
+.post > blockquote > p > img
 {
     display: block;
     margin-left: auto;
