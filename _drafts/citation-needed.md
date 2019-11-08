@@ -16,3 +16,5 @@ keywords: []
 * [Quick IPython shells with nix-shell](https://theshortlog.com/2016/02/11/ipython-nix/)
 * [Migrate to travis-ci.com](https://docs.travis-ci.com/user/migrate/open-source-repository-migration)
 * [Designing a Version](https://sedimental.org/designing_a_version.html)
+* [Great Impractical Ideas in Computer Science: PowerPoint Programming](https://www.youtube.com/watch?v=_3loq22TxSc)
+* [my_first_calculator.py](https://github.com/AceLewis/my_first_calculator.py)
