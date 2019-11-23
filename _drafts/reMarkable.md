@@ -1,6 +1,7 @@
 ---
 layout: post
 categories: [nix, bash]
+title: reMarkable
 keywords: []
 ---
 
@@ -9,13 +10,19 @@ will possibly not hurt anyone. This is not a product review, I much rather try t
 focus on technical aspects. Such as packaging the software and analyzing some of
 its features.
 
+{%
+  responsive_image
+  path: static/posts/reMarkable/remarkable.png
+  caption: 'Sketching and writing on the device'
+%}
+
 [reMarkable] is an electronic ink tablet designed for writing. E Ink writing
 tablets promise excellent writing experience and a long battery lifetime. Which
 should make them a good replacement for paper. There are a a few competitors on
 that market. For example the [Ratta SuperNote](https://goodereader.com/blog/product/supernote-a5-digital-note), heavily featured on [goodereader][goodereader][^1].
 
 My main use-cases for the tablet are todo lists,
-meeting notes, mindmaps, ui mockups and ugly sketches [^2]. I bought an e ink
+meeting notes, mindmaps, ui mockups and ugly sketches. I bought an e ink
 tablet because I was fed up with manually digializing paper. I finally chose the
 [reMarkable] because all of the developers [seem to be european cats](https://github.com/orgs/reMarkable/people)
 and the ecosystem [is hackable to at least some degree](https://github.com/reHackable/awesome-reMarkable).
@@ -26,7 +33,7 @@ and the ecosystem [is hackable to at least some degree](https://github.com/reHac
 
 The [reMarkable] connects to the their cloud which has the main focus on document
 sharing and backup. There is an App for Android / iOS as well as a client for
-Windows and MacOS. Sadly, the Linux client was discontinued in late 2017 [^3].
+Windows and MacOS. Sadly, the Linux client was discontinued in late 2017 [^2].
 For cross operating system comaptibility the device can serve its files using
 a built in webserver, accessible via USB. When connected to the cloud, the device
 has some optical character recognition (OCR) capabilities as well conversion of
@@ -55,7 +62,7 @@ done < <(patchelf --print-needed "${binary}")
 ```
 
 I was able to quickly pin down all the dependencies and patch the distributed
-executable with rpaths needed to run the executable under NixOS [^4].
+executable with rpaths needed to run the executable under NixOS [^3].
 Using the following derivation:
 
 ```nix
@@ -136,7 +143,7 @@ $ nix-shell \
 The application starts and connects to the cloud just fine. But I ran into
 problems when displaying any of the drawings. If I do open a notebook, nothing
 is shown. I have checked the whole log for any hints which might indicate issues
-related to the packaging. But I could not find any. Also, all other features [^5]
+related to the packaging. But I could not find any. Also, all other features [^4]
 work just fine.
 
 My best guess would be that the [reMarkable] devs have changed the proprietary
@@ -156,7 +163,7 @@ wrong, I am curious to hear about them in the comment section. Having spent
 quite a few hours on this issue I finally gave up getting the linux client to
 work.
 
-## [rMAPI]
+# [rMAPI]
 
 From the [README.md](https://github.com/juruen/rmapi/blob/master/README.md):
 
@@ -166,17 +173,26 @@ From the [README.md](https://github.com/juruen/rmapi/blob/master/README.md):
 > 
 > ![rMAPI console](/static/posts/reMarkable/rmapi-console.gif)
 
-In short, a greate tool! Creating a derivation and using it under NixOS was
+In short, a great tool! Creating a derivation and using it under NixOS was
 easy. I opened a [pull request](https://github.com/juruen/rmapi/pull/78) in
 order to share my effords with them. Depending on the community feedback I might
 go ahead an add a derivation for [rMAPI] to nixpkgs later.
 
+# Conclusion
+
+I have been using the reMarkable for a few weeks now and I am very statisfied
+with the product. The overall user experience is very good. And the graphite tips
+don't wear out too fast. For the future I would like to see the following features:
+
+* toogle flight mode with a hardware switch
+* mixed pdf and sheet notebooks
+* basic shapes such as circles, squares and lines
+
 
 [^1]: The platform is so unnaturally biased towards that alternative, leading me into questioning their independence. We all need money to support our life. But a bit more transparency, especially when your main focus are product reviews, would be nice.
-[^2]: You'll find a vast collection of such in this very article.
-[^3]: This needs to change!
-[^4]: 20.03pre199897.471869c9185
-[^5]: Except the most important one...
+[^2]: This needs to change!
+[^3]: 20.03pre199897.471869c9185
+[^4]: Except the most important one...
 
 [reMarkable]:https://remarkable.com/
 [goodereader]:https://goodereader.com/blog/product/supernote-a6-digital-note
