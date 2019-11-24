@@ -18,12 +18,12 @@ features.
 
 [reMarkable] is an electronic ink tablet designed for writing. E Ink writing
 tablets promise excellent writing experience and a long battery lifetime. Which
-should make them a good replacement for paper. There are a a few competitors on
+should make them a good replacement for paper. There are a few competitors on
 that market. For example the [Ratta SuperNote](https://goodereader.com/blog/product/supernote-a5-digital-note), heavily featured on [goodereader][goodereader][^1].
 
 My main use-cases for the tablet are to-do lists, meeting notes, mind maps,
 ui mock-ups and ugly sketches. I bought an e ink tablet because I was fed up with
-manually digitalizing paper. I finally chose the [reMarkable] because all of the
+manually digitalizing paper. I finally chose the [reMarkable] because all the
 developers [seem to be european cats](https://github.com/orgs/reMarkable/people)
 and the ecosystem [is hackable to at least some degree](https://github.com/reHackable/awesome-reMarkable).
 
