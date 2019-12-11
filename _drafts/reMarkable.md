@@ -16,6 +16,14 @@ features.
   caption: 'Sketching and writing on the device'
 %}
 
+# Table of Contents
+{:.no_toc}
+
+* entries
+{:toc}
+
+# Feature Overview
+
 [reMarkable] is an electronic ink tablet designed for writing. E Ink writing
 tablets promise excellent writing experience and a long battery lifetime. Which
 should make them a good replacement for paper. There are a few competitors on
@@ -25,11 +33,10 @@ My main use-cases for the tablet are to-do lists, meeting notes, mind maps,
 ui mock-ups and ugly sketches. I bought an e ink tablet because I was fed up with
 manually digitalizing paper. I finally chose the [reMarkable] because all the
 developers [seem to be european cats](https://github.com/orgs/reMarkable/people)
-and the ecosystem [is hackable to at least some degree](https://github.com/reHackable/awesome-reMarkable).
-
-# Features
+and the ecosystem [is hackable to at least some degree](https://github.com/reHackable/awesome-reMarkable). Also they seem to [release frequently](https://support.remarkable.com/hc/en-us/sections/115001534689-Release-notes).
 
 ![reMarkable ecosystem](/static/posts/reMarkable/ecosystem.svg)
+*You must forgive me my drawing skills*
 
 The device connects to the reMarkable cloud which has the main focus on document
 sharing and backup. There is an App for Android / iOS as well as a client for
@@ -40,7 +47,9 @@ has some optical character recognition (OCR) capabilities as well conversion of
 documents to scalable vector graphics (SVG). The live view feature would be
 amazing but also requires the native QT app on the receiving end.
 
-# Reviving the Linux Client
+# NixOS derivations
+
+## Linux Client
 
 Using the [NixOS packaging guideline for QT](https://nixos.org/nixpkgs/manual/#sec-language-qt),
 and the following script:
@@ -163,20 +172,102 @@ wrong, I am curious to hear about them in the comment section. Having spent
 quite a few hours on this issue I finally gave up getting the Linux client to
 work.
 
-# [rMAPI]
+## [rMAPI]
 
 From the [README.md](https://github.com/juruen/rmapi/blob/master/README.md):
 
 > [rMAPI] is a Go app that allows you to access the ReMarkable Cloud API programmatically.
-> 
+>
 > You can interact with the different API end-points through a shell. However, you can also run commands non-interactively. This may come in handy to script certain workflows such as taking automatic backups or uploading documents programmatically.
-> 
+>
 > ![rMAPI console](/static/posts/reMarkable/rmapi-console.gif)
 
 In short, a great tool! Creating a derivation and using it under NixOS was
 easy. I opened a [pull request](https://github.com/juruen/rmapi/pull/78) in
-order to share my efforts with them. Depending on the community feedback I might
-go ahead an add a derivation for [rMAPI] to nixpkgs later.
+order to share my work with the [rMAPI] project. Then I did also create another
+[pull request](https://github.com/NixOS/nixpkgs/pull/74657) which adds this
+derivation to nixpkgs. My initial Idea was to keep all relavant `*.nix` files
+in the [rMAPI] repository and just use that repository in the nix-expression
+added to nixpkgs. This approach did not work because it requires import
+from derivations (IFD), which are currently disabled in hydra [^5].
+
+With [rMAPI] we can eaisly replicate the file sharing aspects of the natvie
+Linux client. But how can we get the live view to work?
+
+## [srvfb]
+
+From the [README.md](https://github.com/Merovius/srvfb/blob/master/README.md):
+
+> This repository contains a small webserver that can serve the contents of a linux framebuffer device as video over HTTP. The video is encoded as a series of PNGs, which are served in a multipart/x-mixed-replace stream. The primary use case is to stream a [reMarkable] screen to a computer and share it from there via video-conferencing or capturing it. For that reason, there is also a proxy-mode, which streams the frames as raw, uncompressed data from the remarkable and can then do the png-encoding on a more powerful machine. Whithout that, the framerate is one or two frames per second, which might not be acceptable (it might be, though).
+
+Problem solved! Well, almost. I would still like to be able to toggle flight mode
+by a button press.
+
+# Hacking the reMarkable
+
+Since I could not find a tool to get the flightmode working via button press, I
+had to build something on my own. But before doing so, I had to familiarize myself
+with the intestines of the device itself. For this I had to become `root` on the device.
+
+## SSH to the device
+
+It is possible and super easy:
+
+1. Connect the tablet to your computer via USB.
+2. Get the ip address as well as the root password from the about page.
+3. `ssh`, done!
+
+```sh
+$ ssh root@10.11.99.1
+ｒｅＭａｒｋａｂｌｅ
+╺━┓┏━╸┏━┓┏━┓   ┏━╸┏━┓┏━┓╻ ╻╻╺┳╸┏━┓┏━┓
+┏━┛┣╸ ┣┳┛┃ ┃   ┃╺┓┣┳┛┣━┫┃┏┛┃ ┃ ┣━┫┗━┓
+┗━╸┗━╸╹┗╸┗━┛   ┗━┛╹┗╸╹ ╹┗┛ ╹ ╹ ╹ ╹┗━┛
+
+remarkable: ~/ uname -a
+Linux remarkable 4.9.84-zero-gravitas #1 Thu Jun 27 14:19:15 UTC 2019 armv7l GNU/Linux
+
+remarkable: ~/ cat /proc/cpuinfo
+processor         : 0
+model name        : ARMv7 Processor rev 10 (v7l)
+BogoMIPS          : 24.00
+Features          : half thumb fastmult vfp edsp neon vfpv3 tls vfpd32
+CPU implementer   : 0x41
+CPU architecture  : 7
+CPU variant       : 0x2
+CPU part          : 0xc09
+CPU revision      : 10
+
+Hardware          : Freescale i.MX6 SoloLite (Device Tree)
+Revision          : 0000
+Serial            : 1f2e89d4ee67f7f0
+```
+
+The remarkable Filesystem structure is partially documented on the [remarkable wiki](https://remarkablewiki.com/tech/filesystem). Some other locations I found particularly intersting:
+
+* `/home/root/.local/share/remarkable/xochitl/`: Your documents and metadata.
+* `/etc/remarkable.conf`: Passwords and keys.
+```sh
+remarkable: ~/ grep -r Password /etc/remarkable.conf
+DeveloperPassword=*** ROOT PASSWORD (masked) ***
+Password=*** Screen lock password (masked) ***
+```
+```sh
+remarkable: ~/ sed -n '/wifinetworks/,$p' /etc/remarkable.conf
+[wifinetworks]
+Duckpond.ch=@Variant(*** Key for Wifi network (masked) ***)
+Tomato50=@Variant(*** Key for Wifi network (masked) ***)
+```
+
+## Toggle Flight Mode
+
+# The new reMarkable2
+
+It seems that a new device is on its way. But just not quite there. reMarkable
+has filed a [request for certification by the FCC](https://fccid.io/2AMK2-RM110),
+which contains a wealth of pictures and specs for the new device. But in a letter
+correspondence from the 22. November 2019 they also requested the dismissal of
+that FCC ID. Whatever that means...
 
 # Conclusion
 
@@ -189,12 +280,20 @@ implemented:
 * mixed PDF and sheet notebooks
 * basic shapes such as circles, squares and lines
 
+The reMarkable is a perfect example how open devices can encurage a community to
+make so much more out of a already great product. I sincerely hope that the
+reMarkable stays as open as it is right now [^6] and no money hungry manager or
+acquiring company destroys what they built so far.
+
 
 [^1]: The platform is so unnaturally biased towards that alternative, leading me into questioning their independence. We all need money to support our life. But a bit more transparency, especially when your main focus are product reviews, would be nice.
 [^2]: This needs to change!
 [^3]: 20.03pre199897.471869c9185
 [^4]: Except the most important one...
+[^5]: I also recommend reading [this excellent article by Domen Kožar](https://blog.hercules-ci.com/2019/08/30/native-support-for-import-for-derivation/)
+[^6]: I can haz `xochitl` github repo?
 
 [reMarkable]:https://remarkable.com/
 [goodereader]:https://goodereader.com/blog/product/supernote-a6-digital-note
 [rMAPI]:https://github.com/juruen/rmapi
+[srvfb]:https://github.com/Merovius/srvfb
