@@ -31,9 +31,9 @@ that market. For example the [Ratta SuperNote](https://goodereader.com/blog/prod
 heavily featured on [goodereader][goodereader][^1].
 
 My main use-cases for the tablet are to-do lists, meeting notes, mind maps,
-ui mock-ups and ugly sketches. I bought an e ink tablet because I was fed up with
+user interface mock-ups and ugly sketches. I bought an e ink tablet because I was fed up with
 manually digitalizing paper. I finally chose the [reMarkable] because all of the
-developers [seem to be european cats](https://github.com/orgs/reMarkable/people)
+developers [seem to be European cats](https://github.com/orgs/reMarkable/people)
 and the ecosystem [is hackable to at least some degree](https://github.com/reHackable/awesome-reMarkable).
 Also they [release frequently](https://support.remarkable.com/hc/en-us/sections/115001534689-Release-notes)
 which is a big plus.
@@ -50,17 +50,17 @@ has some optical character recognition (OCR) capabilities as well conversion of
 documents to scalable vector graphics (SVG). The live view feature would be
 amazing but also requires the native QT app on the receiving end.
 
-# Software for the reMarkable and Some NixOs Derivations
+# Software for the reMarkable and Some NixOS Derivations
 
-In this section I am looking at software writte for the [reMarkable] and because
-NixOs is awesome I also tried to create some derivations.
+In this section I am looking at software written for the [reMarkable] and because
+NixOS is awesome I also tried to create some derivations.
 
 ## The Official Linux Client
 
 Using the [NixOS packaging guideline for QT](https://nixos.org/nixpkgs/manual/#sec-language-qt),
 and the following script:
 
-```shell
+```sh
 #!/usr/bin/env bash
 set -euo pipefail
 
@@ -80,7 +80,7 @@ I was able to quickly pin down all the dependencies and patch the distributed
 executable with rpaths needed to run the executable under NixOS [^3].
 With the resulting [`remarkable-linux-client.nix`](/static/posts/reMarkable/remarkable-linux-client.nix) derivation I can now run the client inside a `nix-shell`:
 
-```shell
+```sh
 $ nix-shell \
   --command reMarkable \
   -p $( \
@@ -110,7 +110,7 @@ xochitl.documentworker: Storing page... 0
 But this is just a guess. If you have a better idea about what might be going
 wrong, I am curious to hear about them in the comment section. Having spent
 quite a few hours on this issue, I finally gave up getting the Linux client to
-work. Therfore I started looking for open source alternatives:
+work. Therefore I started looking for open source alternatives:
 
 ## Accessing the reMarkable API With [rMAPI]
 
@@ -132,7 +132,7 @@ repository and just use that repository in the nix-expression added to nixpkgs.
 This approach did not work because it requires import from derivations (IFD),
 which are currently disabled in hydra [^5].
 
-With [rMAPI] I can now easily replicate the file sharing aspects of the natvie
+With [rMAPI] I can now easily replicate the file sharing aspects of the native
 Linux client. But how can we get the live view to work?
 
 ## Streaming the Framebuffer with [srvfb]
@@ -141,8 +141,8 @@ The idea is simple. We grab the framebuffer from the [reMarkable] and send it
 back to the computer where we then render an image. In its most basic shape this
 can be a [^6]:
 
-```
-ssh root@10.11.99.1 "cat /dev/fb0" | \
+```sh
+$ ssh root@10.11.99.1 "cat /dev/fb0" | \
   ffmpeg -vcodec rawvideo \
          -f rawvideo \
          -pix_fmt gray16le \
@@ -156,7 +156,7 @@ ssh root@10.11.99.1 "cat /dev/fb0" | \
 The amazing project [srvfb](https://github.com/Merovius/srvfb) took this idea
 to the next level. From the [README.md](https://github.com/Merovius/srvfb/blob/master/README.md):
 
-> This repository contains a small webserver that can serve the contents of a linux framebuffer device as video over HTTP. The video is encoded as a series of PNGs, which are served in a multipart/x-mixed-replace stream. The primary use case is to stream a [reMarkable] screen to a computer and share it from there via video-conferencing or capturing it. For that reason, there is also a proxy-mode, which streams the frames as raw, uncompressed data from the remarkable and can then do the png-encoding on a more powerful machine. Whithout that, the framerate is one or two frames per second, which might not be acceptable (it might be, though).
+> This repository contains a small webserver that can serve the contents of a Linux framebuffer device as video over HTTP. The video is encoded as a series of PNGs, which are served in a multipart/x-mixed-replace stream. The primary use case is to stream a [reMarkable] screen to a computer and share it from there via video-conferencing or capturing it. For that reason, there is also a proxy-mode, which streams the frames as raw, uncompressed data from the remarkable and can then do the png-encoding on a more powerful machine. Whithout that, the framerate is one or two frames per second, which might not be acceptable (it might be, though).
 
 Running this on the [reMarkable] is super easy. The result is great and even the
 documented lag in non-proxy mode is acceptable. Problem solved.
@@ -175,7 +175,7 @@ internals of the device. For this I had to become `root` first.
 Good news! It is possible and super easy:
 
 1. Connect the tablet to your computer via USB.
-2. Get the ip address as well as the root password from the about page.
+2. Get the IP address as well as the root password from the about page.
 3. `ssh`, done!
 
 ```sh
@@ -204,7 +204,7 @@ Revision          : 0000
 Serial            : 1f2e89d4ee67f7f0
 ```
 
-The remarkable Filesystem structure is partially documented on the [remarkable wiki](https://remarkablewiki.com/tech/filesystem).
+The remarkable File system structure is partially documented on the [remarkable wiki](https://remarkablewiki.com/tech/filesystem).
 Some other locations I found interesting:
 
 * `/home/root/.local/share/remarkable/xochitl/`: Your documents and metadata.
@@ -230,7 +230,7 @@ In my simple approach I am using [evtest] to parse the binary events from
 `/dev/input/event*`. First I cross compiled [evtest] with [dockercross] for the
 32 bit ARMV7-A and copied the resulting binary to the reMarkable.
 
-```bash
+```sh
 $ git clone https://github.com/freedesktop-unofficial-mirror/evtest.git
 $ cd evtest
 $ docker \
@@ -255,7 +255,7 @@ handle button press events on `/dev/input/event2`. With
 `rfkill list | grep -q "Soft blocked: no"` it then detects if flight mode is
 disabled and calls out to `rfkill` accordingly.
 
-```bash
+```sh
 #!/usr/bin/env bash
 set -euo pipefail
 
@@ -307,7 +307,7 @@ handle_events(){
 handle_events
 ```
 
-done!.. One downside comming from directly using `rfkill`, is that the user interface
+done!.. One downside coming from directly using `rfkill`, is that the user interface
 does not properly detect this state change. Which means we can get the reMarkable into
 weird states where the device is connected to a network with the flight mode icon
 on. Rebooting the device recovers the clean state again. [But let us call this a
@@ -329,7 +329,7 @@ is on its way. [reMarkable] has filed a [request for certification by the FCC](h
 In a letter correspondence from the 22. November 2019 they requested the dismissal of
 that FCC ID. Whatever that means...
 
-Wrapping up the [reMarkable] is a perfect example how open devices can encurage
+Wrapping up the [reMarkable] is a perfect example how open devices can encourage
 a community to make so much more out of a already great product. I sincerely hope
 that the company stays as open as it is right now [^7] and no money hungry manager
 or acquiring company destroys what they built so far.
