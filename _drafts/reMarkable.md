@@ -107,10 +107,10 @@ Redrawing lines completed in 0 ms
 xochitl.documentworker: Storing page... 0
 ```
 
-But this is just a guess. If you have a better idea about what might be going
-wrong, I am curious to hear about them in the comment section. Having spent
-quite a few hours on this issue, I finally gave up getting the Linux client to
-work. Therefore I started looking for open source alternatives:
+But this is just a guess. If you have a better idea what might be going wrong,
+I am curious to hear about them in the comment section. Having spent quite a few
+hours on this issue, I finally gave up getting the Linux client to work.
+Therefore I started looking for open source alternatives:
 
 ## Accessing the reMarkable API With [rMAPI]
 
