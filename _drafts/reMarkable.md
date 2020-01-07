@@ -2,7 +2,7 @@
 layout: post
 categories: [nix, bash]
 title: reMarkable
-keywords: [reMarkable, e ink, derivation, rMAPI]
+keywords: [reMarkable, e ink, derivation, rMAPI, srvfb]
 ---
 
 I got my [reMarkable] recently and writing a few words about it will possibly
