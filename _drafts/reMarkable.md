@@ -315,7 +315,7 @@ feature, shall we?](https://www.youtube.com/watch?v=JYAq-7sOzXQ)
 
 # Conclusion
 
-I have been using the reMarkable for a few weeks now and I am very satisfied
+After having used the reMarkable for a few weeks now I am still very satisfied
 with the product. The overall user experience is very good. And the graphite tips
 don't wear out too fast. For the future I would like to see the following features
 implemented:
