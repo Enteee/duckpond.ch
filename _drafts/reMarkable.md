@@ -325,7 +325,7 @@ implemented:
 * basic shapes such as circles, squares and lines
 
 Maybe we get all this with the reMarkable2. It seems that a new device is on its
-way. [reMarkable] has filed a [request for certification by the FCC (FCC ID 2AMK2-RM110)](https://fccid.io/2AMK2-RM110) which contains a wealth of pictures and specs. But in a letter correspondence
+way. [reMarkable] has filed a [request for certification by the FCC (ID: 2AMK2-RM110)](https://fccid.io/2AMK2-RM110) which contains a wealth of pictures and specs. But in a letter correspondence
 from the 22. November 2019 they requested the dismissal of that FCC ID.
 Whatever that means...
 
