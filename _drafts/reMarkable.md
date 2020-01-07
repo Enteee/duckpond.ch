@@ -77,8 +77,8 @@ done < <(patchelf --print-needed "${binary}")
 ```
 
 I was able to quickly pin down all the dependencies and patch the distributed
-executable with rpaths needed to run the executable under NixOS [^3].
-With the resulting [`remarkable-linux-client.nix`](/static/posts/reMarkable/remarkable-linux-client.nix) derivation I can now run the client inside a `nix-shell`:
+executable with NixOS specific rpaths [^3]. With the resulting derivation [`remarkable-linux-client.nix`](/static/posts/reMarkable/remarkable-linux-client.nix) I can now run the
+client inside a `nix-shell`:
 
 ```sh
 $ nix-shell \
