@@ -324,12 +324,12 @@ implemented:
 * mixed PDF and sheet notebooks
 * basic shapes such as circles, squares and lines
 
-But maybe we get all this with the reMarkable2. Because it seems that a new device
-is on its way. [reMarkable] has filed a [request for certification by the FCC](https://fccid.io/2AMK2-RM110) which contains a wealth of pictures and specs for the new device.
-In a letter correspondence from the 22. November 2019 they requested the dismissal of
-that FCC ID. Whatever that means...
+Maybe we get all this with the reMarkable2. It seems that a new device is on its
+way. [reMarkable] has filed a [request for certification by the FCC](https://fccid.io/2AMK2-RM110) which contains a wealth of pictures and specs. But in a letter correspondence
+from the 22. November 2019 they requested the dismissal of that FCC ID.
+Whatever that means...
 
-Wrapping up the [reMarkable] is a perfect example how open devices can encourage
+Wrapping up, the [reMarkable] is a perfect example how open devices can encourage
 a community to make so much more out of a already great product. I sincerely hope
 that the company stays as open as it is right now [^7] and no money hungry manager
 or acquiring company destroys what they built so far.
