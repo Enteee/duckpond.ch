@@ -47,7 +47,7 @@ sharing and backup. There is an App for Android / iOS as well as a client for
 Windows and Mac OS. Sadly, the Linux client was discontinued in late 2017 [^2].
 For cross operating system compatibility the device can serve its files using
 a built in web server accessible via USB. When connected to the cloud, the device
-has some optical character recognition (OCR) capabilities as well conversion of
+has some optical character recognition (OCR) capabilities and can convert
 documents to scalable vector graphics (SVG). The live view feature would be
 amazing but also requires the native QT app on the receiving end.
 
