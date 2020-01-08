@@ -201,7 +201,7 @@ CPU revision      : 10
 
 Hardware          : Freescale i.MX6 SoloLite (Device Tree)
 Revision          : 0000
-Serial            : 1f2e89d4ee67f7f0
+Serial            : ****************
 ```
 
 The remarkable File system structure is partially documented on the [remarkable wiki](https://remarkablewiki.com/tech/filesystem).
