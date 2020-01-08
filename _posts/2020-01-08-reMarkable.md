@@ -78,8 +78,8 @@ done < <(patchelf --print-needed "${binary}")
 ```
 
 I was able to quickly pin down all the dependencies and patch the distributed
-executable with NixOS specific rpaths [^3]. With the resulting derivation [`remarkable-linux-client.nix`](/static/posts/reMarkable/remarkable-linux-client.nix) I can now run the
-client inside a `nix-shell`:
+executable with NixOS specific rpaths [^3]. With the resulting derivation [`remarkable-linux-client.nix`](/static/posts/reMarkable/remarkable-linux-client.nix)
+I can now run the client inside a `nix-shell`:
 
 ```sh
 $ nix-shell \
@@ -165,7 +165,7 @@ Thank you [Merovius](https://github.com/Merovius), keep up the good work!
 
 My last pain point with the reMarkable is the missing hardware button for flight
 mode toggling. Because of battery lifetime I keep flight mode always on. But
-when I do occasionally need internet, the flight mode option in the settings is
+when I occasionally do need internet, the flight mode option in the settings is
 always a million clicks away.
 
 # Hacking Hardware Button Flight Mode Toggling
