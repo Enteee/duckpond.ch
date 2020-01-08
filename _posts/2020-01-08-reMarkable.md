@@ -2,6 +2,7 @@
 layout: post
 categories: [nix, bash]
 title: reMarkable
+featured-image: /static/resized/remarkable-800x1067.png
 keywords: [reMarkable, e ink, derivation, rMAPI, srvfb]
 ---
 
