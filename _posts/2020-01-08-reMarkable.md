@@ -3,7 +3,7 @@ layout: post
 categories: [nix, bash]
 title: reMarkable
 featured-image: /static/resized/remarkable-800x1067.png
-keywords: [reMarkable, rm110, e ink, derivation, rMAPI, srvfb]
+keywords: [reMarkable, rm110, linux, derivation, rMAPI, srvfb]
 ---
 
 I got my [reMarkable] recently and writing a few words about it will possibly
