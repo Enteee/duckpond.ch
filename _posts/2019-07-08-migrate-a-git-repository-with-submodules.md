@@ -9,7 +9,7 @@ With [git-sync-mirror] migrating or mirroring a `git` repository is a piece of
 cake. But when the migrated repository contains submodules additional steps are
 required.
 
-# The Problem
+## The Problem
 
 Submodule references are not updated when mirroring `git` repositories. This is
 because those references are tracked in a file called `.gitmodules` inside the
@@ -55,7 +55,7 @@ mirrors, the first repository [Enteee/example-dependency] still points to
 repository [Enteee/example-dependency] should point to [Enteee/example-submodule]
 instead.
 
-# The Solution: [git-submodule-url-rewrite]
+## The Solution: [git-submodule-url-rewrite]
 
 [git-submodule-url-rewrite] is a `git` command that lets you rewrite submodule
 urls. Installing the command is as simple as copying the script somewhere to
@@ -102,7 +102,7 @@ rewrite url for submodule 'js' in '/tmp/example-dependency' from 'https://github
 
 `git commit && git push`, done!
 
-## Why should I use this?
+### Why should I use this?
 
 In this section I try to answer a few common questions. Keep in mind that
 [git-submodule-url-rewrite] is a very simple `git` command which I found useful

@@ -46,7 +46,7 @@ Are you sure you want to continue connecting (yes/no)? yes
 Warning: Permanently added '[duckpond.ch]:7410,[71.19.149.209]:7410' (ECDSA) to the list of known hosts.
 ```
 
-# TOFU Inside a Container
+## TOFU Inside a Container
 
 What we are trying to do is:
 
@@ -102,7 +102,7 @@ openssl s_client -showcerts ${@} 2>/dev/null < /dev/null \
 | /kamikaze tee -a /etc/ssl/certs/ca-certificates.crt > /dev/null
 ```
 
-## [enteee/tls-tofu] Container Image
+### [enteee/tls-tofu] Container Image
 
 Based on the `tls-tofu.sh`-idea, I did create the [tls-tofu GitHub project](https://github.com/Enteee/tls-tofu)
 and published [enteee/tls-tofu] container images. Building and running your own
@@ -375,7 +375,7 @@ verification issues.
 
 Mission accomplished.
 
-## A Real World Example: [enteee/git-sync-mirror]
+### A Real World Example: [enteee/git-sync-mirror]
 
 [enteee/git-sync-mirror] is a simple container image for synchronizing a git
 mirror. Inside the `Dockerfile` it installs a run script (`/run.sh`) and
@@ -385,7 +385,7 @@ overwrites the default command. The `ENTRYPOINT` is still provided by
 ```sh
 FROM enteee/tls-tofu:alpine-latest
 
-# Disable TLS-TOFU by default
+## Disable TLS-TOFU by default
 ENV TLS_TOFU false
 
 RUN set -exuo pipefail \
@@ -423,7 +423,7 @@ Nevertheless, we can still see [enteee/tls-tofu] connecting to google.com. But
 since all certificates are valid it does not add any new trusted ones. After
 this [`kamikaze`] is destroyed and control is being handed over to [enteee/git-sync-mirror].
 
-## Caveat: Restart Policies
+### Caveat: Restart Policies
 
 If an attacker is in control of your network, it is very likely that they can
 also crash applications you are running in containers. If you restart the
@@ -432,7 +432,7 @@ can make the container trust every certificate they want. This is very, very
 bad. Always disable automatic container restart with TLS-TOFU exactly for this
 reason.
 
-## Final Thoughts
+### Final Thoughts
 
 [enteee/tls-tofu] implements a simple, yet powerful base image which allows
 containers to run in environments where something is tampering with the
