@@ -1,6 +1,7 @@
 ---
 layout: post
 categories: [citation needed]
+image: /static/posts/citation-needed/xkcd_protester.png
 keywords: []
 ---
 

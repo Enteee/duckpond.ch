@@ -1,6 +1,7 @@
 ---
 layout: post
 categories: [citation needed]
+image: /static/posts/citation-needed/xkcd_protester.png
 keywords: [reddit, Duktape, Bash, Meme, nix, npm, MS-DOS games, IPython, travis-ci, Version, PowerPoint, python]
 ---
 
