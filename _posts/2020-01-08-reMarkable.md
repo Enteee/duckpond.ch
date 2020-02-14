@@ -17,13 +17,13 @@ features.
   caption: 'Sketching and writing on the device'
 %}
 
-# Table of Contents
+## Table of Contents
 {:.no_toc}
 
 * entries
 {:toc}
 
-# Feature Overview
+## Feature Overview
 
 [reMarkable] is an electronic ink tablet designed for writing. E Ink writing
 tablets promise excellent writing experience and a long battery lifetime. Which
@@ -51,12 +51,12 @@ has some optical character recognition (OCR) capabilities and can convert
 documents to scalable vector graphics (SVG). The live view feature would be
 amazing but also requires the native QT app on the receiving end.
 
-# Software for the reMarkable and Some NixOS Derivations
+## Software for the reMarkable and Some NixOS Derivations
 
 In this section I am looking at software written for the [reMarkable] and because
 NixOS is awesome I also tried to create some derivations.
 
-## The Official Linux Client
+### The Official Linux Client
 
 Using the [NixOS packaging guideline for QT](https://nixos.org/nixpkgs/manual/#sec-language-qt),
 and the following script:
@@ -113,7 +113,7 @@ I am curious to hear about them in the comment section. Having spent quite a few
 hours on this issue, I finally gave up getting the Linux client to work.
 Therefore I started looking for open source alternatives:
 
-## Accessing the reMarkable API With [rMAPI]
+### Accessing the reMarkable API With [rMAPI]
 
 From the [README.md](https://github.com/juruen/rmapi/blob/master/README.md):
 
@@ -136,7 +136,7 @@ which are currently disabled in hydra [^5].
 With [rMAPI] I can now easily replicate the file sharing aspects of the native
 Linux client. But how can we get the live view to work?
 
-## Streaming the Framebuffer with [srvfb]
+### Streaming the Framebuffer with [srvfb]
 
 The idea is simple. We grab the framebuffer from the [reMarkable] and send it
 back to the computer where we then render an image. In its most basic shape this
@@ -168,7 +168,7 @@ mode toggling. Because of battery lifetime I keep flight mode always on. But
 when I occasionally do need internet, the flight mode option in the settings is
 always a million clicks away.
 
-# Hacking Hardware Button Flight Mode Toggling
+## Hacking Hardware Button Flight Mode Toggling
 
 I could not find a tool to get the flight mode working via button press, so I
 built something on my own. But before doing so, I familiarized myself with the
@@ -314,7 +314,7 @@ weird states where the device is connected to a network with the flight mode ico
 on. Rebooting the device recovers the clean state again. [But let us call this a
 feature, shall we?](https://www.youtube.com/watch?v=JYAq-7sOzXQ)
 
-# Conclusion
+## Conclusion
 
 After having used the reMarkable for a few weeks now I am still very satisfied
 with the product. The overall user experience is very good. And the graphite tips

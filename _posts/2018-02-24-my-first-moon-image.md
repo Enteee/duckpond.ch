@@ -7,7 +7,7 @@ keywords: [moon, astrophotography]
 
 [After a star tracking project I got hooked on astronomy](/static/posts/my-first-moon-image/startracking.png). This post wraps up my first attempt photographing the Moon.
 
-# The Rig
+## The Rig
 
 Astrophotography can get extremely expensive. I'm a rookie therefore I tried to keep everything affordable. My 300$ rig:
 
@@ -38,7 +38,7 @@ Astrophotography can get extremely expensive. I'm a rookie therefore I tried to 
   caption: 'The rig assembled and ready'
 %}
 
-# First Image
+## First Image
 
 31\. January 2018, the Blue Moon and a clear sky made a perfect opportunity for a first test. I pointed the equatorial mount towards the celestial north pole and adjusted the motor to account for the Earth's rotation. After I attached the "extra" universal T-Adapter the telescope was ready. Then I adjusted the focal point using [`raspistill`][raspistill]'s preview over Wi-Fi [^WiFi].
 
@@ -73,7 +73,7 @@ I choose to use BMP encoding for the images. Simply because I thought a bitmap i
 
 Well, the images are generally too red and blurry. I tried to correct this during post-processing.
 
-# Post-processing
+## Post-processing
 
 First I manually removed distorted and extremely blurry images. Leaving me with 139, worth 3.2 GiB of data. [hugin][hugin] [^hugin_awesome][^hugin_awesome2] then assembled the panorama below. Again, everything on default parameters with a 20° field of view.
 
@@ -110,7 +110,7 @@ The result is still red and blurry. This is why I then applied the following tra
   caption: 'The processed image'
 %}
 
-# Final Thoughts
+## Final Thoughts
 
 Compared to the imagery [on wikimedia](https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg) mine is a child's drawing. But it's mine! I am happy with the result because I was able to identify a lot of things to improve and test:
 

@@ -8,7 +8,7 @@ keywords: [one-time pad, challenge]
 
 The key to [my new bitcoin wallet](https://blockchain.info/address/15DLuxjMPhYwyHUSXR7APSAiaHBbCKfpsr) can be downloaded by a simple `nc duckpond.ch 8889`.
 
-# Key as a service 2
+## Key as a service 2
 
 ![QR-Code wallet](/static/posts/broken-one-time-pad-2/wallet.png)
 *My bitcoin wallet*
