@@ -2,7 +2,7 @@
 layout: post
 title: "Broken One-time pad"
 categories: [security, math]
-featured-image: /static/posts/broken-one-time-pad/wallet.png
+image: /static/posts/broken-one-time-pad/wallet.png
 keywords: [one-time pad, challenge]
 ---
 
