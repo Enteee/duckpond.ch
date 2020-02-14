@@ -24,7 +24,7 @@ if [ "${DEBUG}" = true ]; then set -x; fi
 echo "running: ${0}"
 env
 
-# Actual script starts here
+## Actual script starts here
 ```
 
 We can then use such a script in a udev rule like we always would:
@@ -53,7 +53,7 @@ Oct 25 22:58:35 puddle undock.sh[32366]: ACTION=remove
 The template also supports debug output. Setting the first argument to `true`
 will print commands and their arguments as they are executed to stderr.
 
-# Bonus: A Nix Expression
+## Bonus: A Nix Expression
 
 The script above is derived from the following nix expression.
 

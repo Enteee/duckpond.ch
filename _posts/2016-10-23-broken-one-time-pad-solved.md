@@ -21,7 +21,7 @@ A more detailed write up can be found on [github](https://github.com/potater/bro
 
 In this post I'll first try to reconstruct svvw's solution, then present my own. At the end we'll fix the found issues in the [broken one-time pad] so that we can restart the challenge in [broken one-time pad 2].
 
-# Notation and visualization
+## Notation and visualization
 
 The message stream $$ m $$ equals the repeated [base64] encoded [PNG] image. The pad stream $$ k $$ reassembles a key stream. The bitwise exclusive OR $$ \oplus $$ of both streams is the resulting ciphertext stream $$ c = m \oplus p $$. The streams are all chunked and indexed in bytes, e.g. $$ m_{3} $$ is the third byte in the message stream. The streams repeat themselves after $$ \vert m \vert $$, respectively $$ \vert k \vert $$ bytes. In general $$ \vert m \vert \neq \vert k \vert $$ which means after every repetition of $$ k $$, $$ m $$ is shifted by $$ s \equiv \vert k \vert \mod{\vert m \vert} $$ bytes. Important to notice is that the two streams always line up after $$ \DeclareMathOperator{\lcm}{lcm} \vert c \vert = \lcm(\vert m \vert, \vert k \vert) $$ bytes.
 
@@ -30,7 +30,7 @@ Variants of the following graphic are used to visualize the two streams. The out
 ![repeating pad](/static/posts/broken-one-time-pad-solved/repeating_pad.svg){: .stretch }
 *The two streams aligned*
 
-# svvw's solution
+## svvw's solution
 
 First things first, [broken one-time pad] should implement a [one-time pad]. [^1] Due to the broken nature of the implementation it becomes similar to a [Vigenerer cipher]. Cryptanalysis techniques working on [Vigenerer cipher]s will mostly work on the [broken one-time pad]. [^2]
 
@@ -138,14 +138,14 @@ iVBORw0KGgoAAAANSUhEUgAAAG8AAABvAQMAAADYCwwjAAAABlBMVEUAAAD///+l2Z/dAAAAAnRSTlP/
 
 In order to isolate the image we can either look for the [base64] padding `==`, or the string `iVBORw0KGgo` which stands for the [base64] encoded [PNG] magic bytes.
 
-## Discussion
+### Discussion
 
 A brute-force attack on the keystream $$ k $$ is possible because $$ M $$ contains only $$ 65 $$ out of $$ 2^8 = 256 $$ possible elements. This means with every $$ c_{i+j \vert k \vert} $$ tested, we can exclude $$ 1 - \frac{65}{256} = 0.74609375 \rightarrow ~ 74.6 \% $$ of the possible $$ k_{i} $$. The huge amount of data $$ \vert c \vert = 14028800 $$ allows for a total of $$ \frac{\vert c \vert}{\vert k \vert} = 137 $$ tests, which reduces the chance for an ambiguity of a certain $$ k_{i} $$ down to $$ (\frac{65}{256})^{137} = 2.7558438890447563 \cdot 10^{-82} $$.
 
 ![probability for an ambiguity](/static/posts/broken-one-time-pad-solved/probability_ambiguity.svg){: .stretch }
 *"Go towards the light"*
 
-# Ente's solution
+## Ente's solution
 
 My solution is based on the observation that $$ \oplus : \{0,1\}^{n} \rightarrow \{0,1\}^{n} $$ is a linear and commutative function. So we can use the additivity property from linearity $$ f(x) + f(y) = f(x + y) $$
 
@@ -248,7 +248,7 @@ while o:
 M = bytearray(M).decode("ascii")
 ```
 
-# Mitigation
+## Mitigation
 
 The cipher is called **ONE**-time pad. Which means the pad should only be used once [^4]! Mitigation of all these problems is as simple as not reusing the key stream.
 

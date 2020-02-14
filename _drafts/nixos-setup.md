@@ -54,20 +54,20 @@ Module imports binds the importet module to the namespace of the module imporing
 }
 ```
 
-### Use rxvt_unicode-with-plugins
+#### Use rxvt_unicode-with-plugins
 
 The `rxvt_unicode` package does not load custom perl-plugins.
 If you want to use such plugins, you should use the [wrapper `rxvt_unicode-with-plugins`](https://github.com/NixOS/nixpkgs/blob/8f33fb51835324878eb914aa740618b18bc804bc/pkgs/applications/misc/rxvt_unicode/wrapper.nix).
 
-## System Setup
+### System Setup
 
-### HIDPI
+#### HIDPI
 
 * Xorg DPI calculations
 * Xresources
 * URXVT-Scale font
 
-### Clipboard Synchronization
+#### Clipboard Synchronization
 
 X servers use multiple clipboards. I keep them in sync using [autocutsel], which is started as part of the i3 session.
 

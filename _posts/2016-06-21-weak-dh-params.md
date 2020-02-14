@@ -27,7 +27,7 @@ k = kdf(k_{0})
 \end{equation}
 5. Try to solve $$ log_{g}(g^{r_{c}}) \pmod{p} $$ in order to get $$ r_{c} $$ back.
 
-## Extracting parameters
+### Extracting parameters
 Extracting the parameters from duckpond.ch: [^2]
 
 ```python
@@ -148,9 +148,9 @@ DH Private-Key: (1024 bit)
 
 Well, that was easy...
 
-# Key agreement
+## Key agreement
 
-The I used [s_client] with the just generated private key and recorded the [ssl-handshake]: [^7]
+Then I used [s_client] with the just generated private key and recorded the [ssl-handshake]: [^7]
 
 ```shell
 $ openssl s_client -connect duckpond.ch:443 -cipher DHE-RSA-AES256-SHA256 -key dhkey.pem 
