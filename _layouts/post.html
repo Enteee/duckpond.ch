@@ -7,7 +7,7 @@ layout: default
 {% assign url = site.url | append: page.url | uri_escape | replace: "%20", "%2520" %}
 {% assign chars_left = chars_left | minus: 24 %}
 
-{% assign via = site.twitter | uri_escape %}
+{% assign via = site.twitter.username | uri_escape %}
 {% assign chars_left = chars_left | minus: 16 %}
 
 {% assign tags_raw = '' %}

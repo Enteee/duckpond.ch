@@ -1,7 +1,7 @@
 ---
 layout: post
 categories: [citation needed]
-featured-image: /static/posts/citation-needed/xkcd_protester.png
+image: /static/posts/citation-needed/xkcd_protester.png
 keywords: [prime number, RMagick, asciinema, pyre, gnu parallel, BuildKit, dobi, sleep, cellular automat, penetration testing]
 ---
 
