@@ -1,7 +1,7 @@
 ---
 layout: post
 categories: [citation needed]
-featured-image: /static/posts/citation-needed/xkcd_protester.png
+image: /static/posts/citation-needed/xkcd_protester.png
 keywords: [MegaPixel, Apollo-11, latex, change the world, tech stuff, secure random, unskilled, full text search, reddit, cryptography, schneier, password security]
 ---
 

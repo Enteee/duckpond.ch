@@ -2,7 +2,7 @@
 layout: post
 categories: [nix, bash]
 title: reMarkable
-featured-image: /static/resized/remarkable-800x1067.png
+image: /static/resized/remarkable-800x1067.png
 keywords: [reMarkable, rm110, linux, derivation, rMAPI, srvfb]
 ---
 

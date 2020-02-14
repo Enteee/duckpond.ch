@@ -1,9 +1,19 @@
 title: duckpond.ch
-description: deep inside the pond..
-author: Ente
-twitter: Enteeeeeee
-github: https://github.com/Enteee
-about: I like ducks!
+tagline: I like ducks!
+description: Deep dive and high quality tech blogging about stuff I have created, contributed or I find interesting. Without focus on any specific topic, technology, framework or language. The world is much to beautiful not to embrace it all.
+logo: /static/img/duck2.png
+author:
+  site: Ente
+  twitter: Enteeeeeee
+twitter:
+  username: Enteeeeeee
+  card: summary_large_image
+social:
+  name: Ente
+  links:
+    - https://github.com/Enteee
+    - https://twitter.com/Enteeeeeee
+    - https://stackoverflow.com/users/3215929/ente
 timezone: "Europe/Zurich"
 urls:
     - text: About
@@ -22,6 +32,7 @@ plugins:
     - jekyll-paginate
     - jekyll-feed
     - jekyll-sitemap
+    - jekyll-seo-tag
     - jekyll-responsive-image
     - jekyll-minifier
     - jekyll-redirect-from
