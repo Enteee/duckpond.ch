@@ -1,3 +1,2 @@
 User-agent: *
 Sitemap: https://duckpond.ch/sitemap.xml
-Disallow: /static/
