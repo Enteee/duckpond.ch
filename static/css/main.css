@@ -18,6 +18,12 @@ strong {
     margin-top: 1em;
 }
 
+.center {
+    width: 100%;
+    text-align: center;
+    font-style: normal;
+}
+
 /**
  * Images
  */
@@ -70,6 +76,7 @@ sup {
     white-space: nowrap;
     color: inherit;
 }
+
 /*
 * Inlide Code: `code`
 */
@@ -215,7 +222,6 @@ ol.reverse-roman > li {
 ol.reverse-roman > li::marker {
     content: counter(post_ctr, upper-roman) ".";
 }
-
 
 /*
  * Links
