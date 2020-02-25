@@ -229,6 +229,45 @@ leverage processing of diagrams.
   <script id="asciicast-8FC3oAI3PCtGdljCISvWVo0o8" src="https://asciinema.org/a/8FC3oAI3PCtGdljCISvWVo0o8.js" async></script>
 </div>
 
+{::options parse_block_html="true" /}
+<details>
+  <summary markdown="span" class="center">Show source</summary>
+```ts
+let diag = `
+@startuml
+class Alice <<single>> {
+  +cry(): any
+}
+note left of Alice::cry
+Untyped. She
+does not like types
+end note
+@enduml
+`
+
+// importing the parser
+import {parse, Class, Note} from 'plantuml-parser';
+
+// for each diagram parsed
+for ( let d of parse(diag) ){
+  // extract all elements
+  let elems = d.elements;
+  for ( let e of elems ) {
+    // we can use type guards to
+    // distinguish between the different
+    // elements in the diagram
+    if ( e instanceof Class) {
+      console.log('Class: '+ e.name);
+    }
+    if ( e instanceof Note ){
+      console.log('Note on '+e.of);
+    }
+  }
+}
+```
+</details>
+
+
 ## Contribute
 
 If you do like the project and you would like to contribute, there are numerous
