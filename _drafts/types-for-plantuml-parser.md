@@ -3,6 +3,7 @@ title: Types for PlantUML Parser
 layout: post
 categories: [plantuml-parser, javascript]
 keywords: [PlantUML parser, plantuml-parser, TypeScript, JavaScript, Type declarations, Open Source Software]
+image: /static/posts/types-for-plantuml-parser/bob-leaves-alice.png
 ---
 [`plantuml-parser`][plantuml-parser] 0.0.12 introduces TypeScript declarations.
 Now you can parse PlantUML and get a fully typed result. PlantUML diagrams are awesome!
@@ -10,7 +11,7 @@ In this post I first give a brief introduction into PlantUML. Then I
 will show how you can use [`plantuml-parser`][plantuml-parser] with TypeScript
 to make the most out of your diagrams.
 
-![Bob leaves Alice](/static/posts/types-for-plantuml-parser//bob-leaves-alice.png)
+![Bob leaves Alice](/static/posts/types-for-plantuml-parser/bob-leaves-alice.png)
 *She wouldn't be my type either*
 
 {::options parse_block_html="true" /}
@@ -98,7 +99,7 @@ is about. You create your design documents in PowerPoint and you are
 happy with it - Then you should probably ask yourself when things started to go wrong
 in you life.
 
-![Learn PlantUML](/static/posts/types-for-plantuml-parser//learn-plantuml.png)
+![Learn PlantUML](/static/posts/types-for-plantuml-parser/learn-plantuml.png)
 *You will find another Alice*
 
 {::options parse_block_html="true" /}
