@@ -1,15 +1,15 @@
 ---
 layout: post
 categories: [plantuml-parser, javascript]
-keywords: [PlantUML parser, plantuml-parser, TypeScript, JavaScript]
+keywords: [PlantUML parser, plantuml-parser, TypeScript, JavaScript, Type declarations, Open Source Software]
 ---
 [`plantuml-parser`][plantuml-parser] 0.0.12 introduces TypeScript declarations.
 Now you can parse PlantUML and get a fully typed result. PlantUML diagrams are awesome!
 In this post I first give a brief introduction into PlantUML. Then I
-will show how you can use [`plantuml-parser`][plantuml-parser] with Typescript
+will show how you can use [`plantuml-parser`][plantuml-parser] with TypeScript
 to make the most out of your diagrams.
 
-![Bob leaves Alice](/static/posts/plantuml-parser/bob-leaves-alice.png)
+![Bob leaves Alice](/static/posts/types-for-plantuml-parser//bob-leaves-alice.png)
 *She wouldn't be my type either*
 
 {::options parse_block_html="true" /}
@@ -72,27 +72,31 @@ Bob --> Alice: Leaves her
 * entries
 {:toc}
 
-## What is PlantUML?
+## Why you should use PlantUML
 
 > PlantUML is an open-source tool allowing users to create UML diagrams from a plain text language. The language of PlantUML is an example of a Domain-specific language. It uses Graphviz software to lay out its diagrams.
 >
 > -- Source: [wikipedia/PlantUML](https://en.wikipedia.org/wiki/PlantUML)
 
 I use PlantUML daily. A textual description of design diagrams alongside the
-source code is my definition of a living document. Belive me if design changes
-can be documented with a few simple modifications to a text file, your devs
-will start doing it. This will make your documentation evolve together with
-the code. Bring version control into the mix and pull requests suddenly become
-self-documenting. Switching to Graphviz documentation means no longer spending
-hours layouting documents. Time better spent doing actual design work.
+source code is my definition of a living document. You know the pain of out
+of date documentation. Did you ever ask yourself why this happens? As a software
+developer I do reject a tool if it does not make my life easier. Writing sound
+and solid source code is already hard enough. Having to deal with a ton of different
+documentation formats makes it even harder. Belive me, if design changes can be
+documented with a few simple modifications of a text file, I will start doing it.
+This has the effect that documentation evolves together with the code. Add version
+control to the mix and pull requests suddenly become self-documenting. Furthermore,
+switching to Graphviz means no longer spending hours layouting documents. Time
+better spent doing actual design work.
 
 With PlantUML you can document without proprietary file mongering software or
-an overpriced vector graphic editor. If you now ask yourself what all that fuzz
-is about, because you create your design documents in PowerPoint and you are
-happy with it - You should probably ask yourself when things started to go wrong
+an overpriced vector graphic editor. In case you ask yourself what all that fuzz
+is about. You create your design documents in PowerPoint and you are
+happy with it - Then you should probably ask yourself when things started to go wrong
 in you life.
 
-![Learn PlantUML](/static/posts/plantuml-parser/learn-plantuml.png)
+![Learn PlantUML](/static/posts/types-for-plantuml-parser//learn-plantuml.png)
 *You will find another Alice*
 
 {::options parse_block_html="true" /}
@@ -213,9 +217,9 @@ $ plantuml-parser <<EOF
 ```
 </details>
 
-But today we want to have a look at the programatic use of the parser. Therefore
-I created the following demonstration which shows how easy it is to do the parsing
-in TypeScript. Furthermore it also provides an example on how type guards can
+But today we want to have a look at the programmatic use of the parser. Therefore
+I created the following demonstration which shows how easy it is to parse PlantUML
+in TypeScript. The demonstration also contains an example on how type guards can
 leverage processing of diagrams.
 
 <div class="center">
@@ -228,9 +232,11 @@ If you do like the project and you would like to contribute, there are numerous
 ways how you can do so. Even if you do not write source code. Every contribution
 counts.
 
-* Tweet about the project: [![Twitter URL](https://img.shields.io/twitter/url?label=%23PlantUMLParser&url=https%3A%2F%2Fgithub.com%2FEnteee%2Fplantuml-parser)](https://twitter.com/intent/tweet?text=Parse%20PlantUML%20with%20JavaScript%20or%20TypeScript%20%F0%9F%9A%80&hashtags=PlantUMLParser,JavaScript,TypeScript&url=https%3A%2F%2Fgithub.com%2FEnteee%2Fplantuml-parser)
+* Tweet: [![Twitter URL](https://img.shields.io/twitter/url?label=%23PlantUMLParser&url=https%3A%2F%2Fgithub.com%2FEnteee%2Fplantuml-parser)](https://twitter.com/intent/tweet?text=Parse%20PlantUML%20with%20JavaScript%20or%20TypeScript%20%F0%9F%9A%80&hashtags=PlantUMLParser,JavaScript,TypeScript&url=https%3A%2F%2Fgithub.com%2FEnteee%2Fplantuml-parser)
 * [Send us your PlantUML diagrams](https://github.com/Enteee/plantuml-parser/issues/new/choose)
 * [Resolve an issue](https://github.com/Enteee/plantuml-parser/issues)
 * [Donate](https://github.com/sponsors/Enteee)
+
+Thank you.
 
 [plantuml-parser]:https://github.com/Enteee/plantuml-parser
