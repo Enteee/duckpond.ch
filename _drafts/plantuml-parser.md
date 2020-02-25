@@ -34,8 +34,8 @@ Bob --> Alice: Leaves her
 
 ## What is PlantUML?
 
-> PlantUML is an open-source tool allowing users to create UML diagrams from a plain text language. The language of PlantUML is an example of a Domain-specific language. It uses Graphviz software to lay out its diagrams. It has been used to allow blind students to work with UML. PlantUML also helps blind software engineers to design and read UML diagrams.
-> 
+> PlantUML is an open-source tool allowing users to create UML diagrams from a plain text language. The language of PlantUML is an example of a Domain-specific language. It uses Graphviz software to lay out its diagrams.
+>
 > -- Source: [wikipedia/PlantUML](https://en.wikipedia.org/wiki/PlantUML)
 
 I use PlantUML daily. A textual description of design diagrams alongside the
@@ -44,12 +44,13 @@ can be documented with a few simple modifications to a text file, your devs
 will start doing it. This will make your documentation evolve together with
 the code. Bring version control into the mix and pull requests suddenly become
 self-documenting. Switching to Graphviz documentation means no longer spending
-hours layouting documents. Time you can use doing actual design work.
+hours layouting documents. Time better spent doing actual design work.
 
-You can document without proprietary file mongering software or an overpriced
-vector graphic editor. If you now ask yourself what all that fuzz is about,
-because you create your design documents in PowerPoint and you are happy with it -
-then You should probably ask yourself when things started to go wrong in you life.
+With PlantUML you can document without proprietary file mongering software or
+an overpriced vector graphic editor. If you now ask yourself what all that fuzz
+is about, because you create your design documents in PowerPoint and you are
+happy with it - You should probably ask yourself when things started to go wrong
+in you life.
 
 ![Learn PlantUML](/static/posts/plantuml-parser/learn-plantuml.png)
 *You will find another Alice*
@@ -60,7 +61,7 @@ then You should probably ask yourself when things started to go wrong in you lif
 ```
 @startuml
 (*) --> If "Do you know PlantUML?" then
---> [No] "Learn PlantUML"
+  --> [No] "Learn PlantUML"
   If "" then
     --> [I don't have Time] "Leave Alice"
     --> "Learn PlantUML"
@@ -81,8 +82,8 @@ language. So why not start parsing it?
 
 ## Parsing PlantUML with TypeScript
 
-With [`plantuml-parser`][plantuml-parser] parsing the Syntax into something which
-is machine-processable is easy. 
+Parsing the syntax to something machine-processable is easy with the command line
+[`plantuml-parser`][plantuml-parser].
 
 {::options parse_block_html="true" /}
 
@@ -172,6 +173,13 @@ $ plantuml-parser <<EOF
 ```
 </details>
 
-But today we will see how easy this is to do the same in TypeScript.
+But today we want to have a look at the programatic use of the parser. Therefore
+I created the following demonstration which shows how easy it is to do the parsing
+in TypeScript and how type guards can leverage processing of existing diagrams.
+
+<div class="center">
+  <script id="asciicast-8FC3oAI3PCtGdljCISvWVo0o8" src="https://asciinema.org/a/8FC3oAI3PCtGdljCISvWVo0o8.js" async></script>
+</div>
+
 
 [plantuml-parser]:https://github.com/Enteee/plantuml-parser
