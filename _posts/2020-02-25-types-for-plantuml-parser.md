@@ -235,10 +235,12 @@ If you do like the project and you would like to contribute, there are numerous
 ways how you can do so. Even if you do not write source code. Every contribution
 counts.
 
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
 * Tweet: [![Twitter URL](https://img.shields.io/twitter/url?label=%23PlantUMLParser&url=https%3A%2F%2Fgithub.com%2FEnteee%2Fplantuml-parser)](https://twitter.com/intent/tweet?text=Parse%20PlantUML%20with%20JavaScript%20or%20TypeScript%20%F0%9F%9A%80&hashtags=PlantUMLParser,JavaScript,TypeScript&url=https%3A%2F%2Fgithub.com%2FEnteee%2Fplantuml-parser)
-* [Send us your PlantUML diagrams](https://github.com/Enteee/plantuml-parser/issues/new/choose)
-* [Resolve an issue](https://github.com/Enteee/plantuml-parser/issues)
-* [Donate](https://github.com/sponsors/Enteee)
+* Star: <a class="github-button" href="https://github.com/Enteee/plantuml-parser" data-icon="octicon-star" data-show-count="true" aria-label="Star Enteee/plantuml-parser on GitHub">Star</a>
+* Resolve: <a class="github-button" href="https://github.com/Enteee/plantuml-parser/issues" data-icon="octicon-issue-opened" data-show-count="true" aria-label="Issue Enteee/plantuml-parser on GitHub">Issue</a>
+* Donate: <a class="github-button" href="https://github.com/sponsors/Enteee" data-icon="octicon-heart" aria-label="Sponsor @Enteee on GitHub">Sponsor</a>
 
 Thank you.
 
