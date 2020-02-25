@@ -3,11 +3,11 @@ layout: post
 categories: []
 keywords: [PlantUML parser, plantuml-parser, TypeScript, JavaScript]
 ---
-[`plantuml-parser`][plantuml-parser] 0.0.11 introduces TypeScript declarations.
+[`plantuml-parser`][plantuml-parser] 0.0.12 introduces TypeScript declarations.
 Now you can parse PlantUML and get a fully typed result. PlantUML diagrams are awesome!
 In this post I first give a brief introduction into PlantUML. Then I
-will show how [`plantuml-parser`][plantuml-parser] with Typescript to makes the
-most out of your diagrams.
+will show how you can use [`plantuml-parser`][plantuml-parser] with Typescript
+to makes the most out of your diagrams.
 
 ![Bob leaves Alice](/static/posts/plantuml-parser/bob-leaves-alice.png)
 *She wouldn't be my type either*
