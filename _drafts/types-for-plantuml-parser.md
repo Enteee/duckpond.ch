@@ -1,4 +1,5 @@
 ---
+title: Types for PlantUML Parser
 layout: post
 categories: [plantuml-parser, javascript]
 keywords: [PlantUML parser, plantuml-parser, TypeScript, JavaScript, Type declarations, Open Source Software]
