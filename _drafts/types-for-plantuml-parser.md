@@ -86,6 +86,7 @@ developer I do reject a tool if it does not make my life easier. Writing sound
 and solid source code is already hard enough. Having to deal with a ton of different
 documentation formats makes it even harder. Belive me, if design changes can be
 documented with a few simple modifications of a text file, I will start doing it.
+
 This has the effect that documentation evolves together with the code. Add version
 control to the mix and pull requests suddenly become self-documenting. Furthermore,
 switching to Graphviz means no longer spending hours layouting documents. Time
