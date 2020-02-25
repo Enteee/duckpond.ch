@@ -1,13 +1,13 @@
 ---
 layout: post
-categories: []
+categories: [plantuml-parser, javascript]
 keywords: [PlantUML parser, plantuml-parser, TypeScript, JavaScript]
 ---
 [`plantuml-parser`][plantuml-parser] 0.0.12 introduces TypeScript declarations.
 Now you can parse PlantUML and get a fully typed result. PlantUML diagrams are awesome!
 In this post I first give a brief introduction into PlantUML. Then I
 will show how you can use [`plantuml-parser`][plantuml-parser] with Typescript
-to makes the most out of your diagrams.
+to make the most out of your diagrams.
 
 ![Bob leaves Alice](/static/posts/plantuml-parser/bob-leaves-alice.png)
 *She wouldn't be my type either*
@@ -23,6 +23,46 @@ actor Bob
 Alice -> Bob: Tells Bob that\n she does not like\ntypes
 Bob --> Alice: Leaves her
 @enduml
+```
+</details>
+{::options parse_block_html="true" /}
+<details>
+  <summary markdown="span" class="center">Show parser result</summary>
+```
+[
+  {
+    "elements": [
+      {
+        "left": "Alice",
+        "right": "Bob",
+        "leftType": "Unknown",
+        "rightType": "Unknown",
+        "leftArrowHead": "",
+        "rightArrowHead": ">",
+        "leftArrowBody": "-",
+        "rightArrowBody": "-",
+        "leftCardinality": "",
+        "rightCardinality": "",
+        "label": "Tells Bob that\\n she does not like\\ntypes",
+        "hidden": false
+      },
+      {
+        "left": "Bob",
+        "right": "Alice",
+        "leftType": "Unknown",
+        "rightType": "Unknown",
+        "leftArrowHead": "",
+        "rightArrowHead": ">",
+        "leftArrowBody": "-",
+        "rightArrowBody": "-",
+        "leftCardinality": "",
+        "rightCardinality": "",
+        "label": "Leaves her",
+        "hidden": false
+      }
+    ]
+  }
+]
 ```
 </details>
 
@@ -63,7 +103,7 @@ in you life.
 (*) --> If "Do you know PlantUML?" then
   --> [No] "Learn PlantUML"
   If "" then
-    --> [I don't have Time] "Leave Alice"
+    --> [I don't\nhave time] "Leave Alice"
     --> "Learn PlantUML"
   else
     --> [Ok] "Good"
@@ -175,11 +215,22 @@ $ plantuml-parser <<EOF
 
 But today we want to have a look at the programatic use of the parser. Therefore
 I created the following demonstration which shows how easy it is to do the parsing
-in TypeScript and how type guards can leverage processing of existing diagrams.
+in TypeScript. Furthermore it also provides an example on how type guards can
+leverage processing of diagrams.
 
 <div class="center">
   <script id="asciicast-8FC3oAI3PCtGdljCISvWVo0o8" src="https://asciinema.org/a/8FC3oAI3PCtGdljCISvWVo0o8.js" async></script>
 </div>
 
+## Contribute
+
+If you do like the project and you would like to contribute, there are numerous
+ways how you can do so. Even if you do not write source code. Every contribution
+counts.
+
+* Tweet about the project: [![Twitter URL](https://img.shields.io/twitter/url?label=%23PlantUMLParser&url=https%3A%2F%2Fgithub.com%2FEnteee%2Fplantuml-parser)](https://twitter.com/intent/tweet?text=Parse%20PlantUML%20with%20JavaScript%20or%20TypeScript%20%F0%9F%9A%80&hashtags=PlantUMLParser,JavaScript,TypeScript&url=https%3A%2F%2Fgithub.com%2FEnteee%2Fplantuml-parser)
+* [Send us your PlantUML diagrams](https://github.com/Enteee/plantuml-parser/issues/new/choose)
+* [Resolve an issue](https://github.com/Enteee/plantuml-parser/issues)
+* [Donate](https://github.com/sponsors/Enteee)
 
 [plantuml-parser]:https://github.com/Enteee/plantuml-parser
