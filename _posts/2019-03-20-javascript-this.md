@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "JavaScript: this"
-categories: [web]
+categories: [javascript, web]
 keywords: [JavaScript, node.js, this, arrow-functions]
 ---
 
