@@ -95,43 +95,6 @@ services:
                 aliases:
                     - mailcow-isso
 
-    challenges:
-        build:
-            context: ${CONTAINER_DIR}/challenges
-            args:
-                - python_version=${PYTHON_VERSION}
-        networks:
-            backbone:
-                aliases:
-                    - challenges
-<<<<<<< HEAD
-    openvpn-as:
-        build:
-            context: ${CONTAINER_DIR}/openvpn-as
-            args:
-                - openvpnas_version=${OPENVPNAS_VERSION}
-                - dockerize_version=${DOCKERIZE_VERSION}
-        command: -wait file:///certs/duckpond.ch/cert.pem -wait file:///certs/duckpond.ch/privkey.pem -wait file:///certs/duckpond.ch/fullchain.pem -timeout ${DOCKERIZE_TIMEOUT} /init
-        cap_add:
-            - NET_ADMIN
-        environment:
-            - PUID=1000
-            - PGID=100
-            - TZ=Europe/London
-            - INTERFACE=eth0
-        volumes:
-            - certs:/certs/:ro
-        ports:
-            - 943:943
-            - 9443:9443
-            - 1194:1194/udp
-        networks:
-            backbone:
-                aliases:
-                    - openvpn
-            mailcow-network:
-                aliases:
-                    - openvpn-mailcow
 #    openvpn-as:
 #        build:
 #            context: ${CONTAINER_DIR}/openvpn-as
