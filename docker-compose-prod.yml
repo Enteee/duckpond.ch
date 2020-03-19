@@ -31,5 +31,5 @@ services:
             - 8888:8888
             - 8889:8889
 
-    openvpn-as:
-        restart: always
+#    openvpn-as:
+#        restart: always

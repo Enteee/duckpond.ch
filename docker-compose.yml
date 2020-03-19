@@ -95,6 +95,12 @@ services:
                 aliases:
                     - mailcow-isso
 
+    challenges:
+        build:
+            context: ${CONTAINER_DIR}/challenges
+            args:
+                - python_version=${PYTHON_VERSION}
+
 #    openvpn-as:
 #        build:
 #            context: ${CONTAINER_DIR}/openvpn-as
