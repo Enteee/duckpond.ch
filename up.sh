@@ -11,10 +11,10 @@ cat <<EOF
 up.sh env [docker-compose-arguments]: run the blog
 
 Options:
-  -h|--help       print this help
-  -v|--verbose    make verbose
-  -ec|--encrypt   encrypt all .pgp files
-  -dc|--decrypt   decrypt all .pgp files
+  -h|--help               print this help
+  -v|--verbose            make verbose
+  -ec|--encrypt password  encrypt all .pgp files
+  -dc|--decrypt password  decrypt all .pgp files
 
 environments:
   prod    production environment
