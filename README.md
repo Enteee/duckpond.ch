@@ -1,7 +1,7 @@
 # Duckpond
 
 * [https://www.duckpond.ch](https://www.duckpond.ch)
-* [Testbed](http://duckpond.ch:8080), user: ente  pw: gggggg
+* [Testbed](http://direct.duckpond.ch:8080), user: ente  pw: gggggg
 
 ## Start
 
