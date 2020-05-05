@@ -17,7 +17,7 @@ data = ["Bern", "Genève", "Zürich"]
 ```
 
 The files we will write are `cities-utf-8.csv` which is in `utf-8` encoding
-an `cities-latin.csv` in `ISO/IEC 5589-1 (latin)`.
+an `cities-latin.csv` in `ISO/IEC 8859-1 (latin)`.
 ```python
 DataFrame(data).to_csv("cities-utf-8.csv", index=False)
 DataFrame(data).to_csv("cities-latin.csv", encoding="latin", index=False)
