@@ -181,7 +181,7 @@ def __monkey_patch__DataFrame_to_csv():
     pd.DataFrame.to_csv = _DataFrame_to_csv
 ```
 
-If we now use this monkey patch, we can finally generate the files:
+If we now use this monkey patch, we can finally generate the files
 ```python
 __monkey_patch__DataFrame_to_csv()
 
@@ -192,8 +192,7 @@ with open("cities-latin.csv", mode="wb") as fd:
   DataFrame(data).to_csv(fd, encoding="latin", index=False)
 ```
 
-and get the expected files
-
+... and get the expected content:
 ```sh
 $ file cities-*.csv
 cities-latin.csv: ISO-8859 text
