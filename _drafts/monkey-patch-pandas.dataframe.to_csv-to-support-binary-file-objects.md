@@ -66,7 +66,7 @@ $ hexdump -C cities-utf-8.csv
 00000017
 ```
 
-In fact, they are the exactly same.
+In fact, they are exactly the same.
 ```
 $ sha256sum cities-*.csv
 ab401dff37c00f4d22e4ab2aa70fa2d67d89bd042787cb9e643bea7eeb5ee577  cities-latin.csv
