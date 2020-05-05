@@ -2,8 +2,10 @@
 layout: post
 title: "Broken One-time pad 2"
 image: /static/posts/broken-one-time-pad-2/wallet.png
-categories: [security, math]
+categories: [security, math, python]
 keywords: [one-time pad, challenge]
+redirect_from:
+  - /security/math/2017/05/18/broken-one-time-pad-2.html
 ---
 
 The key to [my new bitcoin wallet](https://blockchain.info/address/15DLuxjMPhYwyHUSXR7APSAiaHBbCKfpsr) can be downloaded by a simple `nc duckpond.ch 8889`.

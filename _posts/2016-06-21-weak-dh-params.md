@@ -2,8 +2,10 @@
 layout: post
 title:  "Weak Diffie-Hellman Parameters"
 keywords: [diffie-hellman parameters, logjam]
-categories: [security]
+categories: [security, math, python]
 image: /static/posts/weak-dh-parameters/ssl_lab-ciphers-weak.png
+redirect_from:
+  - /security/2016/06/21/weak-dh-params.html
 ---
 
 Not a long time ago a friend of mine told me that the nginx at duckpond.ch is using 1024 bit standard DH parameters.

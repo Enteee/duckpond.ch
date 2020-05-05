@@ -1,9 +1,11 @@
 ---
 layout: post
 title: "Broken One-time pad"
-categories: [security, math]
+categories: [security, math, python]
 image: /static/posts/broken-one-time-pad/wallet.png
 keywords: [one-time pad, challenge]
+redirect_from:
+  - /security/math/2016/09/15/broken-one-time-pad.html
 ---
 
 There are many mistakes to be made when implementing crypto. So let's make some, abuse them and learn.
