@@ -1,9 +1,11 @@
 ---
 layout: post
 title: "Broken One-time pad [Solved]"
-categories: [security, math]
+categories: [security, math, python]
 image: /static/posts/broken-one-time-pad-solved/repeating_pad_xor.png
 keywords: [one-time pad, challenge]
+redirect_from:
+  - /security/math/2016/10/23/broken-one-time-pad-solved.html
 ---
 
 The [broken one-time pad] was solved. On reddit a user called svvw [^0] [claimed to be the one](https://www.reddit.com/r/cryptography/comments/52vktn/broken_onetime_pad_lets_implement_crypto_and/d7p6e1w) who did it. 
