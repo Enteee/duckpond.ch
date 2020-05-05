@@ -182,7 +182,7 @@ def __monkey_patch__DataFrame_to_csv():
 ```
 
 If we now use this monkey patch, we can finally generate the files:
-```
+```python
 __monkey_patch__DataFrame_to_csv()
 
 with open("cities-utf-8.csv", mode="wb") as fd:
