@@ -113,7 +113,7 @@ MONKEY_PATCH_DATAFRAME_TO_CSV = Semaphore()
 
 @contextmanager
 def __monkey_patch__DataFrame_to_csv():
-    """Monkey patch pandas. DataFrame.to_csv to make the function work with binary file objects.
+    """Monkey patch pandas.DataFrame.to_csv to make the function work with binary file objects.
 
     This is here because to work around the following issues:
       - https://github.com/pandas-dev/pandas/issues/9712
