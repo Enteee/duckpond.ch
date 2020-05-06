@@ -106,6 +106,12 @@ solution which monkey patches `pandas.DataFrame.to_csv` so that the function
 supports binary file objects.
 
 ```python
+from contextlib import contextmanager
+from threading import Semaphore
+
+MONKEY_PATCH_DATAFRAME_TO_CSV = Semaphore()
+
+@contextmanager
 def __monkey_patch__DataFrame_to_csv():
     """Monkey patch pandas. DataFrame.to_csv to make the function work with binary file objects.
 
@@ -179,17 +185,28 @@ def __monkey_patch__DataFrame_to_csv():
 
     # apply monkey patch
     pd.DataFrame.to_csv = _DataFrame_to_csv
+
+    # Since we are patching in global scope, we have to
+    # ensure here that only one thread runs at the time.
+    # Otherwise monkey patching and reverting the patch
+    # can go really wrong...
+    with MONKEY_PATCH_DATAFRAME_TO_CSV:
+      try:
+        yield _DataFrame_to_csv
+      finally:
+        # restore original to_csv
+        pd.DataFrame.to_csv = _DataFrame_to_csv_orig
 ```
 
 If we now use this monkey patch, we can finally generate the files
 ```python
-__monkey_patch__DataFrame_to_csv()
+with __monkey_patch__DataFrame_to_csv():
 
-with open("cities-utf-8.csv", mode="wb") as fd:
-  DataFrame(data).to_csv(fd, index=False)
+  with open("cities-utf-8.csv", mode="wb") as fd:
+    DataFrame(data).to_csv(fd, index=False)
 
-with open("cities-latin.csv", mode="wb") as fd:
-  DataFrame(data).to_csv(fd, encoding="latin", index=False)
+  with open("cities-latin.csv", mode="wb") as fd:
+    DataFrame(data).to_csv(fd, encoding="latin", index=False)
 ```
 
 ... and get the expected content:
