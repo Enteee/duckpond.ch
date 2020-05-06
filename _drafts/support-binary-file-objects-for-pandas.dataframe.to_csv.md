@@ -163,7 +163,7 @@ def __monkey_patch__DataFrame_to_csv():
                         # https://github.com/pandas-dev/pandas/issues/19827
                         # but if that issue ever gets fixed we our patch
                         # should still work.
-                        "mode": "r",
+                        "mode": "w",
 
                         # always use Unix-style line_terminators. The conversion
                         # line_teminator will happen on StringIO.write
