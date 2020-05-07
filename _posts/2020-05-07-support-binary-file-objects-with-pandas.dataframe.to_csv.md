@@ -2,7 +2,7 @@
 layout: post
 categories: [python, bash]
 keywords: [pandas, DataFrame, to_csv, encoding, utf-8, latin, monkey patch]
-title: Support Binary File Objects for pandas.DataFrame.to_csv
+title: Support Binary File Objects with pandas.DataFrame.to_csv
 ---
 
 `pandas.DataFrame.to_csv` does not support writing to binary file objects [^1].
