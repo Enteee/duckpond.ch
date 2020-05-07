@@ -112,7 +112,7 @@ from threading import Semaphore
 MONKEY_PATCH_DATAFRAME_TO_CSV = Semaphore()
 
 @contextmanager
-def __monkey_patch__DataFrame_to_csv():
+def monkey_patch__DataFrame_to_csv():
     """Monkey patch pandas.DataFrame.to_csv to make the function work with binary file objects.
 
     This is here because to work around the following issues:
@@ -141,7 +141,7 @@ def __monkey_patch__DataFrame_to_csv():
                 default_line_termnator = linesep
 
             # Note: Other than to_csv, StringIO will reject uncommon line terminators
-            # by throwing an exception. But I think that's go good thing.
+            # by throwing an exception. But I think that's a good thing.
             sio = StringIO(
                 newline=kwargs.get("line_terminator", default_line_termnator)
             )
