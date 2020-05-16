@@ -161,7 +161,7 @@ def monkey_patch__DataFrame_to_csv():
 
                         # enforce mode, this is currently ignored because of:
                         # https://github.com/pandas-dev/pandas/issues/19827
-                        # but if that issue ever gets fixed we our patch
+                        # but if that issue ever gets fixed this patch
                         # should still work.
                         "mode": "w",
 
