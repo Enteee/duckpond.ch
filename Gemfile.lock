@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/Enteee/jekyll-feed.git
-  revision: 2e5851a9cc9b067dee288b422dc8518e5b22282f
+  revision: c85d9cb2d343b5ae19631d8a0cb5599774972c5c
   branch: feature/Make-amount-of-posts-in-feed-configurable
   specs:
     jekyll-feed (0.13.0)
