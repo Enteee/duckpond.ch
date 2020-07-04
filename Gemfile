@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 gem 'jekyll'
 gem 'jekyll-paginate'
-gem 'jekyll-feed', :git => 'https://github.com/Enteee/jekyll-feed.git', :branch => 'feature/Make-amount-of-posts-in-feed-configurable'
+gem 'jekyll-feed'
 gem 'jekyll-sitemap'
 gem 'jekyll-responsive-image'
 gem 'jekyll-minifier'
