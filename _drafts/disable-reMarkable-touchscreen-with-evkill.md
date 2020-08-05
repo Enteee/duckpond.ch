@@ -6,7 +6,7 @@ image: /static/posts/disable-reMarkable-touchscreen-with-evkill/evkill.png
 keywords: [evdev]
 ---
 
-`evkill` is a silencer for evdev input devices. Run a single command and make
+[`evkill`][evkill] is a silencer for evdev input devices. Run a single command and make
 your `/dev/input/` devices go "psst!".  In this post we will use `evkill` on a
 reMarkable e-ink writing tablet to disable the capacitive display while writing.
 
@@ -32,7 +32,7 @@ to the reMarkable.
 
 ```sh
 $ curl https://raw.githubusercontent.com/Enteee/evkill/master/install.sh | ARCH="armv7l" sh
-$ scp evkill root@10.11.99.1:~
+$ scp evkill root@10.11.99.1:.
 ```
 
 Next, we cross compile and upload [`evtest`][evtest].
@@ -45,7 +45,7 @@ $ docker \
   dockcross/linux-armv7a > dockercross
 $ chmod +x dockercross
 $ ./dockercross bash -c "autoreconf -iv && ./configure --host=arm-linux-gnueabi && make"
-$ scp evtest root@10.11.99.1:~
+$ scp evtest root@10.11.99.1:.
 ```
 
 Given the device mapping from the table below, we adapt the script from [the
@@ -124,8 +124,20 @@ handle_events(){
 handle_events
 ```
 
-And with that we have achived what we wanted. Below a quick demonstartion of
-the script in action.
+If we now save the script to an executable file called `disable-touchscreen.sh`
+and run it on the device, we have achive what we wanted.
+
+```sh
+$ chmod +x disable-touchscreen.sh
+$ scp disable-touchscreen.sh root@10.11.99.1:.
+$ ssh -t -t root@10.11.99.1 ./disable-touchscreen.sh
+```
+
+**Important**: In case you omit the `-t -t` options to `ssh`, the script will
+keep running on the reMarkable even after you exit ssh with CRTL+C. This might
+cause some problems when the devices enables the lock screen.
+
+Below a quick demonstartion of the script in action.
 
 [^1]: Version 2.2.0.48
 
