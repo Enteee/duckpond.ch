@@ -247,7 +247,7 @@ evdev exposes three different event sources on the [reMarkable]:
 {:.table}
 | Device | Name | Description |
 | ------ | ---- | ----------- |
-| `/dev/input/event0` | Wacom I2C Digitizer | The capcitive pen input device |
+| `/dev/input/event0` | Wacom I2C Digitizer | The capacitive pen input device |
 | `/dev/input/event1` | cyttsp5_mt | The touchscreen |
 | `/dev/input/event2` | gpio-keys | The hardware buttons |
 
