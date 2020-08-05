@@ -16,12 +16,12 @@ reMarkable e-ink writing tablet to disable the capacitive display while writing.
 ## The Problem
 
 Since reMarkable has introduced page flips using swipe gestures on the screen,
-it happens a lot that I unintentially change page while writing. They must have
+it happens a lot that I unintentionally change page while writing. They must have
 put some detection for this into their software, but for whatever reason
 this does not work for me on my device [^1]. This is why I'd like to be able to
 disable the capcitive sensor behind the screen by a button press. [In a previous
-postI already showed how we can toggle flight mode with the hardware
-buttons][reMarkable-hacking].  This time we will re use the same script. But
+post I already showed how we can toggle flight mode with the hardware
+buttons][reMarkable-hacking].  This time we will reuse the same script. But
 instead of switching network devices on and off, we will use [`evkill`][evkill]
 to disable input devices.
 
@@ -125,7 +125,7 @@ handle_events
 ```
 
 If we now save the script to an executable file called `disable-touchscreen.sh`
-and run it on the device, we have achive what we wanted.
+and run it on the device, we have achieved what we wanted.
 
 ```sh
 $ chmod +x disable-touchscreen.sh
@@ -135,9 +135,9 @@ $ ssh -t -t root@10.11.99.1 ./disable-touchscreen.sh
 
 **Important**: In case you omit the `-t -t` options to `ssh`, the script will
 keep running on the reMarkable even after you exit ssh with CRTL+C. This might
-cause some problems when the devices enables the lock screen.
+cause some problems when the devices activates the lock screen.
 
-Below a quick demonstartion of the script in action.
+Below a quick demonstration of the script in action.
 
 [^1]: Version 2.2.0.48
 
