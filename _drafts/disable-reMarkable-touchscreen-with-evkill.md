@@ -12,16 +12,15 @@ reMarkable e-ink writing tablet to disable the capacitive display while writing.
 
 ![evkill on reMarkable](/static/posts/disable-reMarkable-touchscreen-with-evkill/evkill.png)
 
-
 ## The Problem
 
-Since reMarkable has introduced page flips using swipe gestures on the screen,
-it happens a lot that I unintentionally change page while writing. They must have
-put some detection for this into their software, but for whatever reason
-this does not work for me on my device [^1]. This is why I'd like to be able to
-disable the capcitive sensor behind the screen by a button press. [In a previous
-post I already showed how we can toggle flight mode with the hardware
-buttons][reMarkable-hacking].  This time we will reuse the same script. But
+Since reMarkable has introduced page flips using swipe gestures, it happens a
+lot that I unintentionally change page while writing. They must have put some
+detection for this into their software, but for whatever reason this does not
+work for me on my device [^1]. This is why I'd like to be able to disable the
+capcitive sensor behind the screen by a button press. [In a previous post I
+already showed how we can toggle flight mode with the hardware
+buttons][reMarkable-hacking]. This time we will reuse the same script. But
 instead of switching network devices on and off, we will use [`evkill`][evkill]
 to disable input devices.
 
@@ -60,7 +59,7 @@ previous post][reMarkable-hacking].
 
 The idea is that the script detects button presses by listening on
 `/dev/input/event2` using [`evtest`][evtest]. Once it registers a button press
-from the left and right hardware button it will start a [`evkill`][evkill]
+from the left and right hardware button it will start an [`evkill`][evkill]
 process in the background and disable `/dev/input/event1`. If we then again
 press both buttons, the script will terminate all running [`evkill`][evkill]
 instances with the effect of enabling the touchscreen again.
@@ -137,7 +136,18 @@ $ ssh -t -t root@10.11.99.1 ./disable-touchscreen.sh
 keep running on the reMarkable even after you exit ssh with CRTL+C. This might
 cause some problems when the devices activates the lock screen.
 
-Below a quick demonstration of the script in action.
+Below a demonstration of how this looks like on an actual reMarkable:
+
+<div class="embed-responsive embed-responsive-4by3">
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/skB0LoFMXNs"
+    frameborder="0"
+    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+  ></iframe>
+</div>
 
 [^1]: Version 2.2.0.48
 
