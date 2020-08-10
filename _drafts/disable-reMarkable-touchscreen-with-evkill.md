@@ -1,9 +1,9 @@
 ---
 layout: post
-categories: [evkill]
+categories: [evkill, bash]
 title: Disable reMarkable Touchscreen with evkill
 image: /static/posts/disable-reMarkable-touchscreen-with-evkill/evkill.png
-keywords: [evdev]
+keywords: [evdev, evkill, reMarkable, disable touchscreen]
 ---
 
 [`evkill`][evkill] is a silencer for evdev input devices. Run a single command and make
