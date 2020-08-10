@@ -17,7 +17,7 @@ reMarkable e-ink writing tablet to disable the capacitive display while writing.
 Since reMarkable has introduced page flips using swipe gestures, it happens a
 lot that I unintentionally change page while writing. They must have put some
 detection for this into their software, but for whatever reason this does not
-work for me on my device [^1]. This is why I'd like to be able to disable the
+work for me on my device [^1]. This is why I would like to be able to disable the
 capcitive sensor behind the screen by a button press. [In a previous post I
 already showed how we can toggle flight mode with the hardware
 buttons][reMarkable-hacking]. This time we will reuse the same script. But
