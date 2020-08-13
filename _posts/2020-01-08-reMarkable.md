@@ -247,8 +247,8 @@ evdev exposes three different event sources on the [reMarkable]:
 {:.table}
 | Device | Name | Description |
 | ------ | ---- | ----------- |
-| `/dev/input/event0` | Wacom I2C Digitizer | The capacitive pen input device |
-| `/dev/input/event1` | cyttsp5_mt | The touchscreen |
+| `/dev/input/event0` | Wacom I2C Digitizer | The electromagnetic resonance device for the pen |
+| `/dev/input/event1` | cyttsp5_mt | The capacitive touchscreen |
 | `/dev/input/event2` | gpio-keys | The hardware buttons |
 
 The following `bash` script uses the just compiled [evtest] binary to fetch and
