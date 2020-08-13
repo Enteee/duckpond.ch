@@ -53,8 +53,8 @@ previous post][reMarkable-hacking].
 {:.table}
 | Device | Name | Description |
 | ------ | ---- | ----------- |
-| `/dev/input/event0` | Wacom I2C Digitizer | The capacitive pen input device |
-| `/dev/input/event1` | cyttsp5_mt | The touchscreen |
+| `/dev/input/event0` | Wacom I2C Digitizer | The electromagnetic resonance device for the pen |
+| `/dev/input/event1` | cyttsp5_mt | The capacitive touchscreen |
 | `/dev/input/event2` | gpio-keys | The hardware buttons |
 
 The idea is that the script detects button presses by listening on
