@@ -7,8 +7,8 @@ keywords: [evdev, evkill, reMarkable, disable touchscreen]
 ---
 
 [`evkill`][evkill] is a silencer for evdev input devices. Run a single command and make
-your `/dev/input/` devices go "psst!".  In this post we will use `evkill` on a
-reMarkable e-ink writing tablet to disable the capacitive display while writing.
+your `/dev/input/` devices go "psst!".  In this post we will use [`evkill`][evkill]
+on a reMarkable e-ink writing tablet to disable the capacitive display while writing.
 
 ![evkill on reMarkable](/static/posts/disable-reMarkable-touchscreen-with-evkill/evkill.png)
 
