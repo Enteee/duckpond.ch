@@ -9,3 +9,4 @@ keywords: []
 
 * [Checking whitespace with Git](http://peter.eisentraut.org/blog/2014/11/04/checking-whitespace-with-git/)
 * [Ionic: Make source maps for android work](https://github.com/ionic-team/ionic-framework/issues/16455#issuecomment-505397373)
+* [A tool to generate binary polyglots](https://github.com/corkami/mitra)
