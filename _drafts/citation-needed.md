@@ -12,3 +12,4 @@ keywords: []
 * [A tool to generate binary polyglots](https://github.com/corkami/mitra)
 * [Firejail with Tor HOWTO](https://www.void.gr/kargig/blog/2016/12/12/firejail-with-tor-howto/)
 * [[xchg rax,rax]](https://www.xorpd.net/pages/xchg_rax/snip_00.html)
+* [Awesome Hacking: A collection of awesome lists for hackers, pentesters & security researchers](https://github.com/Hack-with-Github/Awesome-Hacking)
