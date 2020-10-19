@@ -16,7 +16,7 @@ tack of things but then provides visualizations of the data collected.
 
 ![Count](/static/posts/count-beta-release/count.jpg){: width="80%" }
 
-Yes, there are quite a few [^1] other counting apps on the playstore already.
+Yes, there are quite a few [^1] other counting apps on the Play Store already.
 Some other notable projects are:
 
 * [Thing Counter](https://play.google.com/store/apps/details?id=de.sleak.thingcounter&hl=en)
