@@ -1,7 +1,7 @@
 ---
 layout: post
 categories: [count]
-keywords: [Android, App]
+keywords: [Android, App, Ionic, Count, Analytics, Visualizations, ApexCharts]
 ---
 
 During COVID-19 times it is vital that people don't gather in big groups.
@@ -14,9 +14,9 @@ having to carry out the tedious task. With that in mind, the idea was born
 for [count][count-github]. [count][count-github] is an app that helps you keep
 tack of things but then provides visualizations of the data collected.
 
-![Count](/static/posts/count-project-set-up/count.jpg){: width="80%" }
+![Count](/static/posts/count-beta-release/count.jpg){: width="80%" }
 
-Yes, there's a quite a few [^1] other counting apps on the playstore already.
+Yes, there are quite a few [^1] other counting apps on the playstore already.
 Some other notable projects are:
 
 * [Thing Counter](https://play.google.com/store/apps/details?id=de.sleak.thingcounter&hl=en)
@@ -34,11 +34,15 @@ event. Using this data we can then provide insight about all different aspects
 such as frequency and locality. Would you like to know when people visit which
 one of your branches? [count][count-github] can tell you that.
 
-With this blog post I am starting the open beta of the app. You can join
-now if you do have an Android phone: [![Join Android Beta](https://img.shields.io/badge/Join%20Android%20Beta-NOW!-brightgreen)](https://play.google.com/apps/testing/ch.duckpond.count)
+![Count Preview](/static/posts/count-beta-release/preview.gif)
 
-If you are interested contributing to [count][count-github] you can do this by
-using the following channels:
+With this blog post I am starting the open beta of the app. You can join
+now if you do have an Android phone.
+
+[![Join Android Beta](https://img.shields.io/badge/Join%20Android%20Beta-NOW!-brightgreen)](https://play.google.com/apps/testing/ch.duckpond.count)
+
+If want to contribute to [count][count-github] you can do this using the
+following channels:
 
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 
