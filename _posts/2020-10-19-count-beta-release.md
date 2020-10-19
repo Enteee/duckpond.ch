@@ -43,7 +43,7 @@ now if you have an Android phone.
 
 [![Join Android Beta](https://img.shields.io/badge/Join%20Android%20Beta-NOW!-brightgreen)](https://play.google.com/apps/testing/ch.duckpond.count)
 
-If want to contribute to [Count][count-github] you can do this using the
+If want to contribute to [Count][count-github], you can do this using the
 following channels:
 
 <script async defer src="https://buttons.github.io/buttons.js"></script>
