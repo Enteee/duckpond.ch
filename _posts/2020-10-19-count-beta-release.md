@@ -39,7 +39,7 @@ Would you like to know when people visit which one of your branches?
 ![Count Preview](/static/posts/count-beta-release/preview.gif)
 
 With this blog post I am starting the open beta of the app. You can join
-now if you do have an Android phone.
+now if you have an Android phone.
 
 [![Join Android Beta](https://img.shields.io/badge/Join%20Android%20Beta-NOW!-brightgreen)](https://play.google.com/apps/testing/ch.duckpond.count)
 
