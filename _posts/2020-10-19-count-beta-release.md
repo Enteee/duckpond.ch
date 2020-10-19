@@ -25,12 +25,16 @@ Some other notable projects are:
 
 But they are all not open source, lack important features (looking at the comment
 section) and don't do much with the data they are collecting. This is where
-[Count][count-github] steps in. [Count][count-github] is a simple tally counter
-with advanced visualizations based on metadata collected during counting. Every
-time the counter is changed the app collects time, location and position of the
-event. Using this data we can then provide insight about all different aspects
-such as frequency and locality. Would you like to know when people visit which
-one of your branches? [Count][count-github] can tell you that.
+[Count][count-github] steps in.
+
+[Count][count-github] is a simple tally counter with advanced visualizations
+based on metadata collected during counting. Every time the counter is changed
+the app collects time, location and position of the event. Using this data
+we can then provide insight about all different aspects such as frequency and
+locality.
+
+Would you like to know when people visit which one of your branches?
+[Count][count-github] can tell you that.
 
 ![Count Preview](/static/posts/count-beta-release/preview.gif)
 
