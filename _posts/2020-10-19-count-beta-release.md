@@ -4,15 +4,13 @@ categories: [count]
 keywords: [Android, App, Ionic, Count, Analytics, Visualizations, ApexCharts]
 ---
 
-During COVID-19 times it is vital that people don't gather in big groups.
-That puts the burden of tacking people in enclosed spaces onto the people in
-charge of those places. Shop owners, bouncers, bus drivers and conductors have
-to constantly keep track of people.
+During COVID-19 times it is vital that we don't gather in big groups.
+That puts the burden of tacking people in enclosed spaces onto the ones in
+charge. Counting is a lot of work with not much reward.
 
-Counting is a lot of work with not much reward for the person
-having to carry out the tedious task. With that in mind, the idea was born
-for [count][count-github]. [count][count-github] is an app that helps you keep
-tack of things but then provides visualizations of the data collected.
+With [Count][count-github] I am beta Beta-releasing an app which wants to change
+that. [Count][count-github] helps you keep tack of things but then also provides
+visualizations of the data collected.
 
 ![Count](/static/posts/count-beta-release/count.jpg){: width="80%" }
 
@@ -27,12 +25,12 @@ Some other notable projects are:
 
 But they are all not open source, lack important features (looking at the comment
 section) and don't do much with the data they are collecting. This is where
-[count][count-github] steps in. [count][count-github] is a simple tally counter
+[Count][count-github] steps in. [Count][count-github] is a simple tally counter
 with advanced visualizations based on metadata collected during counting. Every
 time the counter is changed the app collects time, location and position of the
 event. Using this data we can then provide insight about all different aspects
 such as frequency and locality. Would you like to know when people visit which
-one of your branches? [count][count-github] can tell you that.
+one of your branches? [Count][count-github] can tell you that.
 
 ![Count Preview](/static/posts/count-beta-release/preview.gif)
 
@@ -41,7 +39,7 @@ now if you do have an Android phone.
 
 [![Join Android Beta](https://img.shields.io/badge/Join%20Android%20Beta-NOW!-brightgreen)](https://play.google.com/apps/testing/ch.duckpond.count)
 
-If want to contribute to [count][count-github] you can do this using the
+If want to contribute to [Count][count-github] you can do this using the
 following channels:
 
 <script async defer src="https://buttons.github.io/buttons.js"></script>
