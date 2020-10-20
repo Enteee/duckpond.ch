@@ -2,6 +2,7 @@
 layout: post
 categories: [count]
 keywords: [Android, App, Ionic, Count, Analytics, Visualizations, ApexCharts]
+image: /static/posts/count-beta-release/count.jpg
 ---
 
 During COVID-19 times it is vital that we don't gather in big groups.
