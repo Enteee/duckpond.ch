@@ -6,7 +6,7 @@ image: /static/posts/count-beta-release/count.jpg
 ---
 
 During COVID-19 times it is vital that we don't gather in big groups.
-That puts the burden of tacking people in enclosed spaces onto the ones in
+That puts the burden of tracking people in enclosed spaces onto the ones in
 charge. Counting is a lot of work with not much reward.
 
 With [Count][count-github] I am beta Beta-releasing an app which wants to change
