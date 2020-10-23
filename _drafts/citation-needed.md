@@ -13,3 +13,4 @@ keywords: []
 * [Firejail with Tor HOWTO](https://www.void.gr/kargig/blog/2016/12/12/firejail-with-tor-howto/)
 * [xchg rax,rax](https://www.xorpd.net/pages/xchg_rax/snip_00.html)
 * [Awesome Hacking: A collection of awesome lists for hackers, pentesters & security researchers](https://github.com/Hack-with-Github/Awesome-Hacking)
+* [GTFOBins is a curated list of Unix binaries that can be exploited by an attacker to bypass local security restrictions](https://gtfobins.github.io/)
