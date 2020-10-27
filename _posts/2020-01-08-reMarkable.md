@@ -87,7 +87,11 @@ $ nix-shell \
   -p $( \
     nix-build \
     --quiet \
-    -E '(import <nixpkgs> {}).qt5.callPackage ./remarkable-linux-client.nix {}' \
+    -E '(import (builtins.fetchGit {
+        url = "https://github.com/nixos/nixpkgs/";
+        ref = "master";
+        rev = "471869c9185fb610e67940a701eb13b1cfb335a4";
+    }) {}).qt5.callPackage ./remarkable-linux-client.nix {}' \
   )
 ```
 
