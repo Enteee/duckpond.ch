@@ -14,3 +14,6 @@ keywords: []
 * [xchg rax,rax](https://www.xorpd.net/pages/xchg_rax/snip_00.html)
 * [Awesome Hacking: A collection of awesome lists for hackers, pentesters & security researchers](https://github.com/Hack-with-Github/Awesome-Hacking)
 * [GTFOBins is a curated list of Unix binaries that can be exploited by an attacker to bypass local security restrictions](https://gtfobins.github.io/)
+* [Reverse Shell Cheat Sheet](https://highon.coffee/blog/reverse-shell-cheat-sheet/)
+* [Capture and inspect HTTP requests](https://hookbin.com/)
+* [What is RCU?](https://www.kernel.org/doc/Documentation/RCU/whatisRCU.txt)
