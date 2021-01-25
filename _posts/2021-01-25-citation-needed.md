@@ -2,7 +2,7 @@
 layout: post
 categories: [citation needed]
 image: /static/posts/citation-needed/xkcd_protester.png
-keywords: []
+keywords: [git, ionic, asm, firejail, GTFOBins, reverse shell, hookbin, RCU, paged out, PoC GTFO]
 ---
 
 ![citation-needed](/static/posts/citation-needed/xkcd_protester.png)
