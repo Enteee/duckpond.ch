@@ -18,3 +18,4 @@ keywords: []
 * [Capture and inspect HTTP requests](https://hookbin.com/)
 * [What is RCU?](https://www.kernel.org/doc/Documentation/RCU/whatisRCU.txt)
 * [Paged Out! is a free experimental (one article == one page) technical magazine](https://pagedout.institute)
+* [International Journal of Proof-of-Concept or Get The Fuck Out](https://www.alchemistowl.org/pocorgtfo/)
