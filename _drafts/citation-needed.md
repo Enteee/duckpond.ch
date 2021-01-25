@@ -17,3 +17,4 @@ keywords: []
 * [Reverse Shell Cheat Sheet](https://highon.coffee/blog/reverse-shell-cheat-sheet/)
 * [Capture and inspect HTTP requests](https://hookbin.com/)
 * [What is RCU?](https://www.kernel.org/doc/Documentation/RCU/whatisRCU.txt)
+* [Paged Out! is a free experimental (one article == one page) technical magazine](https://pagedout.institute)
