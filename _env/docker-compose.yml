@@ -36,6 +36,7 @@ services:
         build: ${CONTAINER_DIR}/nginx-http
         command: -template ${DOCKERIZE_CONF_DIR}/conf.d/:/etc/nginx/conf.d/ -template ${DOCKERIZE_CONF_DIR}/htpasswd:/etc/nginx/.htpasswd -poll ./start.sh
         volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
             - ${CONTAINER_DIR}/nginx-http/conf.d/:${DOCKERIZE_CONF_DIR}/conf.d:ro
             - ${CONTAINER_DIR}/nginx-http/htpasswd:${DOCKERIZE_CONF_DIR}/htpasswd:ro
             - acme-challenge:/usr/share/nginx/letsencrypt/.well-known/acme-challenge:ro
@@ -68,6 +69,7 @@ services:
             context: ${CONTAINER_DIR}/dehydrated
             args:
                 - debian_version=${DEBIAN_VERSION}
+                - docker_version=${DOCKER_VERSION}
         command: dehydrated -c --accept-terms --hook /etc/dehydrated/hook.sh
         volumes:
             - ${CONTAINER_DIR}/dehydrated/etc:/etc/dehydrated:ro
