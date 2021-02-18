@@ -8,7 +8,7 @@ services:
                 - jekyll_version=${JEKYLL_VERSION}
         command: jekyll build --watch
         volumes:
-            - ./:/srv/jekyll:ro
+            - ../:/srv/jekyll:ro
             - www:/srv/jekyll/_site:rw
 
     jekyll-dev:
@@ -18,7 +18,7 @@ services:
                 - jekyll_version=${JEKYLL_VERSION}
         command: jekyll build --drafts --watch
         volumes:
-            - ./:/srv/jekyll:ro
+            - ../:/srv/jekyll:ro
             - www-dev:/srv/jekyll/_site:rw
 
     nginx-dockerize:
