@@ -35,6 +35,21 @@ ln_key(){
       "${dir}/key.pem"
 }
 
+restart_containers(){
+    local containers
+    containers=()
+
+    # Nginx
+    containers+=("$(docker ps -qaf name=nginx-https)")
+
+    # Mailcow containers
+    containers+=("$(docker ps -qaf name=postfix-mailcow)")
+    containers+=("$(docker ps -qaf name=dovecot-mailcow)")
+    containers+=("$(docker ps -qaf name=nginx-mailcow)")
+
+    docker restart "${containers[@]}"
+}
+
 deploy_challenge() {
     local DOMAIN="${1}" TOKEN_FILENAME="${2}" TOKEN_VALUE="${3}"
 
@@ -131,7 +146,13 @@ deploy_cert() {
     generate_dh "$(dirname "${CERTFILE}")"
 
     # copy certificates to mailcow ssl dir
+    # also copy fullchain.pem to cert.pem, because they expect
+    # a full chain in cert.pem
     cp -r "$(dirname "${CERTFILE}")/." "${MAILCOW_CERTS_DIR}"
+    cp -r "${FULLCHAINFILE}" "${MAILCOW_CERTS_DIR}/cert.pem"
+
+    # finally, restart containers so that they pick up the new certs
+    restart_containers
 }
 
 deploy_ocsp() {
@@ -182,7 +203,10 @@ unchanged_cert() {
     generate_dh "$(dirname "${CERTFILE}")"
 
     # copy certificates to mailcow ssl dir
+    # also copy fullchain.pem to cert.pem, because they expect
+    # a full chain in cert.pem
     cp -r "$(dirname "${CERTFILE}")/." "${MAILCOW_CERTS_DIR}"
+    cp -r "${FULLCHAINFILE}" "${MAILCOW_CERTS_DIR}/cert.pem"
 }
 
 invalid_challenge() {
