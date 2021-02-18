@@ -19,7 +19,6 @@ set -euo pipefail
 PWD="$(pwd)"
 TMP_FILE="${PWD}/docker-compose-generated.$$.yaml"
 DOCKER_COMPOSE_CONFIG_VERSION="${DOCKER_COMPOSE_CONFIG_VERSION:-2.1}"
-ENV_FILE="${ENV_FILE:-.env}"
 
 finish() {
   rm "${TMP_FILE}" 2>/dev/null
@@ -63,4 +62,4 @@ for f in ${files[@]}; do
   compose-config "${f}"
 done
 
-docker-compose --env-file "${ENV_FILE}" -f "${TMP_FILE}" ${args[@]}
+docker-compose -f "${TMP_FILE}" ${args[@]}
