@@ -65,4 +65,4 @@ for f in ${files[@]}; do
   compose-config "${f}"
 done
 
-${DOCKER_COMPOSE_CMD} -f "${TMP_FILE}" ${args[@]}
+exec ${DOCKER_COMPOSE_CMD} -f "${TMP_FILE}" ${args[@]}
