@@ -86,7 +86,7 @@ env_blogproduction(){
 
 env_mailproduction(){
   exec "${DOCKER_COMPOSE}" \
-    -f _env/mailcow/docker-compose.yml \
+    -f mailcow/docker-compose.yml \
     up "${@}"
 }
 
@@ -94,7 +94,7 @@ env_production(){
   exec "${DOCKER_COMPOSE}" \
     -f docker-compose.yml \
     -f docker-compose-prod.yml \
-    -f _env/mailcow/docker-compose.yml \
+    -f mailcow/docker-compose.yml \
     up "${@}"
 }
 
@@ -154,7 +154,7 @@ fi
 
 if [ "${encrypt}" == true ];then
   find \
-    "${DIR}" \
+    "${DIR}/../" \
     -type f \
     -name "*.gpg" \
     -execdir bash -c 'encrypt "${1}" "${2}"' _ "{}" "${encrypt_password}" \;
@@ -162,7 +162,7 @@ fi
 
 if [ "${decrypt}" == true ];then
   find \
-    "${DIR}" \
+    "${DIR}/../" \
     -type f \
     -name "*.gpg" \
     -execdir bash -c 'decrypt "${1}" "${2}"' _ "{}" "${decrypt_password}" \;
