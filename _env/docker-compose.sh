@@ -19,7 +19,9 @@ set -euo pipefail
 PWD="$(pwd)"
 TMP_FILE="${PWD}/docker-compose-generated.$$.yaml"
 DOCKER_COMPOSE_CONFIG_VERSION="${DOCKER_COMPOSE_CONFIG_VERSION:-2.1}"
-ENV_FILE="${ENV_FILE:-.env}"
+ENV_FILE="$(readlink -f "${ENV_FILE:-.env}")"
+
+DOCKER_COMPOSE_CMD="docker-compose --env-file ${ENV_FILE}"
 
 finish() {
   rm "${TMP_FILE}" 2>/dev/null
@@ -30,7 +32,7 @@ trap finish EXIT
 compose-config() {
   local dir="$(dirname "${1}")"
   local file="$(basename "${1}")"
-  docker-compose -f "${1}" -f "${TMP_FILE}" config \
+  ${DOCKER_COMPOSE_CMD} -f "${1}" -f "${TMP_FILE}" config \
   | sponge "${TMP_FILE}"
 }
 
@@ -62,5 +64,4 @@ echo "version: \"${DOCKER_COMPOSE_CONFIG_VERSION}\"" > ${TMP_FILE}
 for f in ${files[@]}; do
   compose-config "${f}"
 done
-
-docker-compose --env-file "${ENV_FILE}" -f "${TMP_FILE}" ${args[@]}
+${DOCKER_COMPOSE_CMD} -f "${TMP_FILE}" ${args[@]}
