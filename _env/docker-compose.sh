@@ -30,8 +30,6 @@ finish() {
 trap finish EXIT
 
 compose-config() {
-  local dir="$(dirname "${1}")"
-  local file="$(basename "${1}")"
   ${DOCKER_COMPOSE_CMD} -f "${1}" -f "${TMP_FILE}" config \
   | sponge "${TMP_FILE}"
 }
@@ -60,9 +58,9 @@ if [ "${verbose}" == true ]; then
   set -x
 fi
 
-echo "version: \"${DOCKER_COMPOSE_CONFIG_VERSION}\"" > ${TMP_FILE}
-for f in ${files[@]}; do
+echo "version: \"${DOCKER_COMPOSE_CONFIG_VERSION}\"" > "${TMP_FILE}"
+for f in "${files[@]}"; do
   compose-config "${f}"
 done
 
-exec ${DOCKER_COMPOSE_CMD} -f "${TMP_FILE}" ${args[@]}
+exec "${DOCKER_COMPOSE_CMD}" -f "${TMP_FILE}" "${args[@]}"
