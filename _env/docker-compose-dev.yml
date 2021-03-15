@@ -27,4 +27,3 @@ services:
 
     challenges:
 
-    openvpn-as:

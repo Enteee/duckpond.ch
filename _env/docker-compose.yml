@@ -108,7 +108,6 @@ volumes:
     www-dev:
     certs:
     acme-challenge:
-    openvpn-as:
 
 networks:
     backbone:
