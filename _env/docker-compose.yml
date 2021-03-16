@@ -103,11 +103,44 @@ services:
             args:
                 - python_version=${PYTHON_VERSION}
 
+    cryptpad:
+        build:
+            context: ${CONTAINER_DIR}/cryptpad
+            args:
+                - debian_version=${DEBIAN_VERSION}
+                - dockerize_version=${DOCKERIZE_VERSION}
+                - cryptpad_version=${CRYPTPAD_VERSION}
+        command: -template ${DOCKERIZE_CONF_DIR}/config/:/cryptpad/config -poll ./start.sh
+        environment:
+            - CRYPTPAD_GID=${GID}
+            - CRYPTPAD_UID=${UID}
+        volumes:
+            - ${CONTAINER_DIR}/cryptpad/config/:${DOCKERIZE_CONF_DIR}/config:ro
+            - cryptpad-blob:/cryptpad/blob
+            - cryptpad-block:/cryptpad/block
+            - cryptpad-customize:/cryptpad/customize
+            - cryptpad-data:/cryptpad/data
+            - cryptpad-datastore:/cryptpad/datastore
+              #networks:
+              #    backbone:
+              #        aliases:
+              #            - cryptpad
+        ulimits:
+          nofile:
+            soft: 1000000
+            hard: 1000000
+
 volumes:
     www:
     www-dev:
     certs:
     acme-challenge:
+
+    cryptpad-blob:
+    cryptpad-block:
+    cryptpad-customize:
+    cryptpad-data:
+    cryptpad-datastore:
 
 networks:
     backbone:
