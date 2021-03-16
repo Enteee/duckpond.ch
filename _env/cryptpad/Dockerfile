@@ -4,10 +4,12 @@ FROM debian:${debian_version} AS build
 # Install requirements to clone repository and install deps
 RUN set -ex \
   && apt-get update \
-  && apt-get install --no-install-recommends --no-install-suggests -y \
-    git \
-    nodejs npm \
-    wget ca-certificates
+  && DEBIAN_FRONTEND=noninteractive \
+    apt-get install --no-install-recommends --no-install-suggests -y \
+      git \
+      nodejs npm \
+      wget ca-certificates \
+      apache2-utils
 
 # Install dockerize
 ARG dockerize_version=0.6.1
@@ -19,6 +21,8 @@ RUN set -ex \
 
 # Install cryptpad
 ARG cryptpad_version=4.2.1
+ARG cryptpad_htpasswd_user="crypt"
+ARG cryptpad_htpasswd_password="replaceme"
 RUN set -ex \
   && wget \
     "https://github.com/xwiki-labs/cryptpad/archive/${cryptpad_version}.tar.gz" \
@@ -33,6 +37,11 @@ RUN set -ex \
     && npm install --production \
     && npm install -g bower \
     && bower install --allow-root \
+    && htpasswd \
+      -b \
+      -c ./.htpasswd \
+      "${cryptpad_htpasswd_user}" \
+      "${cryptpad_htpasswd_password}" \
   )
 
 # Create actual cryptpad image
@@ -41,9 +50,10 @@ FROM debian:${debian_version}
 # Install runtime dependencies
 RUN set -ex \
   && apt-get update \
-  && apt-get install --no-install-recommends --no-install-suggests -y \
-    inotify-tools \
-    nodejs
+  && DEBIAN_FRONTEND=noninteractive \
+    apt-get install --no-install-recommends --no-install-suggests -y \
+      inotify-tools \
+      nodejs
 
 # Copy dockerize from build
 COPY --from=build /usr/local/bin/dockerize /usr/local/bin/dockerize
@@ -55,6 +65,8 @@ COPY --from=build /cryptpad /cryptpad
 EXPOSE 3000 3001
 
 COPY start.sh .
+
+VOLUME /cryptpad
 
 ENTRYPOINT [ "dockerize" ]
 CMD ["true"]

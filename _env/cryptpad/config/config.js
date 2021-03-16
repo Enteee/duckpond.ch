@@ -46,7 +46,7 @@ module.exports = {
  *  cryptpad/docs/example.nginx.conf (see the $main_domain variable)
  *
  */
-    httpUnsafeOrigin: 'http://localhost:3000/',
+  httpUnsafeOrigin: 'https://crypt.duckpond.ch/',
 
 /*  httpSafeOrigin is the URL that is used for the 'sandbox' described above.
  *  If you're testing or developing with CryptPad on your local machine then
@@ -64,7 +64,7 @@ module.exports = {
  *
  *  CUSTOMIZE AND UNCOMMENT THIS FOR PRODUCTION INSTALLATIONS.
  */
-    // httpSafeOrigin: "https://some-other-domain.xyz",
+  httpSafeOrigin: "https://crypt-sb.duckpond.ch/",
 
 /*  httpAddress specifies the address on which the nodejs server
  *  should be accessible. By default it will listen on 127.0.0.1
@@ -108,11 +108,9 @@ module.exports = {
      *  key, which can be found on the settings page for registered users.
      *  Entries should be strings separated by a comma.
      */
-/*
     adminKeys: [
-        //"[cryptpad-user1@my.awesome.website/YZgXQxKR0Rcb6r6CmxHPdAGLVludrAF2lEnkbx1vVOo=]",
+      "[ente@crypt.duckpond.ch/IiNoT7fzPGl8TJbj7dEPXmfJdikIDFa4hudnoKTQZnU=]"
     ],
-*/
 
     /*  CryptPad's administration panel includes a "support" tab
      *  wherein administrators with a secret key can view messages
