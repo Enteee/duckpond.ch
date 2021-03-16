@@ -109,7 +109,7 @@ module.exports = {
      *  Entries should be strings separated by a comma.
      */
     adminKeys: [
-      "[ente@crypt.duckpond.ch/IiNoT7fzPGl8TJbj7dEPXmfJdikIDFa4hudnoKTQZnU=]"
+      "[ente@crypt-sb.duckpond.ch/aP1YVL0Kj4NprelPgT9qZ48uhYEUEqSA8XYHxosDCHU=]",
     ],
 
     /*  CryptPad's administration panel includes a "support" tab
