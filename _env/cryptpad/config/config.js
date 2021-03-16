@@ -216,7 +216,7 @@ module.exports = {
      *  defaults to 20MB if no value is provided
      */
     //maxUploadSize: 20 * 1024 * 1024,
-    maxUploadSize: 100 * 1024 * 1024,
+    maxUploadSize: 500 * 1024 * 1024,
 
     /*
      *  CryptPad allows administrators to give custom limits to their friends.
