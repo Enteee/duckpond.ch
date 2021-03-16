@@ -30,3 +30,6 @@ services:
         ports:
             - 8888:8888
             - 8889:8889
+
+    cryptpad:
+        restart: always
