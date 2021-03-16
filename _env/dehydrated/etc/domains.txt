@@ -1,1 +1,1 @@
-duckpond.ch www.duckpond.ch blog.duckpond.ch mail.duckpond.ch
+duckpond.ch www.duckpond.ch blog.duckpond.ch mail.duckpond.ch crypt.duckpond.ch crypt-sb.duckpond.ch direct.duckpond.ch
