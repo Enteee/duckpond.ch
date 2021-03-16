@@ -137,12 +137,12 @@ module.exports = {
      *  You can disable any solicitations for donations by setting 'removeDonateButton' to true,
      *  but we'd appreciate it if you didn't!
      */
-    //removeDonateButton: false,
+    removeDonateButton: true,
 
     /*  CryptPad will display a point of contact for your instance on its contact page
      *  (/contact.html) if you provide it below.
      */
-    adminEmail: 'i.did.not.read.my.config@cryptpad.fr',
+    adminEmail: 'cryptpad@duckpond.ch',
 
     /*
      *  By default, CryptPad contacts one of our servers once a day.
@@ -152,7 +152,7 @@ module.exports = {
      *
      *  If you want to block this check-in and remain set 'blockDailyCheck' to true.
      */
-    //blockDailyCheck: false,
+    blockDailyCheck: true,
 
     /*
      *  By default users get 50MB of storage by registering on an instance.
