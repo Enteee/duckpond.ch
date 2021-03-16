@@ -121,10 +121,10 @@ services:
             - cryptpad-customize:/cryptpad/customize
             - cryptpad-data:/cryptpad/data
             - cryptpad-datastore:/cryptpad/datastore
-              #networks:
-              #    backbone:
-              #        aliases:
-              #            - cryptpad
+        networks:
+            backbone:
+                aliases:
+                    - cryptpad
         ulimits:
           nofile:
             soft: 1000000
