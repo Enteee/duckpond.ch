@@ -44,9 +44,12 @@ services:
             args:
                 - nginx_version=${NGINX_VERSION}
         command:
-          -stdout /var/log/nginx/access.log
-          -stderr /var/log/nginx/error.log
-          ./start.sh
+            -stdout /var/log/nginx/access.log
+            -stderr /var/log/nginx/error.log
+            ./start.sh
+        ports:
+            - 80:80
+            - 8080:8080
         volumes:
             - acme-challenge:/usr/share/nginx/letsencrypt/.well-known/acme-challenge:ro
             - www-dev:/usr/share/nginx/html:ro
@@ -70,6 +73,8 @@ services:
             -stdout /var/log/nginx/access.log
             -stderr /var/log/nginx/error.log
             ./start.sh
+        ports:
+            - 443:443
         volumes:
             - certs:/certs/:ro
             - www:/usr/share/nginx/html:ro
@@ -130,6 +135,9 @@ services:
             context: ${CONTAINER_DIR}/challenges
             args:
                 - python_version=${PYTHON_VERSION}
+        ports:
+            - 8888:8888
+            - 8889:8889
 
     cryptpad:
         depends_on:
