@@ -1,6 +1,20 @@
 version: '2.1'
 
 services:
+    #
+    # Base image
+    #
+    debian-dockerize:
+        image: debian-dockerize
+        build:
+            context: ${CONTAINER_DIR}/debian-dockerize
+            args:
+                - debian_version=${DEBIAN_VERSION}
+                - dockerize_version=${DOCKERIZE_VERSION}
+
+    #
+    # Services
+    #
     jekyll:
         build:
             context: ${CONTAINER_DIR}/jekyll
@@ -21,26 +35,23 @@ services:
             - ../:/srv/jekyll:ro
             - www-dev:/srv/jekyll/_site:rw
 
-    nginx-dockerize:
-        image: nginx-dockerize
-        build:
-            context: ${CONTAINER_DIR}/nginx-dockerize
-            args:
-                - nginx_version=${NGINX_VERSION}
-                - dockerize_version=${DOCKERIZE_VERSION}
-
     nginx-http:
         depends_on:
-            - nginx-dockerize
+            - debian-dockerize
         image: nginx-http
-        build: ${CONTAINER_DIR}/nginx-http
-        command: -template ${DOCKERIZE_CONF_DIR}/conf.d/:/etc/nginx/conf.d/ -template ${DOCKERIZE_CONF_DIR}/htpasswd:/etc/nginx/.htpasswd -poll ./start.sh
+        build:
+            context: ${CONTAINER_DIR}/nginx-http
+            args:
+                - nginx_version=${NGINX_VERSION}
+        command:
+          -stdout /var/log/nginx/access.log
+          -stderr /var/log/nginx/error.log
+          ./start.sh
         volumes:
-            - /var/run/docker.sock:/var/run/docker.sock
-            - ${CONTAINER_DIR}/nginx-http/conf.d/:${DOCKERIZE_CONF_DIR}/conf.d:ro
-            - ${CONTAINER_DIR}/nginx-http/htpasswd:${DOCKERIZE_CONF_DIR}/htpasswd:ro
             - acme-challenge:/usr/share/nginx/letsencrypt/.well-known/acme-challenge:ro
             - www-dev:/usr/share/nginx/html:ro
+            - ${CONTAINER_DIR}/nginx-http/conf.d/:/etc/nginx/conf.d/:ro
+            - ${CONTAINER_DIR}/nginx-http/htpasswd:/etc/nginx/.htpasswd:ro
         networks:
             backbone:
                 aliases:
@@ -48,14 +59,21 @@ services:
 
     nginx-https:
         depends_on:
-            - nginx-dockerize
+            - debian-dockerize
             - isso
         build: ${CONTAINER_DIR}/nginx-https
-        command: -template ${DOCKERIZE_CONF_DIR}/conf.d/:/etc/nginx/conf.d/ -wait file:///certs/duckpond.ch/cert.pem -wait file:///certs/duckpond.ch/privkey.pem -wait file:///certs/duckpond.ch/fullchain.pem -timeout ${DOCKERIZE_TIMEOUT} ./start.sh
+        command:
+            -wait file:///certs/duckpond.ch/cert.pem
+            -wait file:///certs/duckpond.ch/privkey.pem
+            -wait file:///certs/duckpond.ch/fullchain.pem
+            -timeout ${DOCKERIZE_TIMEOUT}
+            -stdout /var/log/nginx/access.log
+            -stderr /var/log/nginx/error.log
+            ./start.sh
         volumes:
-            - ${CONTAINER_DIR}/nginx-https/conf.d/:${DOCKERIZE_CONF_DIR}/conf.d:ro
             - certs:/certs/:ro
             - www:/usr/share/nginx/html:ro
+            - ${CONTAINER_DIR}/nginx-https/conf.d/:/etc/nginx/conf.d/:ro
         volumes_from:
             - cryptpad:ro
         networks:
@@ -66,31 +84,37 @@ services:
 
     letsencrypt:
         depends_on:
+            - debian-dockerize
             - nginx-http
         build:
             context: ${CONTAINER_DIR}/dehydrated
             args:
-                - debian_version=${DEBIAN_VERSION}
                 - docker_version=${DOCKER_VERSION}
-        command: dehydrated -c --accept-terms --hook /etc/dehydrated/hook.sh
+        command: ./start.sh
         volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
             - ${CONTAINER_DIR}/dehydrated/etc:/etc/dehydrated:ro
-            - certs:/etc/dehydrated/certs:rw
-            - ${CONTAINER_DIR}/mailcow/data/assets/ssl:/certs_mailcow:rw
-            - acme-challenge:/etc/dehydrated/acme-challenge:rw
+
+            - certs:/rw/certs:rw
+            - ${CONTAINER_DIR}/mailcow/data/assets/ssl:/rw/certs_mailcow:rw
+            - acme-challenge:/rw/acme-challenge:rw
+            - letsencrypt-accounts:/accounts:rw
 
     isso:
+        depends_on:
+            - debian-dockerize
         build:
             context: ${CONTAINER_DIR}/isso
             args:
-                - dockerize_version=${DOCKERIZE_VERSION}
-        command: -wait tcp://nginx-https:443 -timeout ${DOCKERIZE_TIMEOUT} /sbin/tini -- run.sh
-        environment:
-            - GID=${GID}
-            - UID=${UID}
+                - isso_version=${ISSO_VERSION}
+        command:
+            -wait tcp://nginx-https:443
+            -timeout ${DOCKERIZE_TIMEOUT}
+            ./start.sh
         volumes:
-            - ${CONTAINER_DIR}/isso/config:/config
-            - ${CONTAINER_DIR}/isso/db:/db
+            - ${CONTAINER_DIR}/isso/config:/config:ro
+
+            - isso-db:/rw/db:rw
         networks:
             backbone:
                 aliases:
@@ -109,40 +133,66 @@ services:
         build:
             context: ${CONTAINER_DIR}/cryptpad
             args:
-                - debian_version=${DEBIAN_VERSION}
-                - dockerize_version=${DOCKERIZE_VERSION}
                 - cryptpad_version=${CRYPTPAD_VERSION}
                 - cryptpad_htpasswd_user=${CRYPTPAD_HTPASSWD_USER}
                 - cryptpad_htpasswd_password=${CRYPTPAD_HTPASSWD_PASSWORD}
-        command: -template ${DOCKERIZE_CONF_DIR}/config/:/cryptpad/config -poll ./start.sh
-        environment:
-            - CRYPTPAD_GID=${GID}
-            - CRYPTPAD_UID=${UID}
+        command: ./start.sh
         volumes:
-            - ${CONTAINER_DIR}/cryptpad/config/:${DOCKERIZE_CONF_DIR}/config:ro
-            - cryptpad-blob:/cryptpad/blob
-            - cryptpad-block:/cryptpad/block
-            - cryptpad-customize:/cryptpad/customize
-            - cryptpad-data:/cryptpad/data
-            - cryptpad-datastore:/cryptpad/datastore
+            - ${CONTAINER_DIR}/cryptpad/customize/:/cryptpad/customize:ro
+            - ${CONTAINER_DIR}/cryptpad/config/:/cryptpad/config:ro
+
+            - cryptpad-blob:/cryptpad/blob:rw
+            - cryptpad-block:/cryptpad/block:rw
+            - cryptpad-data:/cryptpad/data:rw
+            - cryptpad-datastore:/cryptpad/datastore:rw
         networks:
             backbone:
                 aliases:
                     - cryptpad
         ulimits:
-          nofile:
-            soft: 1000000
-            hard: 1000000
+            nofile:
+              soft: 1000000
+              hard: 1000000
+
+    syncthing:
+        build:
+            context: ${CONTAINER_DIR}/syncthing
+            args:
+                - syncthing_version=${SYNCTHING_VERSION}
+        ports:
+            - 22000:22000
+            - 21027:21027/udp
+        volumes:
+            - certs:/rw/Sync/letsencrypt/certs:rw
+            - letsencrypt-accounts:/rw/Sync/letsencrypt/letsencrypt-accounts:rw
+            - isso-db:/rw/Sync/isso/db:rw
+            - cryptpad-blob:/rw/Sync/cryptpad/blob:rw
+            - cryptpad-block:/rw/Sync/cryptpad/block:rw
+            - cryptpad-data:/rw/Sync/cryptpad/data:rw
+            - cryptpad-datastore:/rw/Sync/cryptpad/datastore:rw
+        networks:
+            backbone:
+                aliases:
+                    - syncthing
 
 volumes:
+    #
+    # No Backup
+    #
     www:
     www-dev:
-    certs:
     acme-challenge:
+
+    #
+    # Backup
+    #
+    certs:
+    letsencrypt-accounts:
+
+    isso-db:
 
     cryptpad-blob:
     cryptpad-block:
-    cryptpad-customize:
     cryptpad-data:
     cryptpad-datastore:
 
