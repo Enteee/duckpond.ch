@@ -53,7 +53,7 @@ services:
         volumes:
             - acme-challenge:/usr/share/nginx/letsencrypt/.well-known/acme-challenge:ro
             - www-dev:/usr/share/nginx/html:ro
-            - ${CONTAINER_DIR}/nginx-http/conf.d/:/etc/nginx/conf.d/:ro
+            - ${CONTAINER_DIR}/nginx-http/sites-enabled:/etc/nginx/sites-enabled/:ro
             - ${CONTAINER_DIR}/nginx-http/htpasswd:/etc/nginx/.htpasswd:ro
         networks:
             backbone:
@@ -78,7 +78,7 @@ services:
         volumes:
             - certs:/certs/:ro
             - www:/usr/share/nginx/html:ro
-            - ${CONTAINER_DIR}/nginx-https/conf.d/:/etc/nginx/conf.d/:ro
+            - ${CONTAINER_DIR}/nginx-https/sites-enabled:/etc/nginx/sites-enabled/:ro
         volumes_from:
             - cryptpad:ro
         networks:
