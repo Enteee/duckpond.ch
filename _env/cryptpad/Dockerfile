@@ -1,5 +1,6 @@
-ARG debian_version=10.0
-FROM debian:${debian_version} AS build
+FROM debian-dockerize AS build
+
+MAINTAINER Ente "ducksource@duckpond.ch"
 
 # Install requirements to clone repository and install deps
 RUN set -ex \
@@ -10,14 +11,6 @@ RUN set -ex \
       nodejs npm \
       wget ca-certificates \
       apache2-utils
-
-# Install dockerize
-ARG dockerize_version=0.6.1
-RUN set -ex \
-  && wget \
-    "https://github.com/jwilder/dockerize/releases/download/v${dockerize_version}/dockerize-linux-amd64-v${dockerize_version}.tar.gz" \
-  && tar -C "/usr/local/bin" -xzvf "dockerize-linux-amd64-v${dockerize_version}.tar.gz" \
-  && rm "dockerize-linux-amd64-v${dockerize_version}.tar.gz"
 
 # Install cryptpad
 ARG cryptpad_version=4.2.1
@@ -45,28 +38,37 @@ RUN set -ex \
   )
 
 # Create actual cryptpad image
-FROM debian:${debian_version}
+FROM debian-dockerize
+
+MAINTAINER Ente "ducksource@duckpond.ch"
 
 # Install runtime dependencies
 RUN set -ex \
   && apt-get update \
   && DEBIAN_FRONTEND=noninteractive \
     apt-get install --no-install-recommends --no-install-suggests -y \
-      inotify-tools \
       nodejs
 
-# Copy dockerize from build
-COPY --from=build /usr/local/bin/dockerize /usr/local/bin/dockerize
-
-# Copy cryptpad from build
+# Install cryptpad
 COPY --from=build /cryptpad /cryptpad
 
-# Ports
-EXPOSE 3000 3001
+# Make service writable directories
+RUN set -ex \
+  && SERVICE_WRITABLE_DIRS=( \
+    "/cryptpad/blob" \
+    "/cryptpad/block" \
+    "/cryptpad/data" \
+    "/cryptpad/datastore" \
+  ) \
+  && mkdir -p "${SERVICE_WRITABLE_DIRS[@]}" \
+  && chown -R \
+    "${SERVICE_USER}":"${SERVICE_GROUP}" \
+    "${SERVICE_WRITABLE_DIRS[@]}"
+
+USER "${SERVICE_UID}":"${SERVICE_USER}"
+
+EXPOSE 3000
+EXPOSE 3001
 
 COPY start.sh .
-
-VOLUME /cryptpad
-
-ENTRYPOINT [ "dockerize" ]
-CMD ["true"]
+CMD ["./start.sh"]

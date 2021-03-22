@@ -1,13 +1,13 @@
 version: '2.1'
 
 services:
+    debian-dockerize:
+
     jekyll:
         restart: always
 
     jekyll-dev:
         restart: always
-
-    nginx-dockerize:
 
     nginx-http:
         restart: always
@@ -32,4 +32,7 @@ services:
             - 8889:8889
 
     cryptpad:
+        restart: always
+
+    syncthing:
         restart: always

@@ -47,13 +47,13 @@
 #DOMAINS_TXT="${BASEDIR}/domains.txt"
 
 # Output directory for generated certificates
-#CERTDIR="${BASEDIR}/certs"
+CERTDIR="/rw/certs"
 
 # Directory for account keys and registration information
-ACCOUNTDIR="/accounts"
+ACCOUNTDIR="/rw/accounts"
 
 # Output directory for challenge-tokens to be served by webserver or deployed in HOOK (default: /var/www/dehydrated)
-WELLKNOWN="${BASEDIR}/acme-challenge"
+WELLKNOWN="/rw/acme-challenge"
 
 # Default keysize for private keys (default: 4096)
 #KEYSIZE="4096"
@@ -98,7 +98,7 @@ WELLKNOWN="${BASEDIR}/acme-challenge"
 #CONTACT_EMAIL=
 
 # Lockfile location, to prevent concurrent access (default: $BASEDIR/lock)
-LOCKFILE="/lock"
+LOCKFILE="/tmp/lock"
 
 # Option to add CSR-flag indicating OCSP stapling to be mandatory (default: no)
 #OCSP_MUST_STAPLE="no"
@@ -107,7 +107,7 @@ LOCKFILE="/lock"
 #OCSP_FETCH="no"
 
 # Issuer chain cache directory (default: $BASEDIR/chains)
-#CHAINCACHE="${BASEDIR}/chains"
+CHAINCACHE="/rw//chains"
 
 # Automatic cleanup (default: no)
 #AUTO_CLEANUP="no"
