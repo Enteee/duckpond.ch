@@ -38,7 +38,6 @@ services:
     nginx-http:
         depends_on:
             - debian-dockerize
-        image: nginx-http
         build:
             context: ${CONTAINER_DIR}/nginx-http
             args:
