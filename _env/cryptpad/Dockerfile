@@ -67,6 +67,8 @@ RUN set -ex \
 
 USER "${SERVICE_UID}":"${SERVICE_USER}"
 
+VOLUME /cryptpad
+
 EXPOSE 3000
 EXPOSE 3001
 
