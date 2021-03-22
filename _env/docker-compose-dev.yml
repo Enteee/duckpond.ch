@@ -10,14 +10,9 @@ services:
         entrypoint: "/bin/bash -c 'env; sleep 1h'"
 
     nginx-http:
-        ports:
-            - 127.0.0.1:80:80
-            - 127.0.0.1:8080:8080
         entrypoint: "/bin/bash -c 'env; sleep 1h'"
 
     nginx-https:
-        ports:
-            - 127.0.0.1:443:443
         entrypoint: "/bin/bash -c 'env; sleep 1h'"
 
     letsencrypt:
@@ -30,13 +25,8 @@ services:
         entrypoint: "/bin/bash -c 'env; sleep 1h'"
 
     cryptpad:
-        ports:
-            - 127.0.0.1:3000:3000
-            - 127.0.0.1:3001:3001
         entrypoint: "/bin/bash -c 'env; sleep 1h'"
 
     syncthing:
-        ports:
-            - 127.0.0.1:8384:8384
         entrypoint: "/bin/bash -c 'env; sleep 1h'"
 
