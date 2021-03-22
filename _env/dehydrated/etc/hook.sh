@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -exuo pipefail
 
-MAILCOW_CERTS_DIR="/certs_mailcow"
+MAILCOW_CERTS_DIR="/rw/certs_mailcow"
 
 DH_OUTFILE="${DH_OUTFILE:-dhparams.pem}"
 DH_KEYLENGTH="${DH_KEYLENGTH:-4096}"
