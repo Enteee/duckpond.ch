@@ -124,12 +124,16 @@ services:
                     - mailcow-isso
 
     challenges:
+        depends_on:
+            - debian-dockerize
         build:
             context: ${CONTAINER_DIR}/challenges
             args:
                 - python_version=${PYTHON_VERSION}
 
     cryptpad:
+        depends_on:
+            - debian-dockerize
         build:
             context: ${CONTAINER_DIR}/cryptpad
             args:
@@ -155,6 +159,8 @@ services:
               hard: 1000000
 
     syncthing:
+        depends_on:
+            - debian-dockerize
         build:
             context: ${CONTAINER_DIR}/syncthing
             args:
