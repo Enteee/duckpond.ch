@@ -29,4 +29,6 @@ services:
 
     syncthing:
         entrypoint: "/bin/bash -c 'env; sleep 1h'"
+        ports:
+            - 127.0.0.1:8384:8384
 

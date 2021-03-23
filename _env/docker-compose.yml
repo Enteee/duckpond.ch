@@ -176,9 +176,13 @@ services:
             - 22000:22000
             - 21027:21027/udp
         volumes:
+            - syncthing-config:/rw/syncthing:rw
+            # Sync Folder: letsencrypt
             - certs:/rw/Sync/letsencrypt/certs:rw
             - letsencrypt-accounts:/rw/Sync/letsencrypt/letsencrypt-accounts:rw
+            # Sync Folder: isso
             - isso-db:/rw/Sync/isso/db:rw
+            # Sync Folder: cryptpad
             - cryptpad-blob:/rw/Sync/cryptpad/blob:rw
             - cryptpad-block:/rw/Sync/cryptpad/block:rw
             - cryptpad-data:/rw/Sync/cryptpad/data:rw
@@ -195,6 +199,7 @@ volumes:
     www:
     www-dev:
     acme-challenge:
+    syncthing-config:
 
     #
     # Backup

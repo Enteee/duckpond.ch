@@ -13,6 +13,7 @@ RUN set -ex \
 # Make service writable directories
 RUN set -ex \
   && SERVICE_WRITABLE_DIRS=( \
+    "/rw/syncthing" \
     "/rw/Sync/letsencrypt" \
     "/rw/Sync/isso" \
     "/rw/Sync/cryptpad" \
