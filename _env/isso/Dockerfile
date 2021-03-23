@@ -33,5 +33,3 @@ EXPOSE 8080
 
 COPY start.sh .
 CMD ["./start.sh"]
-
-ENTRYPOINT ["dockerize"]
