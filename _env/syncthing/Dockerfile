@@ -25,9 +25,13 @@ RUN set -ex \
 RUN set -ex \
   && SERVICE_WRITABLE_DIRS=( \
     "/rw/syncthing" \
-    "/rw/Sync/letsencrypt" \
-    "/rw/Sync/isso" \
-    "/rw/Sync/cryptpad" \
+    "/rw/Sync/letsencrypt/certs" \
+    "/rw/Sync/letsencrypt/letsencrypt-accounts" \
+    "/rw/Sync/isso/db" \
+    "/rw/Sync/cryptpad/blob" \
+    "/rw/Sync/cryptpad/block" \
+    "/rw/Sync/cryptpad/data" \
+    "/rw/Sync/cryptpad/datastore" \
   ) \
   && mkdir -p "${SERVICE_WRITABLE_DIRS[@]}" \
   && chown -R \
