@@ -180,13 +180,13 @@ services:
             #
             # Sync Folders:
             #
-            - certs:/rw/Sync/letsencrypt/certs:rw
-            - letsencrypt-accounts:/rw/Sync/letsencrypt/letsencrypt-accounts:rw
-            - isso-db:/rw/Sync/isso/db:rw
-            - cryptpad-blob:/rw/Sync/cryptpad/blob:rw
-            - cryptpad-block:/rw/Sync/cryptpad/block:rw
-            - cryptpad-data:/rw/Sync/cryptpad/data:rw
-            - cryptpad-datastore:/rw/Sync/cryptpad/datastore:rw
+            - certs:/service/certs:rw
+            - letsencrypt-accounts:/service/letsencrypt-accounts:rw
+            - isso-db:/service/isso-db:rw
+            - cryptpad-blob:/service/cryptpad-blob:rw
+            - cryptpad-block:/service/cryptpad-block:rw
+            - cryptpad-data:/service/cryptpad-data:rw
+            - cryptpad-datastore:/service/cryptpad-datastore:rw
         networks:
             backbone:
                 aliases:
