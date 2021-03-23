@@ -14,6 +14,7 @@ RUN set -ex \
         python3-wheel \
         sqlite3 \
         build-essential \
+        python3-gevent \
     && yes | pip3 install \
         "isso==${isso_version}"
 
