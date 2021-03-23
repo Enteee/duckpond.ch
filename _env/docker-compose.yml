@@ -102,7 +102,7 @@ services:
             - certs:/rw/certs:rw
             - ${CONTAINER_DIR}/mailcow/data/assets/ssl:/rw/certs_mailcow:rw
             - acme-challenge:/rw/acme-challenge:rw
-            - letsencrypt-accounts:/accounts:rw
+            - letsencrypt-accounts:/rw/accounts:rw
 
     isso:
         depends_on:
