@@ -3,12 +3,19 @@ FROM debian-dockerize
 MAINTAINER Ente "ducksource@duckpond.ch"
 
 # Install isso
-ARG isso_version=0.12.2
+ARG isso_version=0.12.5
 RUN set -ex \
     && apt-get update \
     && DEBIAN_FRONTEND=noninteractive \
       apt-get install --no-install-recommends --no-install-suggests -y \
-        isso="${isso_version}"
+        python3-dev \
+        python3-pip \
+        python3-setuptools \
+        python3-wheel \
+        sqlite3 \
+        build-essential \
+    && yes | pip3 install \
+        "isso==${isso_version}"
 
 # Make service writable directories
 RUN set -ex \
