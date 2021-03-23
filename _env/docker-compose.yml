@@ -178,7 +178,7 @@ services:
         volumes:
             - syncthing-config:/rw/syncthing:rw
             #
-            # Sync Folders:
+            # Sync Folders
             #
             - certs:/service/certs:rw
             - letsencrypt-accounts:/service/letsencrypt-accounts:rw
