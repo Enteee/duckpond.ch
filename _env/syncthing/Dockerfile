@@ -32,6 +32,7 @@ RUN set -ex \
     "/service/cryptpad-block" \
     "/service/cryptpad-data" \
     "/service/cryptpad-datastore" \
+    "/service/volume-backup" \
   ) \
   && mkdir -p "${SERVICE_WRITABLE_DIRS[@]}" \
   && chown -R \

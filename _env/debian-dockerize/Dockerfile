@@ -65,3 +65,4 @@ WORKDIR "${service_user_home}"
 SHELL ["/bin/bash", "-c"]
 
 ENTRYPOINT [ "dockerize" ]
+CMD [ "true" ]

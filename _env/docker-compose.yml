@@ -42,6 +42,8 @@ services:
             context: ${CONTAINER_DIR}/nginx-http
             args:
                 - nginx_version=${NGINX_VERSION}
+        labels:
+            volume-sync_pause: "true"
         command:
             -stdout /var/log/nginx/access.log
             -stderr /var/log/nginx/error.log
@@ -64,6 +66,8 @@ services:
             - debian-dockerize
             - isso
         build: ${CONTAINER_DIR}/nginx-https
+        labels:
+            volume-sync_pause: "true"
         command:
             -wait file:///certs/duckpond.ch/cert.pem
             -wait file:///certs/duckpond.ch/privkey.pem
@@ -94,6 +98,8 @@ services:
             context: ${CONTAINER_DIR}/dehydrated
             args:
                 - docker_version=${DOCKER_VERSION}
+        labels:
+            volume-sync_pause: "true"
         command: ./start.sh
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
@@ -111,6 +117,8 @@ services:
             context: ${CONTAINER_DIR}/isso
             args:
                 - isso_version=${ISSO_VERSION}
+        labels:
+            volume-sync_pause: "true"
         command:
             -wait tcp://nginx-https:443
             -timeout ${DOCKERIZE_TIMEOUT}
@@ -130,6 +138,8 @@ services:
     challenges:
         depends_on:
             - debian-dockerize
+        labels:
+            volume-sync_pause: "true"
         build:
             context: ${CONTAINER_DIR}/challenges
             args:
@@ -147,6 +157,8 @@ services:
                 - cryptpad_version=${CRYPTPAD_VERSION}
                 - cryptpad_htpasswd_user=${CRYPTPAD_HTPASSWD_USER}
                 - cryptpad_htpasswd_password=${CRYPTPAD_HTPASSWD_PASSWORD}
+        labels:
+            volume-sync_pause: "true"
         command: ./start.sh
         volumes:
             - ${CONTAINER_DIR}/cryptpad/customize/:/cryptpad/customize:ro
@@ -172,6 +184,9 @@ services:
             context: ${CONTAINER_DIR}/syncthing
             args:
                 - syncthing_version=${SYNCTHING_VERSION}
+        labels:
+            volume-sync_pause: "true"
+        command: ./start.sh
         ports:
             - 22000:22000
             - 21027:21027/udp
@@ -187,10 +202,35 @@ services:
             - cryptpad-block:/service/cryptpad-block:rw
             - cryptpad-data:/service/cryptpad-data:rw
             - cryptpad-datastore:/service/cryptpad-datastore:rw
-        networks:
-            backbone:
-                aliases:
-                    - syncthing
+            - volume-backup:/service/volume-backup:rw
+
+    volume-sync:
+        depends_on:
+            - debian-dockerize
+        build:
+            context: ${CONTAINER_DIR}/volume-sync
+            args:
+                - borgbackup_version=${BORGBACKUP_VERSION}
+                - borgbackup_repo=${BORG_REPO}
+                - borgbackup_volumes=${BORG_VOLUMES}
+        environment:
+            - BORG_PASSPHRASE=${BORG_PASSPHRASE}
+            - BORG_REPO=${BORG_REPO}
+            - BORG_VOLUMES=${BORG_VOLUMES}
+        command: ./start.sh
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - volume-backup:${BORG_REPO}:rw
+            #
+            # Backup Folders
+            #
+            - certs:${BORG_VOLUMES}/certs:ro
+            - letsencrypt-accounts:${BORG_VOLUMES}/letsencrypt-accounts:ro
+            - isso-db:${BORG_VOLUMES}/isso-db:ro
+            - cryptpad-blob:${BORG_VOLUMES}/cryptpad-blob:ro
+            - cryptpad-block:${BORG_VOLUMES}/cryptpad-block:ro
+            - cryptpad-data:${BORG_VOLUMES}/cryptpad-data:ro
+            - cryptpad-datastore:${BORG_VOLUMES}/cryptpad-datastore:ro
 
 volumes:
     #
@@ -213,6 +253,11 @@ volumes:
     cryptpad-block:
     cryptpad-data:
     cryptpad-datastore:
+
+    #
+    # Sync
+    #
+    volume-backup:
 
 networks:
     backbone:
