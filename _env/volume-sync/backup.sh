@@ -68,6 +68,15 @@ create_backup(){
     "${BORG_VOLUMES}"
 }
 
+# Change owner of backup
+chown_backup(){
+  echo "Chown Backup"
+  chown \
+    --recursive \
+    "${SERVICE_UID}":"${SERVICE_GID}" \
+    "${BORG_REPO}"
+}
+
 # Check and verify repository
 check_repo(){
   echo "Check repository"
@@ -93,6 +102,7 @@ prune_repo(){
 pause_containers
 init_repo
 create_backup
+chown_backup
 unpause_containers
 check_repo
 prune_repo
