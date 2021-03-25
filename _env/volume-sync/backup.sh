@@ -102,8 +102,8 @@ prune_repo(){
 pause_containers
 init_repo
 create_backup
-chown_backup
-unpause_containers
 check_repo
 prune_repo
+chown_backup
+unpause_containers
 check_repo
