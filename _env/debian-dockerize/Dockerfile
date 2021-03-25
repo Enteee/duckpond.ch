@@ -38,8 +38,14 @@ ENV SERVICE_USER=${service_user}
 ARG service_user_home=/service
 ENV SERVICE_USER_HOME=${service_user_home}
 RUN set -exu \
+  && if getent passwd "${service_uid}"; then \
+    userdel "$(getent passwd "${service_uid}" | cut -d: -f1)" ;\
+  fi \
   && if getent passwd "${service_user}"; then \
     userdel "${service_user}" ;\
+  fi \
+  && if getent group "${service_gid}"; then \
+    groupdel "$(getent group "${service_gid}" | cut -d: -f1)" ;\
   fi \
   && if getent group "${service_group}"; then \
     groupdel "${service_group}" ;\
