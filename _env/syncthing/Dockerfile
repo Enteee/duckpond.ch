@@ -25,13 +25,6 @@ RUN set -ex \
 RUN set -ex \
   && SERVICE_WRITABLE_DIRS=( \
     "/rw/syncthing" \
-    "/service/certs" \
-    "/service/letsencrypt-accounts" \
-    "/service/isso-db" \
-    "/service/cryptpad-blob" \
-    "/service/cryptpad-block" \
-    "/service/cryptpad-data" \
-    "/service/cryptpad-datastore" \
     "/service/volume-backup" \
   ) \
   && mkdir -p "${SERVICE_WRITABLE_DIRS[@]}" \

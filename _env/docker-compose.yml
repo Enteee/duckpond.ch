@@ -186,13 +186,6 @@ services:
             #
             # Sync Folders
             #
-            - certs:/service/certs:rw
-            - letsencrypt-accounts:/service/letsencrypt-accounts:rw
-            - isso-db:/service/isso-db:rw
-            - cryptpad-blob:/service/cryptpad-blob:rw
-            - cryptpad-block:/service/cryptpad-block:rw
-            - cryptpad-data:/service/cryptpad-data:rw
-            - cryptpad-datastore:/service/cryptpad-datastore:rw
             - volume-backup:/service/volume-backup:rw
         networks:
             backbone:
