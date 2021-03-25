@@ -106,4 +106,3 @@ check_repo
 prune_repo
 chown_backup
 unpause_containers
-check_repo
