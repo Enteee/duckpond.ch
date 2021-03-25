@@ -194,6 +194,10 @@ services:
             - cryptpad-data:/service/cryptpad-data:rw
             - cryptpad-datastore:/service/cryptpad-datastore:rw
             - volume-backup:/service/volume-backup:rw
+        networks:
+            backbone:
+                aliases:
+                    - syncthing
 
     volume-sync:
         depends_on:
