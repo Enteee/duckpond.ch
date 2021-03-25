@@ -31,5 +31,6 @@ RUN set -ex \
 
 #USER "${SERVICE_UID}":"${SERVICE_USER}"
 
+COPY backup.sh .
 COPY start.sh .
 CMD ["./start.sh"]
