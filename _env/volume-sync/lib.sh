@@ -83,6 +83,15 @@ init_repo(){
   local borg_repo
   borg_repo="$(get_pw_sensitive_borg_repo)"
 
+  # Create a .stfolder - folder in BORG_REPO
+  # This enables the folder to be shared in
+  # syncthing, even if syncthing has just ro
+  # access.
+  # Note that we use BORG_REPO here and not
+  # borg_repo. This is so that we can share
+  # all pw dependant repositories at once.
+  mkdir -p "${BORG_REPO}/.stfolder"
+
   if ! borg info "${borg_repo}" &>/dev/null; then
     echo "Init repository"
     borg init \
@@ -115,14 +124,15 @@ create_backup(){
 
 # Change owner of backup
 chown_backup(){
-  local borg_repo
-  borg_repo="$(get_pw_sensitive_borg_repo)"
-
   echo "Chown Backup"
+
+  # Note: we chown BORG_BACKUP here,
+  # because we also want to chown possible
+  # meta-folder in BORG_BACKUP (i.e. .stfolder)
   chown \
     --recursive \
     "${SERVICE_UID}":"${SERVICE_GID}" \
-    "${borg_repo}"
+    "${BORG_REPO}"
 }
 
 # Check and verify repository
