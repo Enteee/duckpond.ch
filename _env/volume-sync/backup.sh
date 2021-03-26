@@ -16,7 +16,7 @@ source "${DIR}/lib.sh"
 #
 main(){
   local containers_to_pause
-  read -r -a containers_to_pause <<< "$(get_pause_containers)"
+  read -r -a containers_to_pause <<< "$(get_all_other_containers)"
 
   pause_containers "${containers_to_pause[@]}"
   init_repo
