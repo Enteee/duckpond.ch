@@ -206,8 +206,6 @@ services:
             - BORG_REPO=${BORG_REPO}
             - BORG_VOLUMES=${BORG_VOLUMES}
             - VOLUME_SYNC_SLEEP_TIME=${VOLUME_SYNC_SLEEP_TIME}
-        labels:
-            volume-sync_pause: "false"
         command: ./start.sh
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
