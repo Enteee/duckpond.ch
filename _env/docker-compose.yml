@@ -215,13 +215,13 @@ services:
             #
             # Backup Folders
             #
-            - certs:${BORG_VOLUMES}/certs:ro
-            - letsencrypt-accounts:${BORG_VOLUMES}/letsencrypt-accounts:ro
-            - isso-db:${BORG_VOLUMES}/isso-db:ro
-            - cryptpad-blob:${BORG_VOLUMES}/cryptpad-blob:ro
-            - cryptpad-block:${BORG_VOLUMES}/cryptpad-block:ro
-            - cryptpad-data:${BORG_VOLUMES}/cryptpad-data:ro
-            - cryptpad-datastore:${BORG_VOLUMES}/cryptpad-datastore:ro
+            - certs:${BORG_VOLUMES}/certs:${VOLUME_SYNC_MOUNT}
+            - letsencrypt-accounts:${BORG_VOLUMES}/letsencrypt-accounts:${VOLUME_SYNC_MOUNT}
+            - isso-db:${BORG_VOLUMES}/isso-db:${VOLUME_SYNC_MOUNT}
+            - cryptpad-blob:${BORG_VOLUMES}/cryptpad-blob:${VOLUME_SYNC_MOUNT}
+            - cryptpad-block:${BORG_VOLUMES}/cryptpad-block:${VOLUME_SYNC_MOUNT}
+            - cryptpad-data:${BORG_VOLUMES}/cryptpad-data:${VOLUME_SYNC_MOUNT}
+            - cryptpad-datastore:${BORG_VOLUMES}/cryptpad-datastore:${VOLUME_SYNC_MOUNT}
 
 volumes:
     #
