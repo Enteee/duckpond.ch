@@ -186,7 +186,7 @@ services:
             #
             # Sync Folders
             #
-            - volume-backup:/service/volume-backup:rw
+            - volume-backup:/service/volume-backup:ro
         networks:
             backbone:
                 aliases:
