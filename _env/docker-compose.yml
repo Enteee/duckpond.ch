@@ -221,6 +221,22 @@ services:
             - cryptpad-data:${BORG_VOLUMES}/cryptpad-data:${VOLUME_SYNC_MOUNT}
             - cryptpad-datastore:${BORG_VOLUMES}/cryptpad-datastore:${VOLUME_SYNC_MOUNT}
 
+            # backup volumes according to:
+            # https://github.com/mailcow/mailcow-dockerized/blob/master/helper-scripts/backup_and_restore.sh
+            - vmail-vol-1:${BORG_VOLUMES}/vmail-vol-1:${VOLUME_SYNC_MOUNT}
+            #- vmail-index-vol-1:${BORG_VOLUMES}/vmail-index-vol-1:${VOLUME_SYNC_MOUNT}
+            - mysql-vol-1:${BORG_VOLUMES}/mysql-vol-1:${VOLUME_SYNC_MOUNT}
+            #- mysql-socket-vol-1:${BORG_VOLUMES}/mysql-socket-vol-1:${VOLUME_SYNC_MOUNT}
+            - redis-vol-1:${BORG_VOLUMES}/redis-vol-1:${VOLUME_SYNC_MOUNT}
+            - rspamd-vol-1:${BORG_VOLUMES}/rspamd-vol-1:${VOLUME_SYNC_MOUNT}
+            #- solr-vol-1:${BORG_VOLUMES}/solr-vol-1:${VOLUME_SYNC_MOUNT}
+            - postfix-vol-1:${BORG_VOLUMES}/postfix-vol-1:${VOLUME_SYNC_MOUNT}
+            - crypt-vol-1:${BORG_VOLUMES}/crypt-vol-1:${VOLUME_SYNC_MOUNT}
+            #- sogo-web-vol-1:${BORG_VOLUMES}/sogo-web-vol-1:${VOLUME_SYNC_MOUNT}
+            #- sogo-userdata-backup-vol-1:${BORG_VOLUMES}/sogo-userdata-backup-vol-1:${VOLUME_SYNC_MOUNT}
+            #- xmpp-vol-1:${BORG_VOLUMES}/xmpp-vol-1:${VOLUME_SYNC_MOUNT}
+            #- xmpp-upload-vol-1:${BORG_VOLUMES}/xmpp-upload-vol-1:${VOLUME_SYNC_MOUNT}
+
 volumes:
     #
     # No Backup
