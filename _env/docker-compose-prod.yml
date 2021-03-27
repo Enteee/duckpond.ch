@@ -28,3 +28,6 @@ services:
 
     syncthing:
         restart: always
+
+    volume-sync:
+        restart: always
