@@ -2,36 +2,36 @@ version: '2.1'
 
 services:
     jekyll:
-        entrypoint: "/bin/bash -c 'env; sleep 1h'"
+        command: "/bin/bash -c 'env; sleep 1h'"
 
     jekyll-dev:
         volumes:
             - ./:/srv/jekyll:rw
-        entrypoint: "/bin/bash -c 'env; sleep 1h'"
+        command: "/bin/bash -c 'env; sleep 1h'"
 
     nginx-http:
-        entrypoint: "/bin/bash -c 'env; sleep 1h'"
+        command: "/bin/bash -c 'env; sleep 1h'"
 
     nginx-https:
-        entrypoint: "/bin/bash -c 'env; sleep 1h'"
+        command: "/bin/bash -c 'env; sleep 1h'"
 
     letsencrypt:
-        entrypoint: "/bin/bash -c 'env; sleep 1h'"
+        command: "/bin/bash -c 'env; sleep 1h'"
 
     isso:
-        entrypoint: "/bin/bash -c 'env; sleep 1h'"
+        command: "/bin/bash -c 'env; sleep 1h'"
 
     challenges:
-        entrypoint: "/bin/bash -c 'env; sleep 1h'"
+        command: "/bin/bash -c 'env; sleep 1h'"
 
     cryptpad:
-        entrypoint: "/bin/bash -c 'env; sleep 1h'"
+        command: "/bin/bash -c 'env; sleep 1h'"
 
     syncthing:
-        entrypoint: "/bin/bash -c 'env; sleep 1h'"
+        command: "/bin/bash -c 'env; sleep 1h'"
         ports:
             - 127.0.0.1:8384:8384
 
     volume-sync:
-        entrypoint: "/bin/bash -c 'env; sleep 1h'"
+        command: "/bin/bash -c 'env; sleep 1h'"
 

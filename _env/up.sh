@@ -21,6 +21,9 @@ environments:
   bprod   blog production environment
   mprod   mail production environment
   dev     devlopment envrionment
+
+Notes:
+  - "up" is the default for docker-compose-arguments
 EOF
 }
 
@@ -74,20 +77,20 @@ env_development(){
   exec "${DOCKER_COMPOSE}" \
     -f docker-compose.yml \
     -f docker-compose-dev.yml \
-    up "${@}"
+    "${@}"
 }
 
 env_blogproduction(){
   exec "${DOCKER_COMPOSE}" \
     -f docker-compose.yml \
     -f docker-compose-prod.yml \
-    up "${@}"
+    "${@}"
 }
 
 env_mailproduction(){
   exec "${DOCKER_COMPOSE}" \
     -f mailcow/docker-compose.yml \
-    up "${@}"
+    "${@}"
 }
 
 env_production(){
@@ -96,7 +99,7 @@ env_production(){
     -f docker-compose-prod.yml \
     -f docker-compose-mailcow.yml \
     -f mailcow/docker-compose.yml \
-    up "${@}"
+    "${@}"
 }
 
 verbose=false
@@ -106,7 +109,7 @@ encrypt_password=""
 decrypt=false
 decrypt_password=""
 
-environment="exit"
+environment=false
 
 while [[ $# -gt 0 ]]; do
   case "${1}" in
@@ -143,11 +146,19 @@ while [[ $# -gt 0 ]]; do
     ;;
     *)
       echo "Invalid argument: '${1}'" >&2
+      echo >&2
       usage >&2
       exit 1
     ;;
   esac
 done
+
+if [ "${environment}" == false ]; then
+  echo "Missing environment" >&2
+  echo >&2
+  usage >&2
+  exit 1
+fi
 
 if [ "${verbose}" == true ];then
   set -x
@@ -176,4 +187,8 @@ if [ "${decrypt}" == true ];then
 fi
 
 # Run envionrment
-${environment} "${@}"
+if [[ $# -eq 0 ]]; then
+  ${environment} "up"
+else
+  ${environment} "${@}"
+fi
