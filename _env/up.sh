@@ -21,6 +21,7 @@ environments:
   bprod   blog production environment
   mprod   mail production environment
   dev     devlopment envrionment
+  noop    do not start an environment
 
 Notes:
   - "up" is the default for docker-compose-arguments
@@ -72,6 +73,10 @@ function decrypt(){
     "${in}"
 }
 export -f decrypt
+
+env_noop(){
+  :;
+}
 
 env_development(){
   exec "${DOCKER_COMPOSE}" \
@@ -142,6 +147,10 @@ while [[ $# -gt 0 ]]; do
     ;;
     dev|development)
       environment="env_development" && shift
+      break
+    ;;
+    noop|nooperation)
+      environment="env_noop" && shift
       break
     ;;
     *)
