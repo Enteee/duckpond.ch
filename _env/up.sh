@@ -36,7 +36,7 @@ function encrypt(){
     return
   fi
 
-  echo "${pw}" \
+  ( set +x; echo "${pw}" ) \
   | gpg \
     --batch \
     --yes \
@@ -59,7 +59,7 @@ function decrypt(){
     return
   fi
 
-  echo "${pw}" \
+  ( set +x; echo "${pw}" ) \
   | gpg \
     --decrypt \
     --batch \
@@ -154,19 +154,25 @@ if [ "${verbose}" == true ];then
 fi
 
 if [ "${encrypt}" == true ];then
-  find \
-    "${DIR}/../" \
-    -type f \
-    -name "*.gpg" \
-    -execdir bash -$- -c 'encrypt "${1}" "${2}"' _ "{}" "${encrypt_password}" \;
+  (
+    set +x
+    find \
+      "${DIR}/../" \
+      -type f \
+      -name "*.gpg" \
+      -execdir bash -$- -c 'encrypt "${1}" "${2}"' _ "{}" "${encrypt_password}" \;
+  )
 fi
 
 if [ "${decrypt}" == true ];then
-  find \
-    "${DIR}/../" \
-    -type f \
-    -name "*.gpg" \
-    -execdir bash -$- -c 'decrypt "${1}" "${2}"' _ "{}" "${decrypt_password}" \;
+  (
+    set +x
+    find \
+      "${DIR}/../" \
+      -type f \
+      -name "*.gpg" \
+      -execdir bash -$- -c 'decrypt "${1}" "${2}"' _ "{}" "${decrypt_password}" \;
+  )
 fi
 
 # Run envionrment
