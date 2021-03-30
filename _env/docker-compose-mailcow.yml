@@ -1,0 +1,8 @@
+version: '2.1'
+
+services:
+    isso:
+        networks:
+            mailcow-network:
+                aliases:
+                    - mailcow-isso

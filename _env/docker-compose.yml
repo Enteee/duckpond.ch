@@ -128,9 +128,6 @@ services:
             backbone:
                 aliases:
                     - blog-isso
-            mailcow-network:
-                aliases:
-                    - mailcow-isso
 
     challenges:
         depends_on:

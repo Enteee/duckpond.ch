@@ -94,6 +94,7 @@ env_production(){
   exec "${DOCKER_COMPOSE}" \
     -f docker-compose.yml \
     -f docker-compose-prod.yml \
+    -f docker-compose-mailcow.yml \
     -f mailcow/docker-compose.yml \
     up "${@}"
 }
