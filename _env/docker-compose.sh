@@ -30,7 +30,11 @@ finish() {
 trap finish EXIT
 
 compose-config() {
-  "${DOCKER_COMPOSE_CMD[@]}" -f "${1}" -f "${TMP_FILE}" config \
+  local new_file="${1}" && shift
+  "${DOCKER_COMPOSE_CMD[@]}" \
+    --file "${TMP_FILE}" \
+    --file "${new_file}" \
+    config \
   | sponge "${TMP_FILE}"
 }
 
@@ -63,4 +67,5 @@ for f in "${files[@]}"; do
   compose-config "${f}"
 done
 
+# Note: do not exec here, otherwise the cleanup trap wont run
 "${DOCKER_COMPOSE_CMD[@]}" -f "${TMP_FILE}" "${args[@]}"
