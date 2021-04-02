@@ -31,7 +31,9 @@ trap finish EXIT
 
 compose-config() {
   local new_file="${1}" && shift
+  local new_file_dir="$(dirname "${new_file}")"
   "${DOCKER_COMPOSE_CMD[@]}" \
+    --project-directory "${new_file_dir}" \
     --file "${TMP_FILE}" \
     --file "${new_file}" \
     config \
