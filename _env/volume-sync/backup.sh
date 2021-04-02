@@ -23,6 +23,7 @@ main(){
   create_backup
   check_repo
   prune_repo
+  timestamp_backup
   chown_backup
   unpause_containers "${containers_to_pause[@]}"
 }
