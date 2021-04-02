@@ -204,5 +204,5 @@ restore_backup(){
 # Create a timestamp of last backup
 timestamp_backup(){
   echo "Timestamp Backup"
-  date > "${BORG_REPO}/last-backup"
+  date > "${BORG_REPO}/last-backup.txt"
 }
