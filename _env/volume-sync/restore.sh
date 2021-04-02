@@ -20,7 +20,7 @@ usage(){
 #
 main(){
   local containers_to_pause
-  read -r -a containers_to_pause <<< "$(get_all_other_containers)"
+  read -r -a containers_to_pause <<< "$(get_all_other_unpaused_containers)"
 
   list_backups
   if [ "${#}" -eq 0 ]; then
