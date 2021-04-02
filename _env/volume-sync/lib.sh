@@ -73,7 +73,6 @@ get_all_other_unpaused_containers(){
 # Do pause all containers
 pause_containers(){
   if [ "${#}" -ne 0 ]; then
-    echo "Pause containers"
     docker pause "${@}"
   fi
 }
@@ -81,7 +80,6 @@ pause_containers(){
 # Do unpause all containers
 unpause_containers(){
   if [ "${#}" -ne 0 ]; then
-    echo "UnPause containers"
     docker unpause "${@}"
   fi
 }
@@ -101,7 +99,6 @@ init_repo(){
   mkdir -p "${BORG_REPO}/.stfolder"
 
   if ! borg info "${borg_repo}" &>/dev/null; then
-    echo "Init repository"
     borg init \
       --encryption repokey \
       --verbose \
@@ -114,7 +111,6 @@ create_backup(){
   local borg_repo
   borg_repo="$(get_pw_sensitive_borg_repo)"
 
-  echo "Starting backup"
   (
     cd "${BORG_VOLUMES}" || return 1
     borg create \
@@ -132,7 +128,6 @@ create_backup(){
 
 # Change owner of backup
 chown_backup(){
-  echo "Chown Backup"
 
   # Note: we chown BORG_BACKUP here,
   # because we also want to chown possible
@@ -148,7 +143,6 @@ check_repo(){
   local borg_repo
   borg_repo="$(get_pw_sensitive_borg_repo)"
 
-  echo "Check repository"
   borg check \
     --verify-data \
     "${borg_repo}"
@@ -159,7 +153,6 @@ prune_repo(){
   local borg_repo
   borg_repo="$(get_pw_sensitive_borg_repo)"
 
-  echo "Pruning repository"
   borg prune \
     --list \
     --prefix '{hostname}-' \
@@ -175,9 +168,13 @@ list_backups(){
   local borg_repo
   borg_repo="$(get_pw_sensitive_borg_repo)"
 
-  echo "Listing backups"
   borg list \
     "${borg_repo}"
+}
+
+# Create list of backups
+create_backup_list(){
+  list_backups > "${BORG_REPO}/backup-list.txt"
 }
 
 # Do extract from the backup
@@ -190,7 +187,6 @@ restore_backup(){
   local borg_repo
   borg_repo="$(get_pw_sensitive_borg_repo)"
 
-  echo "Starting restore"
   (
     cd "${BORG_VOLUMES}" || return 1
     borg extract \
@@ -199,10 +195,4 @@ restore_backup(){
       --show-rc \
       "${borg_repo}"::"${backup_to_restore}"
   )
-}
-
-# Create a timestamp of last backup
-timestamp_backup(){
-  echo "Timestamp Backup"
-  date > "${BORG_REPO}/last-backup.txt"
 }
