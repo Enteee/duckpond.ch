@@ -146,6 +146,8 @@ services:
         build:
             context: ${CONTAINER_DIR}/cryptpad
             args:
+                - nodejs_version=${NODEJS_VERSION}
+                - cryptpad_archive=${CRYPTPAD_ARCHIVE}
                 - cryptpad_version=${CRYPTPAD_VERSION}
                 - cryptpad_htpasswd_user=${CRYPTPAD_HTPASSWD_USER}
                 - cryptpad_htpasswd_password=${CRYPTPAD_HTPASSWD_PASSWORD}

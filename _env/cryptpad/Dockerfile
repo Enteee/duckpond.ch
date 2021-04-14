@@ -8,17 +8,27 @@ RUN set -ex \
   && DEBIAN_FRONTEND=noninteractive \
     apt-get install --no-install-recommends --no-install-suggests -y \
       git \
-      nodejs npm \
-      wget ca-certificates \
+      wget curl ca-certificates \
       apache2-utils
 
+# Install recent nodejs
+ARG nodejs_version=15.14.0-1nodesource1
+RUN set -ex \
+  && nodejs_version_major="$(echo "${nodejs_version}" | cut -d. -f1)" \
+  && curl -fsSL "https://deb.nodesource.com/setup_${nodejs_version_major}.x" | bash - \
+  && apt-get update \
+  && DEBIAN_FRONTEND=noninteractive \
+    apt-get install --no-install-recommends --no-install-suggests -y \
+      nodejs=${nodejs_version}
+
 # Install cryptpad
+ARG cryptpad_archive="https://github.com/xwiki-labs/cryptpad/archive"
 ARG cryptpad_version=4.2.1
 ARG cryptpad_htpasswd_user="crypt"
 ARG cryptpad_htpasswd_password="replaceme"
 RUN set -ex \
   && wget \
-    "https://github.com/xwiki-labs/cryptpad/archive/${cryptpad_version}.tar.gz" \
+    "${cryptpad_archive}/${cryptpad_version}.tar.gz" \
   && mkdir -p "/cryptpad" \
   && tar \
     -C "/cryptpad" \
@@ -47,7 +57,17 @@ RUN set -ex \
   && apt-get update \
   && DEBIAN_FRONTEND=noninteractive \
     apt-get install --no-install-recommends --no-install-suggests -y \
-      nodejs
+      curl ca-certificates
+
+# Install recent nodejs
+ARG nodejs_version=15.14.0-1nodesource1
+RUN set -ex \
+  && nodejs_version_major="$(echo "${nodejs_version}" | cut -d. -f1)" \
+  && curl -fsSL "https://deb.nodesource.com/setup_${nodejs_version_major}.x" | bash - \
+  && apt-get update \
+  && DEBIAN_FRONTEND=noninteractive \
+    apt-get install --no-install-recommends --no-install-suggests -y \
+      nodejs=${nodejs_version}
 
 # Install cryptpad
 COPY --from=build /cryptpad /cryptpad
