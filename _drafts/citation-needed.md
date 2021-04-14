@@ -10,3 +10,4 @@ keywords: []
 * [Attacking MS Exchange Web Interfaces](https://swarm.ptsecurity.com/attacking-ms-exchange-web-interfaces/)
 * [.new links are shortcuts to your favorite actions on the websites you love](https://whats.new/shortcuts/)
 * [A web-based data filtering tool for OpenStreetMap](https://overpass-turbo.eu)
+* [Change hostname in `.Xauthority`](https://unix.stackexchange.com/a/278781/347377)
