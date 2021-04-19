@@ -1,0 +1,36 @@
+$TTL 7200
+; duckpond.ch
+@           IN      SOA     ns1.duckpond.ch. master.duckpond.ch. (
+                                        2021041922 ; Serial
+                                        28800      ; Refresh
+                                        1800       ; Retry
+                                        604800     ; Expire - 1 week
+                                        86400 )    ; Minimum
+        IN  NS  ns1
+ns1     IN  A   71.19.149.209
+@       IN  A   71.19.149.209
+
+; Real servers
+duckpond        IN  A   71.19.149.209
+
+; Mailserver
+mail    IN  A   71.19.149.209
+@       IN  MX  10  mail
+@       IN  TXT "v=spf1 ip4:71.19.149.209 -all"
+@       IN  SPF "v=spf1 ip4:71.19.149.209 -all"
+_dmarc  IN  TXT "v=DMARC1; p=none; pct=100; rua=mailto:dmarc-reports@duckpond.ch"
+dkim._domainkey IN  TXT ("v=DKIM1;k=rsa;t=s;s=email;p=" "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtODWRjYN" "1sTrn4m2oHs2GKXpqaH+neVL+ZTHOmYhA2Jto9ahD3qMEHVZ0Ldsjk" "K6UI5XYksVByIGy0Tg1k884fwfMTA+DF1HHwI4oXwrZ8bIVN" "Kp5auJS5DNocL43QddJ+2ARzlgixQA9+T7mOad3xp1szMhDa5yhVYO4HG3s4/2VOvX" "/ZyiJ48VSjojciK6VL0kH1ZJKK2Um1TPPMWM" "5J/YZRWTEC9K6DFArZ+prwTcbxl5HDb5jU9m9Wn3xPDq5fpEfvDXv" "CiKnOO/k/IE6x5glWZlajVolZ9NxE1LgC66LSY+X6" "kHppg1Ja5fTFALPC5cw/upWqi1heDIn4uRlwIDAQAB")
+
+; Services
+crypt       IN  CNAME   duckpond.ch.
+crypt-sb    IN  CNAME   duckpond.ch.
+direct      IN  CNAME   duckpond.ch.
+www         IN  CNAME   duckpond.ch.
+blog        IN  CNAME   duckpond.ch.
+repo        IN  CNAME   duckpond.ch.
+syncthing   IN  CNAME   duckpond.ch.
+
+;google verification
+@       IN  TXT     "google-site-verification=7liSNg_sJPk5Z0v16jxtGQzX6abnOLwZs94kECD08LQ"
+;bing verification
+14f7507a3cd265c61a9bb8f05c4fff5a    IN  CNAME   verify.bing.com.

@@ -1,0 +1,11 @@
+$TTL 7200
+; duckpond.ch
+@       IN      SOA     ns1.duckpond.ch. master.duckpond.ch. (
+                                        2021041922 ; Serial
+                                        28800      ; Refresh
+                                        1800       ; Retry
+                                        604800     ; Expire - 1 week
+                                        86400 )    ; Minimum
+        IN  NS  ns1.duckpond.ch.
+        IN  PTR duckpond.ch.
+        IN  PTR mail.duckpond.ch.

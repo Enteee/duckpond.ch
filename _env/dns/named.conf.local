@@ -1,0 +1,15 @@
+// vim:set ts=4 sw=4 et:
+
+zone "duckpond.ch" IN {
+    type master;
+    file "/etc/bind/zones/duckpond.ch.zone";
+    allow-update { none; };
+    allow-query { any; };
+};
+
+zone "209.149.19.71.in-addr.arpa" IN {
+    type master;
+    file "/etc/bind/zones/209.149.19.71.zone";
+    allow-update { none; };
+    allow-query { any; };
+};

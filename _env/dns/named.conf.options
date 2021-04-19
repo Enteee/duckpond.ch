@@ -1,0 +1,34 @@
+// vim:set ts=4 sw=4 et:
+
+options {
+    // Uncomment these to enable IPv6 connections support
+    // IPv4 will still work:
+    //  listen-on-v6 { any; };
+    // Add this for no IPv4:
+    //  listen-on { none; };
+
+    // allow-recursion { 172.17.0.0/16; };
+
+    //========================================================================
+    // If BIND logs error messages about the root key being expired,
+    // you will need to update your keys.  See https://www.isc.org/bind-keys
+    //========================================================================
+    dnssec-validation auto;
+
+    version none;
+    hostname none;
+    server-id none;
+};
+
+//logging {
+//        channel xfer-log {
+//                file "/var/log/named.log";
+//                print-category yes;
+//                print-severity yes;
+//                print-time yes;
+//                severity info;
+//                };
+//        category xfer-in { xfer-log; };
+//        category xfer-out { xfer-log; };
+//        category notify { xfer-log; };
+//};
