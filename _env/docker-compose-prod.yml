@@ -3,6 +3,9 @@ version: '2.1'
 services:
     debian-dockerize:
 
+#    dns:
+#        restart: always
+
     jekyll:
         restart: always
 

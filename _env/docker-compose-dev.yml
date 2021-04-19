@@ -1,6 +1,11 @@
 version: '2.1'
 
 services:
+    debian-dockerize:
+
+#    dns:
+#        command: "/bin/bash -c 'env; sleep 1h'"
+
     jekyll:
         command: "/bin/bash -c 'env; sleep 1h'"
 

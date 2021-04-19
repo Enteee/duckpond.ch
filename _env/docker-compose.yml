@@ -20,14 +20,15 @@ services:
     #
     # Services
     #
-    dns:
-        build:
-            context: ${CONTAINER_DIR}/dns
-            args:
-                - bind_version=${BIND_VERSION}
-        command: ./start.sh
-        ports:
-            - 53:53
+
+#    dns:
+#        build:
+#            context: ${CONTAINER_DIR}/dns
+#            args:
+#                - bind_version=${BIND_VERSION}
+#        command: ./start.sh
+#        ports:
+#            - 53:53
 
     jekyll:
         build:
