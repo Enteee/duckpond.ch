@@ -222,6 +222,8 @@ services:
             #
             # Backup Folders
             #
+            - ${HOST_DATA_DIR}:${BORG_VOLUMES}/host-data:${VOLUME_SYNC_MOUNT}
+
             - certs:${BORG_VOLUMES}/certs:${VOLUME_SYNC_MOUNT}
             - letsencrypt-accounts:${BORG_VOLUMES}/letsencrypt-accounts:${VOLUME_SYNC_MOUNT}
             - isso-db:${BORG_VOLUMES}/isso-db:${VOLUME_SYNC_MOUNT}
