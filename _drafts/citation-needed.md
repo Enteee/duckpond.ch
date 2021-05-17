@@ -12,3 +12,4 @@ keywords: []
 * [A web-based data filtering tool for OpenStreetMap](https://overpass-turbo.eu)
 * [Change hostname in `.Xauthority`](https://unix.stackexchange.com/a/278781/347377)
 * [`nix-shell` shebangs](http://chriswarbo.net/projects/nixos/nix_shell_shebangs.html#nix-shell-shebangs)
+* [`pyodide`: Python with the scientific stack, compiled to WebAssembly](https://pyodide.org/en/stable/console.html)
