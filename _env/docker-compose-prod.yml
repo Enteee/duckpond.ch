@@ -18,7 +18,8 @@ services:
     nginx-https:
         restart: always
 
-    letsencrypt:
+# Empty conf will remove the service
+#    letsencrypt:
 
     isso:
         restart: always
