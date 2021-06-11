@@ -10,6 +10,10 @@ fi
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 export VOLUME_SYNC_SLEEP_TIME="${VOLUME_SYNC_SLEEP_TIME:-4h}"
 
+# Initial sleep: wait for stack to start
+echo "Initial sleep"
+sleep 3m
+
 while true; do
   echo "Backup"
   "${DIR}/backup.sh"
