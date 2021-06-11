@@ -78,7 +78,10 @@ services:
         depends_on:
             - debian-dockerize
             - isso
-        build: ${CONTAINER_DIR}/nginx-https
+        build:
+            context: ${CONTAINER_DIR}/nginx-https
+            args:
+                - nginx_version=${NGINX_VERSION}
         command:
             -wait file:///certs/duckpond.ch/cert.pem
             -wait file:///certs/duckpond.ch/privkey.pem
@@ -195,7 +198,7 @@ services:
             #
             # Sync Folders
             #
-            - volume-backup:/service/volume-backup:ro
+            - volume-backup:/service/volume-backup:${VOLUME_SYNC_MOUNT}
         networks:
             backbone:
                 aliases:

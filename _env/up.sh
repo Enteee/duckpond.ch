@@ -16,7 +16,7 @@ Options:
   -ec|--encrypt password  encrypt all .pgp files
   -dc|--decrypt password  decrypt all .pgp files
 
-environments:
+Environments:
   prod    production environment
   bprod   blog production environment
   mprod   mail production environment
@@ -25,6 +25,25 @@ environments:
 
 Notes:
   - "up" is the default for docker-compose-arguments
+
+Examples:
+  - Run cryptpad only:
+    ./up.sh prod up cryptpad nginx-https
+
+  - Build cryptpad:
+    ./up.sh prod build cryptpad
+
+  - Backup restore:
+    1.  In .env change VOLUME_SYNC_MOUNT to rw
+    2.  ./up.sh dev up syncthing
+    3.  docker exec -ti duckpondch_syncthing_1 ./start.sh
+    4.  Go to syncthing web ui: https://localhst:8384
+    5.  Connect to sync network
+    6.  Wait for full sync
+    7.  Stop syncthing
+    8.  ./up.sh -v dev up volume-sync
+    9.  docker exec -ti duckpondch_volume-sync_1 ./restore.sh [backup-to-restore]
+    10. In .env change VOLUME_SYNC_MOUNT to ro
 EOF
 }
 
