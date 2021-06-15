@@ -113,6 +113,8 @@ services:
             args:
                 - docker_version=${DOCKER_VERSION}
                 - dehydrated_version=${DEHYDRATED_VERSION}
+        environment:
+            - LETS_ENCRYPT_SLEEP_TIME=${LETS_ENCRYPT_SLEEP_TIME}
         command: ./start.sh
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
