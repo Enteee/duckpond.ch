@@ -112,6 +112,7 @@ services:
             context: ${CONTAINER_DIR}/dehydrated
             args:
                 - docker_version=${DOCKER_VERSION}
+                - dehydrated_version=${DEHYDRATED_VERSION}
         command: ./start.sh
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock

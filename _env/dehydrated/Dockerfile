@@ -13,7 +13,17 @@ RUN set -ex \
   && apt-get update \
   && DEBIAN_FRONTEND=noninteractive \
     apt-get install --no-install-recommends --no-install-suggests -y \
-      dehydrated
+      openssl \
+      curl ca-certificates
+
+# Install recent dehydrated
+ARG dehydrated_version="0.7.0"
+RUN set -ex \
+  && curl -fsSL "https://github.com/dehydrated-io/dehydrated/releases/download/v${dehydrated_version}/dehydrated-${dehydrated_version}.tar.gz" \
+    | tar -zxvf - \
+  && cp "dehydrated-${dehydrated_version}/dehydrated" "/usr/bin/dehydrated" \
+  && chmod +x "/usr/bin/dehydrated" \
+  && rm -rf "dehydrated-${dehydrated_version}"
 
 # Make service writable directories
 RUN set -ex \
