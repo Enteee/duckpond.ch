@@ -7,7 +7,11 @@ FROM debian-dockerize
 
 MAINTAINER Ente "ducksource@duckpond.ch"
 
+# Copy docker binary and setuid on it (very ugly)
 COPY --from=docker /usr/local/bin/docker /usr/local/bin/
+RUN set -ex \
+  && chown root:root /usr/local/bin/docker \
+  && chmod u+s /usr/local/bin/docker
 
 RUN set -ex \
   && apt-get update \
