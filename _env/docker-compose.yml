@@ -215,6 +215,7 @@ services:
                 - borgbackup_repo=${BORG_REPO}
                 - borgbackup_volumes=${BORG_VOLUMES}
         environment:
+            - BORG_INITIAL_SLEEP=${BORG_INITIAL_SLEEP}
             - BORG_PASSPHRASE=${BORG_PASSPHRASE}
             - BORG_REPO=${BORG_REPO}
             - BORG_VOLUMES=${BORG_VOLUMES}
