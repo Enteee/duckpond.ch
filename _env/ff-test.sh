@@ -2,7 +2,7 @@
 #!nix-shell -i bash -p bubblewrap firefox
 #shellcheck shell=bash
 #
-# This script provides away to locally test the infra with firefox
+# This script provides a way to locally test the infra with firefox
 # all known domains will be resolve to localhost
 #
 set -exuo pipefail
