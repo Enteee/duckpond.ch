@@ -27,6 +27,9 @@ Notes:
   - "up" is the default for docker-compose-arguments
 
 Examples:
+  - Clean start production environment:
+    ./up.sh -v --decrypt PASSWORD prod up --build --force-recreate
+
   - Run cryptpad only:
     ./up.sh prod up cryptpad nginx-https
 
