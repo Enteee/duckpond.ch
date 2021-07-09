@@ -16,7 +16,9 @@ ARG nodejs_version=15.14.0-1nodesource1
 RUN set -ex \
   && nodejs_version_major="$(echo "${nodejs_version}" | cut -d. -f1)" \
   && curl -fsSL "https://deb.nodesource.com/setup_${nodejs_version_major}.x" | bash - \
-  && apt-get update \
+  && apt-get update
+# break here for fetching new nodejs_version
+RUN set -ex \
   && DEBIAN_FRONTEND=noninteractive \
     apt-get install --no-install-recommends --no-install-suggests -y \
       nodejs=${nodejs_version}
