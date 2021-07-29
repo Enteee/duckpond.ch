@@ -47,26 +47,29 @@ get_pw_sensitive_borg_repo(){
   echo "${BORG_REPO}/${borg_repo_suffix}"
 }
 
-# Returns a list of container ids to pause excluding
+# Echos a list of container ids to pause excluding
 # the container we are running in and containers already
 # paused.
 get_all_other_unpaused_containers(){
-  docker ps \
-    --format '{{.ID}}' \
-  | {
-    grep -v "$(
+  comm -23 \
+    <( \
       docker ps \
-        --filter "id=${HOSTNAME}" \
-        --format '{{.ID}}'
-    )"
-  } \
-  | {
-    grep -v "$(
+        --format '{{.ID}}' \
+      | {
+        grep -v "$(
+          docker ps \
+            --filter "id=${HOSTNAME}" \
+            --format '{{.ID}}'
+        )"
+      } \
+      | sort \
+    ) \
+    <( \
       docker ps \
         --filter "status=paused" \
-        --format '{{.ID}}'
-    )"
-  } \
+        --format '{{.ID}}' \
+      | sort \
+    ) \
   | tr '\n' ' '
 }
 
