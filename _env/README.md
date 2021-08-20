@@ -19,6 +19,7 @@ dnf install --assumeyes \
   openssh-server \
   gpg \
   htop \
+  net-tools \
   vim \
   git \
   moreutils \
