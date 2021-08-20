@@ -99,7 +99,12 @@ sudo -u ente sh -c 'git config --global user.name "ente"'
 sudo -u ente sh -c 'cd ~;git clone --recurse-submodules https://github.com/Enteee/duckpond.ch.git'
 ```
 
-* (user:ente) Next Steps:
+* (user:root) Reboot:
+```sh
+reboot
+```
+
+* (user:ente) Container Setup:
   1.  Connect to server: `ssh -L 8888:localhost:8384  ente@duckpond.ch`
   2.  Change working directory: `cd ~/duckpond.ch/_env`
   3.  Decrypt `.env`: `./up.sh --decrypt PASSWORD noop`
