@@ -98,9 +98,18 @@ sudo -u ente sh -c 'cd ~;git clone --recurse-submodules https://github.com/Entee
 ```
 
 * Next Steps:
-  1. Connect to server: `ssh -L 8888:localhost:8384  ente@duckpond.ch`
-  2. Start syncthing: `./up.sh dev up syncthing`
-  3. Connect to https://localhost:8888
-  4. Setup syncthing password
-  5. Connect syncthing to backup network
-  6. Restore backup
+  1.  Connect to server: `ssh -L 8888:localhost:8384  ente@duckpond.ch`
+  2.  Decrypt `.env`: `./up.sh --decrypt PASSWORD noop`
+  3.  In .env change `VOLUME_SYNC_MOUNT` to `rw`
+  4.  Start syncthing: `./up.sh dev up syncthing`
+  5.  Connect to https://localhost:8888
+  6.  Setup syncthing password
+  7.  Connect to sync network
+  8.  Wait for full sync
+  9.  Stop syncthing
+  10. Start volume-sync: `./up.sh -v dev up volume-sync`
+  11. Restore backup: `docker exec -ti duckpondch_volume-sync_1 ./restore.sh [backup-to-restore]`
+  12. Stop volume-sync
+  13. In .env change `VOLUME_SYNC_MOUNT` to `ro`
+  14. Make DNS record for duckpond.ch point to the new server
+  15. Init certificates: `./up.sh --decrypt PASSWORD prod run letsencrypt`
