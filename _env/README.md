@@ -113,3 +113,4 @@ sudo -u ente sh -c 'cd ~;git clone --recurse-submodules https://github.com/Entee
   13. In .env change `VOLUME_SYNC_MOUNT` to `ro`
   14. Make DNS record for duckpond.ch point to the new server
   15. Init certificates: `./up.sh --decrypt PASSWORD prod run letsencrypt`
+  16. Clean build & start all containers: `docker system prune -af && ./up.sh --decrypt PASSWORD prod build`
