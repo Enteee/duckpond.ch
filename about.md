@@ -9,7 +9,7 @@ permalink: /about/
 | ----- | ----- |
 | email | ducksource[at]duckpond.ch |
 | pgp   | [80EA 1448 72C2 A93B 2FCB B7CE 0F1C 362B 6F42 0C0A](/static/email-key.txt) |
-| irc   | ente @ Libera.Chat, enteee @ freenode.net |
+| irc   | enteee @ Libera.Chat @ freenode.net |
 | github | <a aria-label="Follow @Enteee on GitHub" data-style="mega" href="https://github.com/Enteee" class="github-button">Follow @Enteee</a> |
 | stack overflow | <a href="https://stackoverflow.com/users/3215929/ente"><img src="https://stackoverflow.com/users/flair/3215929.png?theme=clean" width="208" height="58" alt="profile for Ente at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for Ente at Stack Overflow, Q&amp;A for professional and enthusiast programmers"></a> |
 | twitter | <a href="https://twitter.com/Enteeeeeee" class="twitter-follow-button" data-show-count="false" data-size="large" data-dnt="true">Follow @Enteeeeeee</a> |
