@@ -115,13 +115,13 @@ reboot
   7.  Connect to https://localhost:8888
   8.  Setup syncthing password
   9.  Connect to sync network
-  10.  Wait for full sync
-  11.  Stop syncthing
+  10. Wait for full sync
+  11. Stop syncthing
   12. Start volume-sync: `./up.sh -v dev up volume-sync`
   13. Restore backup: `docker exec -ti duckpondch_volume-sync_1 ./restore.sh [backup-to-restore]`
   14. Stop volume-sync
   15. In .env change `VOLUME_SYNC_MOUNT` to `ro`
-  16. Make DNS record for duckpond.ch point to the new server
+  16. Make DNS record for duckpond.ch point to the new server (also change reverse dns!)
   17. Create cert folder: `mkdir -p mailcow/data/assets/ssl/`
   18. Init certificates: `./up.sh --decrypt PASSWORD prod run letsencrypt`
   19. Clean build & start all containers: `docker system prune -af && ./up.sh --decrypt PASSWORD prod`
