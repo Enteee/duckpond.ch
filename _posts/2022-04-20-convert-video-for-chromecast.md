@@ -9,7 +9,7 @@ the following a lot to convert almost any video for streaming on the Chromecast:
 
 ```sh
 $ ffmpeg \
-  -i input.mp4
+  -i input.mp4 \
   -map 0:v:0 \
   -c:v copy \
   -map 0:a:0 \
