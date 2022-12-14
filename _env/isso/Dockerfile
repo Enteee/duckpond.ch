@@ -15,6 +15,7 @@ RUN set -ex \
         sqlite3 \
         build-essential \
         python3-gevent \
+        libffi-dev \
     && yes | pip3 install \
         "isso==${isso_version}"
 
