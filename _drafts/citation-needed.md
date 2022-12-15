@@ -14,3 +14,4 @@ keywords: []
 * [`nix-shell` shebangs](http://chriswarbo.net/projects/nixos/nix_shell_shebangs.html#nix-shell-shebangs)
 * [`pyodide`: Python with the scientific stack, compiled to WebAssembly](https://pyodide.org/en/stable/console.html)
 * [What is a Browser Security Sandbox?! (Learn to Hack Firefox)](https://www.youtube.com/watch?v=StQ_6juJlZY)
+* [A collection of Awesome resources for the Flipper Zero device](https://github.com/djsime1/awesome-flipperzero)
