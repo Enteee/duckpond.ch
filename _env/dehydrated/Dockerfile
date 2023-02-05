@@ -17,7 +17,7 @@ RUN set -ex \
   && apt-get update \
   && DEBIAN_FRONTEND=noninteractive \
     apt-get install --no-install-recommends --no-install-suggests -y \
-      hexdump \
+      bsdmainutils \
       openssl \
       curl ca-certificates
 
