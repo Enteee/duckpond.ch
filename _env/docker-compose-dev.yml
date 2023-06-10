@@ -1,7 +1,7 @@
 version: '2.1'
 
 services:
-    debian-dockerize:
+#    debian-dockerize:
 
 #    dns:
 #        command: "/bin/bash -c 'env; sleep 1h'"

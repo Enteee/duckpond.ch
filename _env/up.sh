@@ -122,10 +122,10 @@ env_mailproduction(){
 
 env_production(){
   exec "${DOCKER_COMPOSE}" \
+    -f mailcow/docker-compose.yml \
     -f docker-compose.yml \
     -f docker-compose-prod.yml \
     -f docker-compose-mailcow.yml \
-    -f mailcow/docker-compose.yml \
     "${@}"
 }
 
@@ -216,6 +216,11 @@ if [ "${decrypt}" == true ];then
       -execdir bash -$- -c 'decrypt "${1}" "${2}"' _ "{}" "${decrypt_password}" \;
   )
 fi
+
+# Build base image
+"${DOCKER_COMPOSE}" \
+  -f docker-compose-base.yml \
+  "build"
 
 # Run envionrment
 if [[ $# -eq 0 ]]; then

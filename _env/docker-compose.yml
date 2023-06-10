@@ -1,25 +1,6 @@
 version: '2.1'
 
 services:
-    #
-    # Base image
-    #
-    debian-dockerize:
-        image: debian-dockerize
-        build:
-            context: ${CONTAINER_DIR}/debian-dockerize
-            args:
-                - debian_version=${DEBIAN_VERSION}
-                - dockerize_version=${DOCKERIZE_VERSION}
-                - service_gid=${SERVICE_GID}
-                - service_group=${SERVICE_GROUP}
-                - service_uid=${SERVICE_UID}
-                - service_user=${SERVICE_USER}
-                - service_user_HOME=${SERVICE_USER_HOME}
-
-    #
-    # Services
-    #
 
 #    dns:
 #        build:
@@ -51,8 +32,6 @@ services:
             - www-dev:/srv/jekyll/_site:rw
 
     nginx-http:
-        depends_on:
-            - debian-dockerize
         build:
             context: ${CONTAINER_DIR}/nginx-http
             args:
@@ -76,7 +55,6 @@ services:
 
     nginx-https:
         depends_on:
-            - debian-dockerize
             - isso
         build:
             context: ${CONTAINER_DIR}/nginx-https
@@ -106,7 +84,6 @@ services:
 
     letsencrypt:
         depends_on:
-            - debian-dockerize
             - nginx-http
         build:
             context: ${CONTAINER_DIR}/dehydrated
@@ -126,8 +103,6 @@ services:
             - letsencrypt-accounts:/rw/accounts:rw
 
     isso:
-        depends_on:
-            - debian-dockerize
         build:
             context: ${CONTAINER_DIR}/isso
             args:
@@ -146,8 +121,6 @@ services:
                     - blog-isso
 
     challenges:
-        depends_on:
-            - debian-dockerize
         build:
             context: ${CONTAINER_DIR}/challenges
             args:
@@ -157,8 +130,6 @@ services:
             - 8889:8889
 
     cryptpad:
-        depends_on:
-            - debian-dockerize
         build:
             context: ${CONTAINER_DIR}/cryptpad
             args:
@@ -186,8 +157,6 @@ services:
               hard: 1000000
 
     syncthing:
-        depends_on:
-            - debian-dockerize
         build:
             context: ${CONTAINER_DIR}/syncthing
             args:
@@ -208,8 +177,6 @@ services:
                     - syncthing
 
     volume-sync:
-        depends_on:
-            - debian-dockerize
         build:
             context: ${CONTAINER_DIR}/volume-sync
             args:
@@ -299,4 +266,4 @@ volumes:
 
 networks:
     backbone:
-#    mailcow-network:
+    mailcow-network:

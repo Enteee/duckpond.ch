@@ -1,0 +1,18 @@
+version: '2.1'
+
+services:
+    #
+    # Base image
+    #
+    debian-dockerize:
+        image: debian-dockerize
+        build:
+            context: ${CONTAINER_DIR}/debian-dockerize
+            args:
+                - debian_version=${DEBIAN_VERSION}
+                - dockerize_version=${DOCKERIZE_VERSION}
+                - service_gid=${SERVICE_GID}
+                - service_group=${SERVICE_GROUP}
+                - service_uid=${SERVICE_UID}
+                - service_user=${SERVICE_USER}
+                - service_user_HOME=${SERVICE_USER_HOME}

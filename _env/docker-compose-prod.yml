@@ -1,8 +1,6 @@
 version: '2.1'
 
 services:
-    debian-dockerize:
-
 #    dns:
 #        restart: always
 
@@ -17,9 +15,6 @@ services:
 
     nginx-https:
         restart: always
-
-# Empty conf will remove the service
-#    letsencrypt:
 
     isso:
         restart: always
