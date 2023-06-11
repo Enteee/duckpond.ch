@@ -1,4 +1,4 @@
-ARG debian_version=10.0
+ARG debian_version=10.13
 FROM debian:${debian_version} AS build
 
 MAINTAINER Ente "ducksource@duckpond.ch"
