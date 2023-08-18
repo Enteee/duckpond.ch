@@ -11,7 +11,7 @@
     Support requests for such setups should be directed to their authors.
 
     If you're having difficulty difficulty configuring your instance
-    we suggest that you join the project's IRC/Matrix channel.
+    we suggest that you join the project's Matrix channel.
 
     If you don't have any difficulty configuring your instance and you'd like to
     support us for the work that went into making it pain-free we are quite happy
@@ -45,21 +45,13 @@ module.exports = {
  *  In such a case this should be also handled by NGINX, as documented in
  *  cryptpad/docs/example.nginx.conf (see the $main_domain variable)
  *
- *  Note: you may provide multiple origins for the purpose of accessing
- *  a development instance via different URLs, like so:
- *  httpUnsafeOrigin: 'http://127.0.0.1:3000/ http://localhost:3000/',
- *
- *  Such configuration is not recommended for production instances,
- *  as the development team does not actively test such configuration
- *  and it may have unintended consequences in practice.
- *
  */
-  httpUnsafeOrigin: 'https://crypt.duckpond.ch/',
+  httpUnsafeOrigin: 'https://crypt.duckpond.ch:3000/',
 
 /*  httpSafeOrigin is the URL that is used for the 'sandbox' described above.
  *  If you're testing or developing with CryptPad on your local machine then
  *  it is appropriate to leave this blank. The default behaviour is to serve
- *  the main domain over port 3000 and to serve the content over port 3001.
+ *  the main domain over port 3000 and to serve the sandbox content over port 3001.
  *
  *  This is not appropriate in a production environment where invasive networks
  *  may filter traffic going over abnormal ports.
@@ -69,6 +61,9 @@ module.exports = {
  *
  *  This value corresponds to the $sandbox_domain variable
  *  in the example nginx file.
+ *
+ *  Note that in order for the sandboxing system to be effective
+ *  httpSafeOrigin must be different from httpUnsafeOrigin.
  *
  *  CUSTOMIZE AND UNCOMMENT THIS FOR PRODUCTION INSTALLATIONS.
  */
@@ -97,6 +92,19 @@ module.exports = {
  */
     //httpSafePort: 3001,
 
+/*  Websockets need to be exposed on a separate port from the rest of
+ *  the platform's HTTP traffic. Port 3003 is used by default.
+ *  You can change this to a different port if it is in use by a
+ *  different service, but under most circumstances you can leave this
+ *  commented and it will work.
+ *
+ *  In production environments, your reverse proxy (usually NGINX)
+ *  will need to forward websocket traffic (/cryptpad_websocket)
+ *  to this port.
+ *
+ */
+    // websocketPort: 3003,
+
 /*  CryptPad will launch a child process for every core available
  *  in order to perform CPU-intensive tasks in parallel.
  *  Some host environments may have a very large number of cores available
@@ -119,19 +127,6 @@ module.exports = {
     adminKeys: [
       "[ente@crypt-sb.duckpond.ch/aP1YVL0Kj4NprelPgT9qZ48uhYEUEqSA8XYHxosDCHU=]",
     ],
-
-    /*  CryptPad's administration panel includes a "support" tab
-     *  wherein administrators with a secret key can view messages
-     *  sent from users via the encrypted forms on the /support/ page
-     *
-     *  To enable this functionality:
-     *    run `node ./scripts/generate-admin-keys.js`
-     *    save the public key in your config in the value below
-     *    add the private key via the admin panel
-     *    and back it up in a secure manner
-     *
-     */
-    // supportMailboxPublicKey: "",
 
     /*  We're very proud that CryptPad is available to the public as free software!
      *  We do, however, still need to pay our bills as we develop the platform.
@@ -225,29 +220,6 @@ module.exports = {
      */
     //maxUploadSize: 20 * 1024 * 1024,
     maxUploadSize: 500 * 1024 * 1024,
-
-    /*
-     *  CryptPad allows administrators to give custom limits to their friends.
-     *  add an entry for each friend, identified by their user id,
-     *  which can be found on the settings page. Include a 'limit' (number of bytes),
-     *  a 'plan' (string), and a 'note' (string).
-     *
-     *  hint: 1GB is 1024 * 1024 * 1024 bytes
-     */
-/*
-    customLimits: {
-        "[cryptpad-user1@my.awesome.website/YZgXQxKR0Rcb6r6CmxHPdAGLVludrAF2lEnkbx1vVOo=]": {
-            limit: 20 * 1024 * 1024 * 1024,
-            plan: 'insider',
-            note: 'storage space donated by my.awesome.website'
-        },
-        "[cryptpad-user2@my.awesome.website/GdflkgdlkjeworijfkldfsdflkjeEAsdlEnkbx1vVOo=]": {
-            limit: 10 * 1024 * 1024 * 1024,
-            plan: 'insider',
-            note: 'storage space donated by my.awesome.website'
-        }
-    },
-*/
 
     /*  Users with premium accounts (those with a plan included in their customLimit)
      *  can benefit from an increased upload size limit. By default they are restricted to the same
