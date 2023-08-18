@@ -21,7 +21,7 @@ TMP_FILE="${PWD}/docker-compose-generated.$$.yaml"
 DOCKER_COMPOSE_CONFIG_VERSION="${DOCKER_COMPOSE_CONFIG_VERSION:-2.1}"
 ENV_FILE="$(readlink -f "${ENV_FILE:-.env}")"
 
-DOCKER_COMPOSE_CMD=("docker-compose" "--env-file" "${ENV_FILE}")
+DOCKER_COMPOSE_CMD=("docker" "compose" "--env-file" "${ENV_FILE}")
 
 finish() {
   rm "${TMP_FILE}" 2>/dev/null
