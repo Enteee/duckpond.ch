@@ -42,8 +42,7 @@ RUN set -ex \
     cd "/cryptpad" \
     && for p in /patches/* ; do git apply "${p}"; done \
     && npm install --production \
-    && npm install -g bower \
-    && bower install --allow-root \
+    && npm run install:components \
     && htpasswd \
       -b \
       -c ./.htpasswd \
