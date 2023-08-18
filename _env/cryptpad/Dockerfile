@@ -28,6 +28,7 @@ ARG cryptpad_archive="https://github.com/xwiki-labs/cryptpad/archive"
 ARG cryptpad_version=4.2.1
 ARG cryptpad_htpasswd_user="crypt"
 ARG cryptpad_htpasswd_password="replaceme"
+COPY patches /patches
 RUN set -ex \
   && wget \
     --no-verbose \
@@ -42,8 +43,10 @@ RUN set -ex \
   && rm "${cryptpad_version}.tar.gz" \
   && ( \
     cd "/cryptpad" \
+    && for p in /patches/* ; do git apply "${p}"; done \
     && npm install --production \
     && npm run install:components \
+    && npm run build \
     && htpasswd \
       -b \
       -c ./.htpasswd \
