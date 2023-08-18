@@ -39,8 +39,8 @@ Examples:
   - Backup restore:
     1.  In .env change VOLUME_SYNC_MOUNT to rw
     2.  ./up.sh dev up syncthing
-    3.  docker exec -ti duckpondch_syncthing_1 ./start.sh
-    4.  Go to syncthing web ui: https://localhst:8384
+    3.  docker exec -ti duckpondch-syncthing-1 ./start.sh
+    4.  Go to syncthing web ui: https://127.0.0.1:8384
     5.  Connect to sync network
     6.  Wait for full sync
     7.  Stop syncthing
