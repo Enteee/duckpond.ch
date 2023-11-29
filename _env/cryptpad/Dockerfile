@@ -15,10 +15,21 @@ RUN set -ex \
 ARG nodejs_version=15.14.0-1nodesource1
 RUN set -ex \
   && nodejs_version_major="$(echo "${nodejs_version}" | cut -d. -f1)" \
-  && curl -fsSL "https://deb.nodesource.com/setup_${nodejs_version_major}.x" | bash - \
+  && DEBIAN_FRONTEND=noninteractive \
+    apt-get install --no-install-recommends --no-install-suggests -y \
+      ca-certificates \
+      curl \
+      gnupg \
+  && mkdir -p /etc/apt/keyrings \
+  && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
+    | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+  && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_${nodejs_version_major}.x nodistro main" \
+    > /etc/apt/sources.list.d/nodesource.list \
   && apt-get update
 # break here for fetching new nodejs_version
 RUN set -ex \
+  && DEBIAN_FRONTEND=noninteractive \
+    apt-cache policy nodejs \
   && DEBIAN_FRONTEND=noninteractive \
     apt-get install --no-install-recommends --no-install-suggests -y \
       nodejs=${nodejs_version}
@@ -70,7 +81,16 @@ RUN set -ex \
 ARG nodejs_version=15.14.0-1nodesource1
 RUN set -ex \
   && nodejs_version_major="$(echo "${nodejs_version}" | cut -d. -f1)" \
-  && curl -fsSL "https://deb.nodesource.com/setup_${nodejs_version_major}.x" | bash - \
+  && DEBIAN_FRONTEND=noninteractive \
+    apt-get install --no-install-recommends --no-install-suggests -y \
+      ca-certificates \
+      curl \
+      gnupg \
+  && mkdir -p /etc/apt/keyrings \
+  && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
+    | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+  && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_${nodejs_version_major}.x nodistro main" \
+    > /etc/apt/sources.list.d/nodesource.list \
   && apt-get update
 # break here for fetching new nodejs_version
 RUN set -ex \

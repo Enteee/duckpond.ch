@@ -45,7 +45,7 @@ Examples:
     6.  Wait for full sync
     7.  Stop syncthing
     8.  ./up.sh -v dev up volume-sync
-    9.  docker exec -ti duckpondch_volume-sync_1 ./restore.sh [backup-to-restore]
+    9.  docker exec -ti duckpondch-volume-sync-1 ./restore.sh [backup-to-restore]
     10. In .env change VOLUME_SYNC_MOUNT to ro
 EOF
 }

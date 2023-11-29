@@ -11,7 +11,7 @@ PWD="$(pwd)"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 DOMAINS_FILE="${DIR}/dehydrated/etc/domains.txt"
-DOMAINS="$(cat "${DOMAINS_FILE}")"
+readarray -t -d' ' DOMAINS < "${DOMAINS_FILE}"
 TMP_HOSTS="$(mktemp)"
 FIREFOX="$(realpath "$(which "firefox")")"
 
@@ -26,12 +26,13 @@ cat > "${TMP_HOSTS}" <<EOF
 ::1 localhost
 EOF
 # add all domains
-for d in ${DOMAINS}; do
+for d in "${DOMAINS[@]}"; do
   echo "127.0.0.1 ${d}" >> "${TMP_HOSTS}"
   echo "::1 ${d}" >> "${TMP_HOSTS}"
 done
 
 bwrap \
+  --dev-bind /dev /dev \
   --ro-bind /nix /nix \
   --dir /run/user/"$(id -u)" \
   --ro-bind /etc/ssl /etc/ssl \
@@ -46,5 +47,5 @@ bwrap \
   --die-with-parent \
   "${FIREFOX}" \
     --new-instance \
-    ${DOMAINS}
+    "${DOMAINS[@]}"
 
