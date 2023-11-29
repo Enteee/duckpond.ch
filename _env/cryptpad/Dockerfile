@@ -44,17 +44,20 @@ RUN set -ex \
   && wget \
     --no-verbose \
     --show-progress \
-    --progress=dot:mega \
+    --progress=dot:giga \
     "${cryptpad_archive}/${cryptpad_version}.tar.gz" \
   && mkdir -p "/cryptpad" \
   && tar \
     -C "/cryptpad" \
     --strip-components 1 \
-    -xzvf "${cryptpad_version}.tar.gz" \
+    -xzf "${cryptpad_version}.tar.gz" \
   && rm "${cryptpad_version}.tar.gz" \
   && ( \
     cd "/cryptpad" \
-    && for p in /patches/* ; do git apply "${p}"; done \
+    && ( \
+      shopt -s nullglob; \
+      for p in /patches/* ; do git apply "${p}"; done \
+    ) \
     && npm install --production \
     && npm run install:components \
     && npm run build \
