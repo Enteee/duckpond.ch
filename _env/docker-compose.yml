@@ -60,10 +60,14 @@ services:
             context: ${CONTAINER_DIR}/nginx-https
             args:
                 - nginx_version=${NGINX_VERSION}
+        environment:
+            - CRYPTPAD_HTPASSWD_PASSWORD=${CRYPTPAD_HTPASSWD_PASSWORD}
         command:
             -wait file:///certs/duckpond.ch/cert.pem
             -wait file:///certs/duckpond.ch/privkey.pem
             -wait file:///certs/duckpond.ch/fullchain.pem
+            -template /tmpl/etc/nginx/sites-enabled/:/etc/nginx/sites-enabled/
+            -template /tmpl/etc/nginx/conf.d:/etc/nginx/conf.d
             -timeout ${DOCKERIZE_TIMEOUT}
             -stdout /var/log/nginx/access.log
             -stderr /var/log/nginx/error.log
@@ -73,7 +77,8 @@ services:
         volumes:
             - certs:/certs/:ro
             - www:/usr/share/nginx/html:ro
-            - ${CONTAINER_DIR}/nginx-https/sites-enabled:/etc/nginx/sites-enabled/:ro
+            - ${CONTAINER_DIR}/nginx-https/sites-enabled:/tmpl/etc/nginx/sites-enabled/:ro
+            - ${CONTAINER_DIR}/nginx-https/conf.d:/tmpl/etc/nginx/conf.d:ro
         volumes_from:
             - cryptpad:ro
         networks:
