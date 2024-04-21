@@ -26,6 +26,7 @@ RUN set -ex \
   && SERVICE_WRITABLE_DIRS=( \
     "/rw/syncthing" \
     "/service/volume-backup" \
+    "/service/backup" \
   ) \
   && mkdir -p "${SERVICE_WRITABLE_DIRS[@]}" \
   && chown -R \

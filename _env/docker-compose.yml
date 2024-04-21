@@ -176,6 +176,7 @@ services:
             # Sync Folders
             #
             - volume-backup:/service/volume-backup:${VOLUME_SYNC_MOUNT}
+            - backup:/service/backup:rw
         networks:
             backbone:
                 aliases:
@@ -268,6 +269,7 @@ volumes:
     # Sync
     #
     volume-backup:
+    backup:
 
 networks:
     backbone:
