@@ -8,15 +8,13 @@ RUN set -ex \
     && apt-get update \
     && DEBIAN_FRONTEND=noninteractive \
       apt-get install --no-install-recommends --no-install-suggests -y \
+        pipx \
         python3-dev \
-        python3-pip \
-        python3-setuptools \
-        python3-wheel \
         sqlite3 \
         build-essential \
         python3-gevent \
         libffi-dev \
-    && yes | pip3 install \
+    && pipx install \
         "isso==${isso_version}"
 
 # Make service writable directories

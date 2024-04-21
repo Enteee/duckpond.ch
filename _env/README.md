@@ -111,7 +111,7 @@ reboot
   3.  Decrypt `.env`: `./up.sh --decrypt PASSWORD noop`
   4.  In .env change `VOLUME_SYNC_MOUNT` to `rw`
   5.  Start syncthing: `./up.sh dev up syncthing`
-  6.  Start service: `docker exec -ti duckpondch_syncthing_1 ./start.sh`
+  6.  Start service: `docker exec -ti duckpondch-syncthing-1 ./start.sh`
   7.  Connect to https://localhost:8888
   8.  Setup syncthing password
   9.  Connect to sync network

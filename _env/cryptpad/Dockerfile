@@ -58,9 +58,11 @@ RUN set -ex \
       shopt -s nullglob; \
       for p in /patches/* ; do git apply "${p}"; done \
     ) \
-    && npm install --production \
+    && npm install --omit=dev \
     && npm run install:components \
     && npm run build \
+    && ./install-onlyoffice.sh \
+      --accept-license \
     && htpasswd \
       -b \
       -c ./.htpasswd \
