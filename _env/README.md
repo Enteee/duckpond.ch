@@ -1,6 +1,6 @@
 # Server Installation
 
-* Install CentOS 8 Stream
+* Install Rocky linux 9
 
 * (user:root) Set timezone to UTC:
 ```sh
@@ -15,7 +15,7 @@ dnf install --assumeyes \
 
 * (user:root) Base system installation:
 ```sh
-dnf install --assumeyes \
+dnf install --assumeyes --enablerepo=crb \
   openssh-server \
   gpg \
   htop \
@@ -49,6 +49,11 @@ systemctl enable sshd
 systemctl enable fail2ban
 systemctl enable docker
 systemctl enable dnf-automatic.timer
+systemctl enable firewalld
+```
+* (user:root) Reboot:
+```
+reboot
 ```
 
 * (user:root) Activate firewall:
@@ -66,7 +71,7 @@ adduser -G docker ente
 mkdir -p /home/ente/.ssh
 cp /root/.ssh/authorized_keys /home/ente/.ssh/
 chown -R ente:ente /home/ente/.ssh
-chmod 600 /home/ente/.ssh/authorized_keys
+chmod 400 /home/ente/.ssh/authorized_keys
 ```
 
 * (user:root) Set SSH Banner:
