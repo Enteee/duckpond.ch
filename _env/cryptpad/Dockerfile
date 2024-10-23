@@ -20,6 +20,7 @@ RUN set -ex \
       ca-certificates \
       curl \
       gnupg \
+      unzip \
   && mkdir -p /etc/apt/keyrings \
   && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
     | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
