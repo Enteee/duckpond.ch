@@ -132,32 +132,32 @@ services:
             - 8888:8888
             - 8889:8889
 
-    cryptpad:
-        build:
-            context: ${CONTAINER_DIR}/cryptpad
-            args:
-                - nodejs_version=${NODEJS_VERSION}
-                - cryptpad_archive=${CRYPTPAD_ARCHIVE}
-                - cryptpad_version=${CRYPTPAD_VERSION}
-                - cryptpad_htpasswd_user=${CRYPTPAD_HTPASSWD_USER}
-                - cryptpad_htpasswd_password=${CRYPTPAD_HTPASSWD_PASSWORD}
-        command: ./start.sh
-        volumes:
-            - ${CONTAINER_DIR}/cryptpad/customize/:/cryptpad/customize:ro
-            - ${CONTAINER_DIR}/cryptpad/config/:/cryptpad/config:ro
+    #cryptpad:
+    #    build:
+    #        context: ${CONTAINER_DIR}/cryptpad
+    #        args:
+    #            - nodejs_version=${NODEJS_VERSION}
+    #            - cryptpad_archive=${CRYPTPAD_ARCHIVE}
+    #            - cryptpad_version=${CRYPTPAD_VERSION}
+    #            - cryptpad_htpasswd_user=${CRYPTPAD_HTPASSWD_USER}
+    #            - cryptpad_htpasswd_password=${CRYPTPAD_HTPASSWD_PASSWORD}
+    #    command: ./start.sh
+    #    volumes:
+    #        - ${CONTAINER_DIR}/cryptpad/customize/:/cryptpad/customize:ro
+    #        - ${CONTAINER_DIR}/cryptpad/config/:/cryptpad/config:ro
 
-            - cryptpad-blob:/cryptpad/blob:rw
-            - cryptpad-block:/cryptpad/block:rw
-            - cryptpad-data:/cryptpad/data:rw
-            - cryptpad-datastore:/cryptpad/datastore:rw
-        networks:
-            backbone:
-                aliases:
-                    - cryptpad
-        ulimits:
-            nofile:
-              soft: 1000000
-              hard: 1000000
+    #        - cryptpad-blob:/cryptpad/blob:rw
+    #        - cryptpad-block:/cryptpad/block:rw
+    #        - cryptpad-data:/cryptpad/data:rw
+    #        - cryptpad-datastore:/cryptpad/datastore:rw
+    #    networks:
+    #        backbone:
+    #            aliases:
+    #                - cryptpad
+    #    ulimits:
+    #        nofile:
+    #          soft: 1000000
+    #          hard: 1000000
 
     syncthing:
         build:
