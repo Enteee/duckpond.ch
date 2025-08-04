@@ -5,8 +5,6 @@ ARG docker_version=19.03
 FROM docker:${docker_version} AS docker
 FROM debian-dockerize
 
-MAINTAINER Ente "ducksource@duckpond.ch"
-
 COPY --from=docker /usr/local/bin/docker /usr/local/bin/
 
 ARG borgbackup_version="1.1.9-2+deb10u1"

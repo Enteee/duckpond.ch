@@ -1,7 +1,5 @@
 FROM debian-dockerize AS build
 
-MAINTAINER Ente "ducksource@duckpond.ch"
-
 # Install requirements to clone repository and install deps
 RUN set -ex \
   && apt-get update \

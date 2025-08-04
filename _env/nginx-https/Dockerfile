@@ -1,7 +1,5 @@
 FROM debian-dockerize
 
-MAINTAINER Ente "ducksource@duckpond.ch"
-
 # Install nginx
 ARG nginx_version="1.14.2-2+deb10u3"
 RUN set -ex \

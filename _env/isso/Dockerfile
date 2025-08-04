@@ -1,7 +1,5 @@
 FROM debian-dockerize
 
-MAINTAINER Ente "ducksource@duckpond.ch"
-
 # Install isso
 ARG isso_version=0.12.5
 RUN set -ex \

@@ -1,8 +1,6 @@
 ARG debian_version=10.13
 FROM debian:${debian_version} AS build
 
-MAINTAINER Ente "ducksource@duckpond.ch"
-
 # Build dockerize
 ARG dockerize_version=0.6.1
 RUN set -ex \

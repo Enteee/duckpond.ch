@@ -1,7 +1,5 @@
 FROM debian-dockerize
 
-MAINTAINER Ente "ducksource@duckpond.ch"
-
 # Install bind
 ARG bind_version=1:9.11.5.P4+dfsg-5.1+deb10u3
 RUN set -ex \

@@ -5,8 +5,6 @@ ARG docker_version=19.03
 FROM docker:${docker_version} AS docker
 FROM debian-dockerize
 
-MAINTAINER Ente "ducksource@duckpond.ch"
-
 # Copy docker binary and setuid on it (very ugly)
 COPY --from=docker /usr/local/bin/docker /usr/local/bin/
 RUN set -ex \

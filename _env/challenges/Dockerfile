@@ -1,7 +1,5 @@
 FROM debian-dockerize
 
-MAINTAINER Ente "ducksource@duckpond.ch"
-
 # Install python
 ARG python_version=3.7.3-1
 RUN set -ex \

@@ -1,7 +1,5 @@
 FROM debian-dockerize
 
-MAINTAINER Ente "ducksource@duckpond.ch"
-
 # Install syncthing
 ARG syncthing_version="1.14.0"
 RUN set -ex \
