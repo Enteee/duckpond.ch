@@ -7,9 +7,6 @@
 # folders which contain relative paths.
 # see: https://github.com/docker/compose/issues/3874
 #
-# Environment:
-#  - DOCKER_COMPOSE_CONFIG_VERSION: The docker-compose,yaml config file version, default: 2.1
-#
 # Requires:
 #  - sponge (from moreutils https://joeyh.name/code/moreutils/)
 #  - docker & docker-compose
@@ -18,7 +15,6 @@ set -euo pipefail
 
 PWD="$(pwd)"
 TMP_FILE="${PWD}/docker-compose-generated.$$.yaml"
-DOCKER_COMPOSE_CONFIG_VERSION="${DOCKER_COMPOSE_CONFIG_VERSION:-2.1}"
 ENV_FILE="$(readlink -f "${ENV_FILE:-.env}")"
 
 DOCKER_COMPOSE_CMD=("docker" "compose" "--env-file" "${ENV_FILE}")
@@ -65,7 +61,7 @@ if [ "${verbose}" == true ]; then
   set -x
 fi
 
-echo "version: \"${DOCKER_COMPOSE_CONFIG_VERSION}\"" > "${TMP_FILE}"
+touch "${TMP_FILE}"
 for f in "${files[@]}"; do
   compose-config "${f}"
 done
