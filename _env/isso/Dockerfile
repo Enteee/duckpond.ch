@@ -12,7 +12,9 @@ RUN set -ex \
         build-essential \
         python3-gevent \
         libffi-dev \
+        python3-pycparser \
     && pipx install \
+        --system-site-packages \
         "isso==${isso_version}"
 
 # Make service writable directories
