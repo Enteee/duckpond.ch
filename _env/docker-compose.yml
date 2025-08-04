@@ -77,8 +77,8 @@ services:
             - www:/usr/share/nginx/html:ro
             - ${CONTAINER_DIR}/nginx-https/sites-enabled:/tmpl/etc/nginx/sites-enabled/:ro
             - ${CONTAINER_DIR}/nginx-https/conf.d:/tmpl/etc/nginx/conf.d:ro
-        volumes_from:
-            - cryptpad:ro
+        #volumes_from:
+        #    - cryptpad:ro
         networks:
             backbone:
                 aliases:
