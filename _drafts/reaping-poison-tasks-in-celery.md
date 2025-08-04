@@ -2,10 +2,8 @@
 layout: post
 categories: [python]
 image: /static/posts/reaping-poison-tasks-in-celery/task-queues.png
-keywords: []
+keywords: [celery, python, dead letter queues, rabbitmq]
 ---
-
-# Reaping Poison Tasks in Celery: Dead Letter And Quoroum Queues
 
 Celery pipelines often work fine until one task brings everything to a halt. For us, the root cause was simple: when Kubernetes OOM-killed a Celery worker during execution, RabbitMQ would redeliver the unacknowledged task. In practice, this meant the same poison task (often memory-intensive) would bounce from worker to worker, gradually stalling the entire pipeline.
 
@@ -25,7 +23,7 @@ for task_name in app.tasks.keys():
     task_routes[task_name] = {"queue": queue_name}
 ```
 
-However, there's a catch. Even with `worker_prefetch_multiplier=1`, Celery fetches **one task per queue**. If a worker listens to 100 queues, it may prefetch 100 tasks at once. When that worker is OOM-killed, all prefetched but unacknowledged tasks are redelivered, each with their delivery count incremented.
+However, there's a catch. Even with `worker_prefetch_multiplier=1`, Celery fetches one task per queue. If a worker listens to 100 queues, it may prefetch 100 tasks at once. When that worker is OOM-killed, all prefetched but unacknowledged tasks are redelivered, each with their delivery count incremented.
 
 This results in two problems:
 
@@ -34,27 +32,13 @@ This results in two problems:
 
 ## Introducing Dead Letter Queues
 
-To make task failure explicit and avoid stalling the pipeline, we introduced **RabbitMQ Quorum Queues** with `x-delivery-limit` and dead-lettering. The model now looks like this:
+To make task failure explicit and avoid stalling the pipeline, we introduced RabbitMQ Quorum Queues with `x-delivery-limit` and dead-lettering. The model now looks like this:
 
 - Each task-specific queue is a quorum queue with a delivery limit.
 - On reaching the delivery limit, tasks are routed to a **graveyard queue**.
 - The graveyard queue also has a delivery limit, after which tasks go to a final **dead queue**.
 
-```mermaid
-graph TD
-  subgraph RabbitMQ
-    A1[task_type_A queue] -->|delivery limit| G[graveyard queue]
-    B1[task_type_B queue] -->|delivery limit| G
-    G -->|graveyard delivery limit| D[dead queue]
-  end
-
-  subgraph Workers
-    W[Normal Worker] --> A1
-    W --> B1
-    R[Reaper Worker] --> G
-    R --> D
-  end
-```
+![dead letter queues](/static/posts/reaping-poison-tasks-in-celery/task-queues.svg){: .stretch }
 
 This setup ensures that poison tasks are automatically redirected out of the main processing flow.
 
@@ -64,7 +48,7 @@ To process the graveyard and dead queues, we introduced a dedicated class of wor
 
 - They **only subscribe to the graveyard and dead queues**.
 - They run with **worker\_concurrency=1** and **worker\_prefetch\_multiplier=1**.
-- Graveyard tasks are re-executed in isolation — one at a time.
+- Graveyard tasks are re-executed in isolation - one at a time.
 - Dead queue tasks are never executed. They are skipped by immediately raising an exception.
 
 This isolation is essential: the reaper worker only prefetches a single task from the graveyard, and because it subscribes to no other queues, there is no chance of delivery count pollution from co-scheduled tasks.
@@ -88,6 +72,6 @@ class BaseTask(Task):
 
 ## Why It Works
 
-This architecture isolates failure from progress. Reaper workers handle the worst-case tasks without contaminating the main processing pool. Delivery limits and explicit DLQs prevent infinite retries. The one-queue-per-task model ensures fair scheduling, and now with dead-lettering, also ensures robustness under failure.
+This architecture isolates failure from progress. Reaper workers handle the worst-case tasks without contaminating the main processing pool. Delivery limits and explicit dead letter queues prevent infinite retries. The one-queue-per-task model ensures fair scheduling, and now with dead-lettering, also ensures robustness under failure.
 
-With this change, a single poison task no longer halts the system. Failures become visible, bounded, and isolated — the way they should be.
+With this change, a single poison task no longer halts the system. Failures become visible, bounded, and isolated - the way they should be.
