@@ -20,8 +20,8 @@ services:
     challenges:
         restart: always
 
-    cryptpad:
-        restart: always
+    #cryptpad:
+    #    restart: always
 
     syncthing:
         restart: always
