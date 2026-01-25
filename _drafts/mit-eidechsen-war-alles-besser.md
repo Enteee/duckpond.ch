@@ -11,6 +11,8 @@ it here. The article reflects the author’s personal views and style; all opini
 interpretations, and conclusions expressed are solely those of the original author
 and do not represent my own.
 
+---
+
 # Mit Eidechsen war alles besser
 
 Ein in der Antike verbreitetes Navigationshilfmittel war neben der Sonne und den restlichen Sternen
