@@ -127,7 +127,7 @@ mit den Ohren lesen kann.
 
 {%
   responsive_image
-  path: static/mit-eidechsen-war-alles-besser/situation.png
+  path: static/posts/mit-eidechsen-war-alles-besser/situation.png
   caption: 'Porelzza Landefelder: 1: OK für 15m Flieger Man beachte die Stahlstange und die
             Holzpflöcke, 2: Besseres, aber Baumreihe im Anflug, 3: noch besser, aber Weg mit Oma und Hund
             im Anflug, 4: am Besten, aber kostet 400 Euro wegen der Kühe. Blaue Anflugpfeile gemäss damals
