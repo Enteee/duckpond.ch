@@ -81,9 +81,9 @@ relevante Geschwindigkeiten und grosse Masse haben sie auch nicht.
 
 Darum führen Eidechsen heute ein eher zurückgezogenes Leben und verstecken sich, wenn jemand
 in ihrer Nähe erscheint. Das sollte nun ausreichen, um die gesamte Geschichte der letzten
-245 Millionen Jahre zu verstehen. Wenn noch Fragen sind, wende man sich vertrauensvoll an tranalyzer.com.
-Dort sitzt ein Ameisenbär, der kennt sich mit der Weltgeschichte bestens aus, zumindest
-aus Ameisenbärsicht.
+245 Millionen Jahre zu verstehen. Wenn noch Fragen sind, wende man sich vertrauensvoll an
+[tranalyzer.com](https://tranalyzer.com). Dort sitzt ein Ameisenbär, der kennt sich mit
+der Weltgeschichte bestens aus, zumindest aus Ameisenbärsicht.
 
 Die Abscheu der Eidechsen gegenüber dem Menschen zwang sie schliesslich in den Untergrund.
 Darum kann man sie nur erkennen, wenn man sich nahe am Boden befindet und weiss wo sie liegen.
@@ -122,7 +122,9 @@ konzentriere. Diese andauernd herumschweifenden Gedankengänge bringen mich als 
 aus dem Konzept und machen den vorliegenden Text inkohärent und nur länger. Also den Teil,
 der noch kommt, der davor ist ja schon geschrieben und damit im Moment nicht mehr relevant. So
 fokussiere er sich endlich. Vielleicht trinke er ein Bier, esse einen Biber, um den Wald zu schützen,
-und lese dann weiter.[^1](Im Einklang mit dem Trumpschen Dekret zur spontanen Kausalitätsumkehr)
+und lese dann weiter. [^1]
+
+[^1]: Im Einklang mit dem Trumpschen Dekret zur spontanen Kausalitätsumkehr
 
 Habe er sich jetzt wieder gesammelt? Gut. Also weiter. Man stelle sich nun vor, man komme
 in ca. 600m Grund in Porlezza an, versucht sich noch 10 Minuten am Hang zu halten und schaut
