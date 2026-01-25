@@ -11,8 +11,6 @@ keywords: [eidechse, artikel, glider, oma]
 > interpretations, and conclusions expressed are solely those of the original author
 > and do not represent my own.
 
-# Mit Eidechsen war alles besser
-
 Ein in der Antike verbreitetes Navigationshilfmittel war neben der Sonne und den restlichen Sternen
 auch die gemeine Eidechse. Ein leicht zu übersehendes, aber nützliches Reptil. Auch vor Gericht
 fanden Sie weiträumig Verwendung, wenn jemand einen Eid ablegen musste. Wenn man log, kackte
