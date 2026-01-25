@@ -5,11 +5,11 @@ image: /static/posts/mit-eidechsen-war-alles-besser/glider-front.png
 keywords: [eidechse, artikel, glider, oma]
 ---
 
-> I am publishing the following article on behalf of a friend who recently wrote it.
-> I found the piece engaging and worth preserving, which is why I decided to share
-> it here. The article reflects the author’s personal views and style; all opinions,
-> interpretations, and conclusions expressed are solely those of the original author
-> and do not represent my own.
+> **Disclaimer**: I am publishing the following article on behalf of a friend who
+> recently wrote it. I found the piece engaging and worth preserving, which is why
+> I decided to share it here. The article reflects the author’s personal views and
+> style; all opinions, interpretations, and conclusions expressed are solely those
+> of the original author and do not represent my own.
 
 Ein in der Antike verbreitetes Navigationshilfmittel war neben der Sonne und den restlichen Sternen
 auch die gemeine Eidechse. Ein leicht zu übersehendes, aber nützliches Reptil. Auch vor Gericht
