@@ -2,7 +2,7 @@
 layout: post
 title:  "Mit Eidechsen war alles besser"
 categories: [meta]
-image: /static/posts/mit-eidechsen-war-alles-besser/situation.png
+image: /static/posts/mit-eidechsen-war-alles-besser/glider-front-small.jpg
 keywords: [eidechse, artikel, glider, oma]
 ---
 
