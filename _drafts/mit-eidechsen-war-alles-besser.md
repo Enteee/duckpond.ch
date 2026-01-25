@@ -1,8 +1,8 @@
 ---
 layout: post
-categories: []
+categories: [meta]
 image: /static/posts/mit-eidechsen-war-alles-besser/glider-front.png
-keywords: [eidechse artikel glider oma]
+keywords: [eidechse, artikel, glider, oma]
 ---
 
 > I am publishing the following article on behalf of a friend who recently wrote it.
