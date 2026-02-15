@@ -6,6 +6,7 @@ RUN set -ex \
     && apt-get update \
     && DEBIAN_FRONTEND=noninteractive \
       apt-get install --no-install-recommends --no-install-suggests -y \
+        ca-certificates \
         syncthing="${syncthing_version}"
 
 # Make service writable directories
