@@ -77,8 +77,6 @@ services:
             - www:/usr/share/nginx/html:ro
             - ${CONTAINER_DIR}/nginx-https/sites-enabled:/tmpl/etc/nginx/sites-enabled/:ro
             - ${CONTAINER_DIR}/nginx-https/conf.d:/tmpl/etc/nginx/conf.d:ro
-        #volumes_from:
-        #    - cryptpad:ro
         networks:
             backbone:
                 aliases:
@@ -132,33 +130,6 @@ services:
             - 8888:8888
             - 8889:8889
 
-    #cryptpad:
-    #    build:
-    #        context: ${CONTAINER_DIR}/cryptpad
-    #        args:
-    #            - nodejs_version=${NODEJS_VERSION}
-    #            - cryptpad_archive=${CRYPTPAD_ARCHIVE}
-    #            - cryptpad_version=${CRYPTPAD_VERSION}
-    #            - cryptpad_htpasswd_user=${CRYPTPAD_HTPASSWD_USER}
-    #            - cryptpad_htpasswd_password=${CRYPTPAD_HTPASSWD_PASSWORD}
-    #    command: ./start.sh
-    #    volumes:
-    #        - ${CONTAINER_DIR}/cryptpad/customize/:/cryptpad/customize:ro
-    #        - ${CONTAINER_DIR}/cryptpad/config/:/cryptpad/config:ro
-
-    #        - cryptpad-blob:/cryptpad/blob:rw
-    #        - cryptpad-block:/cryptpad/block:rw
-    #        - cryptpad-data:/cryptpad/data:rw
-    #        - cryptpad-datastore:/cryptpad/datastore:rw
-    #    networks:
-    #        backbone:
-    #            aliases:
-    #                - cryptpad
-    #    ulimits:
-    #        nofile:
-    #          soft: 1000000
-    #          hard: 1000000
-
     syncthing:
         build:
             context: ${CONTAINER_DIR}/syncthing
@@ -205,10 +176,6 @@ services:
             - certs:${BORG_VOLUMES}/certs:${VOLUME_SYNC_MOUNT}
             - letsencrypt-accounts:${BORG_VOLUMES}/letsencrypt-accounts:${VOLUME_SYNC_MOUNT}
             - isso-db:${BORG_VOLUMES}/isso-db:${VOLUME_SYNC_MOUNT}
-            - cryptpad-blob:${BORG_VOLUMES}/cryptpad-blob:${VOLUME_SYNC_MOUNT}
-            - cryptpad-block:${BORG_VOLUMES}/cryptpad-block:${VOLUME_SYNC_MOUNT}
-            - cryptpad-data:${BORG_VOLUMES}/cryptpad-data:${VOLUME_SYNC_MOUNT}
-            - cryptpad-datastore:${BORG_VOLUMES}/cryptpad-datastore:${VOLUME_SYNC_MOUNT}
 
             # backup volumes according to:
             # https://github.com/mailcow/mailcow-dockerized/blob/master/helper-scripts/backup_and_restore.sh
@@ -242,11 +209,6 @@ volumes:
     letsencrypt-accounts:
 
     isso-db:
-
-    cryptpad-blob:
-    cryptpad-block:
-    cryptpad-data:
-    cryptpad-datastore:
 
     # Mailcow
     vmail-vol-1:

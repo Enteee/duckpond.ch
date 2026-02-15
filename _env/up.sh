@@ -30,11 +30,11 @@ Examples:
   - Clean start production environment:
     ./up.sh -v --decrypt PASSWORD prod up --build --force-recreate
 
-  - Run cryptpad only:
-    ./up.sh prod up cryptpad nginx-https
+  - Run jekyll only:
+    ./up.sh prod up jekyll nginx-https
 
-  - Build cryptpad:
-    ./up.sh prod build cryptpad
+  - Build jekyll:
+    ./up.sh prod build jekyll
 
   - Backup restore:
     1.  In .env change VOLUME_SYNC_MOUNT to rw

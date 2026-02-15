@@ -27,9 +27,6 @@ services:
     challenges:
         command: "/bin/bash -c 'env; sleep 1h'"
 
-    #cryptpad:
-    #    command: "/bin/bash -c 'env; sleep 1h'"
-
     syncthing:
         command: "/bin/bash -c 'env; sleep 1h'"
         ports:
