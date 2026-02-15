@@ -155,6 +155,7 @@ services:
         build:
             context: ${CONTAINER_DIR}/volume-sync
             args:
+                - docker_version=${DOCKER_VERSION}
                 - borgbackup_version=${BORGBACKUP_VERSION}
                 - borgbackup_repo=${BORG_REPO}
                 - borgbackup_volumes=${BORG_VOLUMES}
