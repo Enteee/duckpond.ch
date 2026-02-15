@@ -47,29 +47,46 @@ get_pw_sensitive_borg_repo(){
   echo "${BORG_REPO}/${borg_repo_suffix}"
 }
 
-# Echos a list of container ids to pause excluding
-# the container we are running in and containers already
-# paused.
-get_all_other_unpaused_containers(){
-  comm -23 \
-    <( \
-      docker ps \
-        --format '{{.ID}}' \
-      | {
-        grep -v "$(
-          docker ps \
-            --filter "id=${HOSTNAME}" \
-            --format '{{.ID}}'
-        )"
-      } \
-      | sort \
-    ) \
-    <( \
-      docker ps \
-        --filter "status=paused" \
-        --format '{{.ID}}' \
-      | sort \
-    ) \
+# Echo a space-separated list of container IDs to pause, excluding:
+# - the container we are running in
+# - containers already paused
+# - containers that do NOT have any read-write bind/volume mount
+get_all_other_unpaused_containers() {
+  local self_id
+  local -a ids
+
+  self_id="$(
+    docker ps \
+      --filter "id=${HOSTNAME}" \
+      --format '{{.ID}}' \
+    | head \
+        --lines 1
+  )"
+
+  readarray -t ids < <(
+    docker ps \
+      --filter 'status=running' \
+      --format '{{.ID}}' \
+    | while read -r id; do
+        if [ -n "$self_id" ] && [ "$id" = "$self_id" ]; then
+          continue
+        fi
+        printf '%s\n' "$id"
+      done
+  )
+
+  if [ "${#ids[@]}" -eq 0 ]; then
+    return 0
+  fi
+
+  docker inspect \
+    "${ids[@]}" \
+    --format '{{.Id}} {{range .Mounts}}{{.Type}}:{{.RW}};{{end}}' \
+  | awk '
+      /(bind|volume):true/ {
+        print substr($1, 1, 12)
+      }
+    ' \
   | tr '\n' ' '
 }
 
