@@ -59,16 +59,33 @@ This design has several advantages:
 - Dead-lettering is now a first-class concept.
 - Tasks that exceed retry limits become visible failures, not silent stalls.
 
-The task base class inspects RabbitMQ's `x-death` headers to determine how many times a message has been dead-lettered. When the task sees multiple `x-death` entries, it is flagged as permanently dead and skipped.
+The task base class inspects RabbitMQ's `x-death` headers to detect whether a task has already been through graveyard processing. If the graveyard queue appears in the `x-death` entries, the task is flagged as permanently dead and skipped immediately.
 
 ```python
 class BaseTask(Task):
     def __call__(self, *args, **kwargs):
-        x_death = self.request.headers.get("x-death", [])
-        if len(x_death) > 1:
-            raise DeadTask("This task has already been reaped.")
+        headers = getattr(self.request, "headers", {}) or {}
+        x_death = XDeathHeader.model_validate(headers.get("x-death", []))
+        graveyard_queue = f"{settings.celery_queue_name_prefix}graveyard"
+        if any(d.queue == graveyard_queue for d in x_death.root):
+            raise DeadTask(f"Task died: {x_death}")
         return self.run(*args, **kwargs)
 ```
+
+### A subtle gotcha: don't count `x-death` entries
+
+An earlier version of this check simply counted `x-death` entries and raised `DeadTask` when there were more than one:
+
+```python
+if len(x_death) > 1:
+    raise DeadTask(...)
+```
+
+This turns out to be wrong once you enable `worker_detect_quorum_queues = True` in Celery 5.5+. That setting activates **Native Delayed Delivery** for all countdown and ETA tasks: instead of embedding the ETA in the message, Celery routes the message through a binary cascade of TTL queues (`celery_delayed_0`, `celery_delayed_1`, …). Each TTL queue appends its own `x-death` entry as the message expires and is forwarded.
+
+A countdown of 3 seconds is encoded as binary `11`, meaning the message passes through `celery_delayed_0` (1 s TTL) and then `celery_delayed_1` (2 s TTL) before reaching the destination queue — arriving with **two** `x-death` entries. The count-based check would therefore kill every task whose retry delay has more than one bit set in its binary representation.
+
+Checking for the graveyard queue by name is precise: it fires exactly when the task has been through graveyard processing, regardless of how many delayed-delivery TTL hops the message took to get there.
 
 ## Why It Works
 
