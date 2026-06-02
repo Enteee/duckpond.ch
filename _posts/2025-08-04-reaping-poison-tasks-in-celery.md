@@ -36,7 +36,8 @@ To make task failure explicit and avoid stalling the pipeline, we introduced Rab
 
 - Each task-specific queue is a quorum queue with a delivery limit.
 - On reaching the delivery limit, tasks are routed to a **graveyard queue**.
-- The graveyard queue also has a delivery limit, after which tasks go to a final **dead queue**.
+- The graveyard queue also has a delivery limit, after which tasks go to a **dead queue**.
+- The dead queue also has a delivery limit, after which tasks go to a final **abyss queue** — from which no worker ever consumes.
 
 ![dead letter queues](/static/posts/reaping-poison-tasks-in-celery/task-queues.svg){: .stretch }
 
@@ -66,7 +67,7 @@ class BaseTask(Task):
     def __call__(self, *args, **kwargs):
         headers = getattr(self.request, "headers", {}) or {}
         x_death = XDeathHeader.model_validate(headers.get("x-death", []))
-        graveyard_queue = f"{settings.celery_queue_name_prefix}graveyard"
+        graveyard_queue = "celery:graveyard"
         if any(d.queue == graveyard_queue for d in x_death.root):
             raise DeadTask(f"Task died: {x_death}")
         return self.run(*args, **kwargs)
@@ -87,8 +88,36 @@ A countdown of 3 seconds is encoded as binary `11`, meaning the message passes t
 
 Checking for the graveyard queue by name is precise: it fires exactly when the task has been through graveyard processing, regardless of how many delayed-delivery TTL hops the message took to get there.
 
+### A subtle gotcha: OOM during deserialization in the dead queue
+
+The reaper raises `DeadTask` after successfully deserializing a dead-queue message and inspecting its `x-death` headers. But what if the reaper is OOM-killed *during deserialization*, before `__call__` is ever reached?
+
+With `task_acks_late = True`, no acknowledgement is sent. RabbitMQ re-enqueues the message and increments its delivery count. If the dead queue has no `x-delivery-limit` — which was the case when it was the terminal stop — this becomes a permanent trap: the reaper keeps picking up the message, OOM-killing itself, and restarting, indefinitely.
+
+The fix is to give the dead queue its own delivery limit and a dead-letter destination that no process consumes — the **abyss queue**:
+
+```python
+# dead queue
+queue_arguments={
+    "x-queue-type": "quorum",
+    "x-delivery-limit": 3,
+    "x-dead-letter-exchange": "tasks",
+    "x-dead-letter-routing-key": "abyss",
+}
+
+# abyss queue
+queue_arguments={
+    "x-queue-type": "quorum",
+    "x-message-ttl": 7 * 24 * 60 * 60 * 1000,  # 7 days in ms
+}
+```
+
+The abyss queue is declared with only an `x-message-ttl`. No worker, persister, or reaper subscribes to it. Messages that land there expire quietly after the configured TTL.
+
+When deserialization succeeds and `DeadTask` is raised normally, the task is acknowledged (`task_acks_on_failure_or_timeout = True`), so the delivery count does not increment and the message is removed. The delivery limit only triggers on unacknowledged redeliveries — precisely the OOM-kill scenario.
+
 ## Why It Works
 
-This architecture isolates failure from progress. Reaper workers handle the worst-case tasks without contaminating the main processing pool. Delivery limits and explicit dead letter queues prevent infinite retries. The one-queue-per-task model ensures fair scheduling, and now with dead-lettering, also ensures robustness under failure.
+This architecture isolates failure from progress. Reaper workers handle the worst-case tasks without contaminating the main processing pool. Delivery limits and explicit dead letter queues prevent infinite retries — including the edge case where the reaper itself is OOM-killed before it can process a message. The abyss queue closes that final loop: any message the reaper cannot survive lands somewhere inert, and expires. The one-queue-per-task model ensures fair scheduling, and now with dead-lettering, also ensures robustness under failure.
 
 With this change, a single poison task no longer halts the system. Failures become visible, bounded, and isolated - the way they should be.
