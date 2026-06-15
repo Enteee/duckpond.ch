@@ -63,15 +63,30 @@ This design has several advantages:
 The task base class inspects RabbitMQ's `x-death` headers to detect whether a task has already been through graveyard processing. If the graveyard queue appears in the `x-death` entries, the task is flagged as permanently dead and skipped immediately.
 
 ```python
+_NDL_ROUTING_KEY_RE = re.compile(r"^[01](?:\.[01]){27}\.(.+)$")
+
 class BaseTask(Task):
     def __call__(self, *args, **kwargs):
         headers = getattr(self.request, "headers", {}) or {}
+
         x_death = XDeathHeader.model_validate(headers.get("x-death", []))
+
+        headers.pop("x-death", None)
+        x_death = XDeathHeader(
+            root=[d for d in x_death.root if not d.queue.startswith("celery_delayed")]
+        )
+
+        delivery_info = getattr(self.request, "delivery_info", {}) or {}
+        if m := _NDL_ROUTING_KEY_RE.match(delivery_info.get("routing_key", "")):
+            delivery_info["routing_key"] = m.group(1)
+
         graveyard_queue = "celery:graveyard"
         if any(d.queue == graveyard_queue for d in x_death.root):
             raise DeadTask(f"Task died: {x_death}")
         return self.run(*args, **kwargs)
 ```
+
+There is more going on here than just the graveyard check. Two additional bugs lurk in the interaction between `autoretry_for` and Native Delayed Delivery — both fixed in `__call__`.
 
 ### A subtle gotcha: don't count `x-death` entries
 
@@ -115,6 +130,62 @@ queue_arguments={
 The abyss queue is declared with only an `x-message-ttl`. No worker, persister, or reaper subscribes to it. Messages that land there expire quietly after the configured TTL.
 
 When deserialization succeeds and `DeadTask` is raised normally, the task is acknowledged (`task_acks_on_failure_or_timeout = True`), so the delivery count does not increment and the message is removed. The delivery limit only triggers on unacknowledged redeliveries — precisely the OOM-kill scenario.
+
+### A subtle gotcha: `x-death` accumulates inside `autoretry_for` retry chains
+
+Celery's `retry()` constructs the next retry message by copying `self.request.headers` verbatim. That copy includes the `x-death` header RabbitMQ set when the message was dead-lettered out of a TTL queue. With Native Delayed Delivery, every NDL round-trip appends a fresh `celery_delayed_N` entry to `x-death`.
+
+After enough retries the accumulated `x-death` header grows large, and — depending on RabbitMQ version and queue policy — can cause the broker to treat the message as having exhausted its delivery budget and route it to the graveyard before `max_retries` is reached.
+
+The fix is to strip `x-death` from `headers` in `__call__` before `run()` is called, so that `retry()` always publishes a clean message. It is safe to remove `x-death` entirely: RabbitMQ ignores any `x-death` present on a published message and writes its own fresh value on dead-lettering.
+
+We also filter out `celery_delayed_*` entries before the graveyard check, because those entries are an NDL artefact and should not influence whether a task is considered permanently dead:
+
+```python
+headers.pop("x-death", None)
+x_death = XDeathHeader(
+    root=[d for d in x_death.root if not d.queue.startswith("celery_delayed")]
+)
+```
+
+### A subtle gotcha: the NDL routing key grows with every retry
+
+This one caused `struct.error: 'B' format requires 0 <= number <= 255` — AMQP's hard limit on routing key length — and took a while to track down.
+
+When Celery publishes a retry via Native Delayed Delivery, it computes a new routing key by prepending a 56-character binary prefix to the original routing key:
+
+```python
+# kombu/transport/native_delayed_delivery.py
+return '.'.join(list(f'{countdown:028b}')) + f'.{routing_key}'
+# e.g. countdown=1 → "0.0.0.…0.0.1.<original_routing_key>"
+#                        ^^^^^^^^55 chars^^^^^^^^
+```
+
+The problem: `retry()` calls `signature_from_request()`, which populates the next retry's options with `delivery_info` via `options.update(delivery_info)`. Because `delivery_info['routing_key']` still contains the NDL-prefixed key from the *current* delivery, `celery/app/base.py` then calls `calculate_routing_key()` on an already-prefixed key — prepending another 56-character prefix on top.
+
+Each retry adds 56 characters:
+
+| Retry | Routing key length |
+|-------|--------------------|
+| 0 (initial) | 68 chars |
+| 1 | 124 chars |
+| 2 | 180 chars |
+| 3 | 236 chars |
+| 4 | 292 chars → **struct.error** |
+
+The task never reaches `max_retries`; it simply stops being publishable around retry 4.
+
+The fix is to strip the NDL prefix from `delivery_info['routing_key']` in `__call__` before `run()` is called. The prefix is always exactly 28 single-bit characters separated by 27 dots (55 chars total), followed by a dot — a pattern that's easy to match and safe to remove:
+
+```python
+_NDL_ROUTING_KEY_RE = re.compile(r"^[01](?:\.[01]){27}\.(.+)$")
+
+delivery_info = getattr(self.request, "delivery_info", {}) or {}
+if m := _NDL_ROUTING_KEY_RE.match(delivery_info.get("routing_key", "")):
+    delivery_info["routing_key"] = m.group(1)
+```
+
+After stripping, `signature_from_request()` copies the original routing key into the retry options, and `calculate_routing_key()` correctly applies exactly one fresh prefix — the routing key length stays constant across all retries.
 
 ## Why It Works
 
