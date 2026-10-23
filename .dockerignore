@@ -1,0 +1,10 @@
+# The only image built with the repository root as its context is `jekyll`
+# (see _env/docker-compose.yml), and its Dockerfile copies just the Gemfile
+# pair. Excluding everything else keeps the build context from shipping the
+# whole ~2.8G working tree to the daemon.
+#
+# The site itself is bind-mounted at runtime, not COPYed, so nothing here
+# affects what Jekyll actually renders.
+*
+!Gemfile
+!Gemfile.lock

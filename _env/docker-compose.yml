@@ -11,7 +11,8 @@ services:
 
     jekyll:
         build:
-            context: ${CONTAINER_DIR}/jekyll
+            context: ${CONTAINER_DIR}/..
+            dockerfile: _env/jekyll/Dockerfile
             args:
                 - jekyll_version=${JEKYLL_VERSION}
         command: jekyll build --watch
@@ -21,7 +22,8 @@ services:
 
     jekyll-dev:
         build:
-            context: ${CONTAINER_DIR}/jekyll
+            context: ${CONTAINER_DIR}/..
+            dockerfile: _env/jekyll/Dockerfile
             args:
                 - jekyll_version=${JEKYLL_VERSION}
         command: jekyll build --drafts --watch
