@@ -118,12 +118,22 @@ init_repo(){
   # all pw dependant repositories at once.
   mkdir -p "${BORG_REPO}/.stfolder"
 
-  if ! borg info "${borg_repo}" &>/dev/null; then
+  # Decide on the repo marker file, not on `borg info`'s exit status: borg
+  # fails for many reasons other than a missing repo (most notably a stale
+  # lock.exclusive left behind when a run is killed). Treating those as
+  # "repo missing" ran `borg init` against an existing repo, which died with
+  # "A repository already exists" and aborted the whole backup.
+  if [ ! -e "${borg_repo}/config" ]; then
     borg init \
       --encryption repokey \
       --verbose \
       "${borg_repo}"
+    return
   fi
+
+  # Repo exists: confirm it is actually usable and let the real error through
+  # (unsuppressed) instead of masking it behind a bogus init attempt.
+  borg info "${borg_repo}" > /dev/null
 }
 
 # Do create the backup

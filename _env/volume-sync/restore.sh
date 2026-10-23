@@ -18,8 +18,11 @@ usage(){
 #
 # Main
 #
+# Containers paused by this run. Global (not a `main` local) so the EXIT trap
+# can always see it, whatever point we bail out from.
+containers_to_pause=()
+
 main(){
-  local containers_to_pause
   read -r -a containers_to_pause <<< "$(get_all_other_unpaused_containers)"
 
   list_backups
@@ -31,11 +34,13 @@ main(){
 
   local backup_to_restore="${1}" && shift
 
+  # Same guarantee as backup.sh: never leave the stack paused if a step fails.
+  trap 'unpause_containers "${containers_to_pause[@]}"' EXIT INT TERM
+
   pause_containers "${containers_to_pause[@]}"
   init_repo
   check_repo
   chown_backup
   restore_backup "${backup_to_restore}"
-  unpause_containers "${containers_to_pause[@]}"
 }
 main "${@}"
